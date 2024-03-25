@@ -11,15 +11,23 @@
 <main class="main">
   <div>
     <h1>Entrenamientos</h1>
-    <div>
-      <button>Ejercicios</button>
-      <button>Rutinas</button>
-    </div>
-    <div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+      <button class="btn btn-outline-primary" (click)=" toggleEjercicios()">Ejercicios</button>
+      <button class="btn btn-outline-primary" (click)="toggleRutinas()">Rutinas</button>
+
 
     </div>
   </div>
+
+  <div *ngIf="mostrarRutinas">
+    <app-rutinas></app-rutinas>
+  </div>
+
+  <div *ngIf="mostrarEjercicios">
+    <app-ejercicios></app-ejercicios>
+  </div>
 </main>
+
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
