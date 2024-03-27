@@ -1,5 +1,29 @@
-<p>rutinas works!</p>
-
 <div>
-    <h1>hola</h1>
+    <ul>
+        <li *ngFor="let rutina of rutinas; let i = index">
+            {{ rutina.nombre }}
+            <button (click)="mostrarDetalles(rutina)">Detalles</button>
+            <button (click)="editarRutina(i)">Editar</button>
+            <button (click)="eliminarRutina(i)">Eliminar</button>
+        </li>
+    </ul>
+
+    <!-- Ventana emergente para detalles de la rutina -->
+    <div *ngIf="rutinaSeleccionada">
+        <h2>{{ rutinaSeleccionada.nombre }}</h2>
+        <p>{{ rutinaSeleccionada.descripcion }}</p>
+        <p>{{ rutinaSeleccionada.observaciones }}</p>
+        <button (click)="rutinaSeleccionada = null">Cerrar</button>
+    </div>
+
+    <!-- Formulario para agregar una nueva rutina -->
+    <div>
+        <button (click)="agregarRutina()">Agregar</button>
+    </div>
+
+    <!-- Formulario para editar una rutina -->
+    <div *ngIf="editarRutinaIndex !== -1">
+        <h2>Editar Rutina</h2>
+        <button (click)="actualizarRutina()">Actualizar</button>
+    </div>
 </div>
