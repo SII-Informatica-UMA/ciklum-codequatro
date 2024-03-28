@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DetallesRutina } from './detalles-rutina/detalles-rutina';
+import { EditarRutina } from './editar-rutina/editar-rutina';
 
 @Component({
   selector: 'app-rutinas',
@@ -34,6 +37,7 @@ export class RutinasComponent {
 
   editarRutinaIndex: number = -1;
 
+  constructor(private modalService: NgbModal) {}
 
   agregarRutina() {
     this.rutinas.push({ ...this.nuevaRutina });
@@ -45,8 +49,9 @@ export class RutinasComponent {
     };
   }
 
-  mostrarDetalles(rutina: any) {
-    this.rutinaSeleccionada = rutina;
+  mostrarDetalles(rutina: any): void {
+    const modalRef = this.modalService.open(DetallesRutina);
+    modalRef.componentInstance.rutina = rutina;
   }
 
 
@@ -68,7 +73,8 @@ export class RutinasComponent {
   }
 
 
-  eliminarRutina(index: number) {
-    this.rutinas.splice(index, 1);
+  eliminarRutina(nombre: string) {
+    let indice = this.rutinas.findIndex(c => c.nombre == nombre);
+    this.rutinas.splice(indice, 1);
   }
 }

@@ -1,11 +1,14 @@
+
 <div>
     <ul>
-        <li *ngFor="let rutina of rutinas; let i = index">
-            {{ rutina.nombre }}
-            <button (click)="mostrarDetalles(rutina)">Detalles</button>
-            <button (click)="editarRutina(i)">Editar</button>
-            <button (click)="eliminarRutina(i)">Eliminar</button>
-        </li>
+        @for (rutina of rutinas; track rutina) {
+          <li>
+                <p>{{rutina.nombre}}</p>
+                <button (click)="mostrarDetalles(rutina)">Detalles</button>
+                <button (click)="mostrarDetalles(rutina)">Editar</button> <!--TODO-->
+                <button (click)="eliminarRutina(rutina)">Eliminar</button>
+            </li>
+        }
     </ul>
 
     <!-- Ventana emergente para detalles de la rutina -->
