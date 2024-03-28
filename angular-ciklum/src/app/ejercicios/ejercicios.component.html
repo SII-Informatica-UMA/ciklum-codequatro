@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Botones Desplegables</title>
+    <!-- Estilos CSS para el menú desplegable -->
+    
 </head>
 <body>
+    <!-- Agrega el botón de accesibilidad con menú desplegable -->
     <div class="dropdown">
         <button class="dropbtn">Ejercicios de tren inferior</button>
         <div class="dropdown-content">
@@ -18,7 +21,7 @@
     <div class="dropdown">
         <button class="dropbtn">Ejercicios de tren superior</button>
         <div class="dropdown-content">
-            <button onclick="mostrarInformacion('Bench press')">Bench press</button>
+            <button (click) ="mostrarInformacion('Bench press')">Bench press</button>
             <button onclick="mostrarInformacion('Fly press')">Fly press</button>
             <button onclick="mostrarInformacion('Back')">Back</button>
             <button onclick="mostrarInformacion('Pull over')">Pull over</button>
@@ -36,9 +39,7 @@
 
     <!-- Script JavaScript para mostrar información -->
     <script>
-        function mostrarInformacion(nombreEjercicio) {
-            alert('Has seleccionado el ejercicio: ' + nombreEjercicio);
-        }
+        
     </script>
 </body>
 </html>
