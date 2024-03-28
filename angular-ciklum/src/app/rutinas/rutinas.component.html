@@ -1,5 +1,32 @@
-<p>rutinas works!</p>
 
 <div>
-    <h1>hola</h1>
+    <ul>
+        @for (rutina of rutinas; track rutina) {
+          <li>
+                <p>{{rutina.nombre}}</p>
+                <button (click)="mostrarDetalles(rutina)">Detalles</button>
+                <button (click)="mostrarDetalles(rutina)">Editar</button> <!--TODO-->
+                <button (click)="eliminarRutina(rutina)">Eliminar</button>
+            </li>
+        }
+    </ul>
+
+    <!-- Ventana emergente para detalles de la rutina -->
+    <div *ngIf="rutinaSeleccionada">
+        <h2>{{ rutinaSeleccionada.nombre }}</h2>
+        <p>{{ rutinaSeleccionada.descripcion }}</p>
+        <p>{{ rutinaSeleccionada.observaciones }}</p>
+        <button (click)="rutinaSeleccionada = null">Cerrar</button>
+    </div>
+
+    <!-- Formulario para agregar una nueva rutina -->
+    <div>
+        <button (click)="agregarRutina()">Agregar</button>
+    </div>
+
+    <!-- Formulario para editar una rutina -->
+    <div *ngIf="editarRutinaIndex !== -1">
+        <h2>Editar Rutina</h2>
+        <button (click)="actualizarRutina()">Actualizar</button>
+    </div>
 </div>
