@@ -36,12 +36,26 @@
     </div> 
 -->
     <div class="dropdown">
+        <p>{{"Lista de ejercicios"}}</p>
         @for (ejercicio of ejercicios; track ejercicio){
-            <p>{{ejercicio.nombre}}</p>
+            
             <div class="dropdown-content">
                 <button (click) = "mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
             </div>
         }
+        <div *ngIf="ejercicioSeleccionado">
+            <h2>{{ ejercicioSeleccionado.nombre }}</h2>
+            <p>{{ ejercicioSeleccionado.descripcion }}</p>
+            <p>{{ ejercicioSeleccionado.observaciones }}</p>
+            <p>{{ ejercicioSeleccionado.tipo }}</p>
+            <p>{{ ejercicioSeleccionado.musculos_trabajados }}</p>
+            <p>{{ ejercicioSeleccionado.material }}</p>
+            <p>{{ ejercicioSeleccionado.dificultad }}</p>
+            <p>{{ ejercicioSeleccionado.multimedia }}</p>
+            <p>{{ ejercicioSeleccionado.id }}</p>
+            <button (click)="ejercicioSeleccionado = null">Cerrar</button>
+        </div>
+        
 
     </div>
 </body>

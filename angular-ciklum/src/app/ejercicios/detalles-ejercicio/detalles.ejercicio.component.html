@@ -1,1 +1,20 @@
-<p>detalles.ejercicio works!</p>
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">{{Ejercicios.nombre}}</h4>
+  </div>
+    <div class="modal-body">
+      <p>{{ Ejercicios.nombre }}</p>
+      <p>{{ Ejercicios.descripcion }}</p>
+      <p>{{ Ejercicios.observaciones }}</p>
+      <p>{{ Ejercicios.tipo }}</p>
+      <p>{{ Ejercicios.musculos_trabajados }}</p>
+      <p>{{ Ejercicios.material }}</p>
+      <p>{{ Ejercicios.dificultad }}</p>
+      <p>{{ Ejercicios.multimedia }}</p>
+      <p>{{ Ejercicios.id }}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+    </div>  
+</div>
+
