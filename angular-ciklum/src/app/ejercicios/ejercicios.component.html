@@ -6,36 +6,43 @@
     <title>Botones Desplegables</title>
 </head>
 <body>
-   <!--
+<!--
     <div class="dropdown">
         <button class="dropbtn">Ejercicios de tren inferior</button>
         <div class="dropdown-content">
-            <button idboton=0 (click)="mostrarInformacion(0)">Prensa</button>
-            <button idboton=1 (click)="mostrarInformacion(1)">Sentadilla bulgara</button>
-            <button idboton=2 (click)="mostrarInformacion(2)">Extension de cuadriceps</button>
-            <button idboton=3 (click)="mostrarInformacion(3)">Extensión de isquiotibiales</button>
+            <button (click)="mostrarInformacion(ejercicios)">Prensa</button>
+            <button (click)="mostrarInformacion(ejercicio)">Sentadilla bulgara</button>
+            <button (click)="mostrarInformacion(ejercicio)">Extension de cuadriceps</button>
+            <button (click)="mostrarInformacion(ejercicio)">Extensión de isquiotibiales</button>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Ejercicios de tren superior</button>
         <div class="dropdown-content">
-            <button idboton=4 (click) ="mostrarInformacion(4)">Bench press</button>
-            <button idboton=5 (click)="mostrarInformacion(5)">Fly press</button>
-            <button idboton=6 (click)="mostrarInformacion(6)">Back</button>
-            <button idboton=7 (click)="mostrarInformacion(7)">Pull over</button>
+            <button (click) ="mostrarInformacion(ejercicio)">Bench press</button>
+            <button (click)="mostrarInformacion(ejercicio)">Fly press</button>
+            <button (click)="mostrarInformacion(ejercicio)">Back</button>
+            <button (click)="mostrarInformacion(ejercicio)">Pull over</button>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Ejercicios de brazos</button>
         <div class="dropdown-content">
-            <button idboton=8 (click)="mostrarInformacion(8)">Triceps</button>
-            <button idboton=9 (click)="mostrarInformacion(9)">Biceps con barra Z</button>
-            <button idboton=10 (click)="mostrarInformacion(10)">Biceps martillo</button>
-            <button idboton=11 (click)="mostrarInformacion(11)">Press militar</button>          
+            <button (click)="mostrarInformacion(ejercicio)">Triceps</button>
+            <button (click)="mostrarInformacion(ejercicio)">Biceps con barra Z</button>
+            <button (click)="mostrarInformacion(ejercicio)">Biceps martillo</button>
+            <button (click)="mostrarInformacion(ejercicio)">Press militar</button>          
         </div>
+    </div> 
+-->
+    <div class="dropdown">
+        @for (ejercicio of ejercicios; track ejercicio){
+            <p>{{ejercicio.nombre}}</p>
+            <div class="dropdown-content">
+                <button (click) = "mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
+            </div>
+        }
+
     </div>
-    -->
-    <div ></div>
-    dddd
 </body>
 </html>

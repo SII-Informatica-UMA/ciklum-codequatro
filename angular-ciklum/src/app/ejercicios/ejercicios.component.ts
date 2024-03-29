@@ -158,7 +158,7 @@ export class EjercicioComponent{
         multimedia: [],
         id: 0
       };
-      
+
       ejercicioSeleccionado: any = null;
 
       editarEjercicioIndex: number = -1;
@@ -212,7 +212,5 @@ export class EjercicioComponent{
         let indice = this.ejercicios.findIndex(x => x.nombre == nombre);
         this.ejercicios.splice(indice,1);
       }
-      mostrarInformacion(idBoton: number){
-
-      }
+   
 }
