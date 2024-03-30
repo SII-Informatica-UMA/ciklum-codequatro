@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetallesRutina } from './detalles-rutina/detalles-rutina';
 import { EditarRutina } from './editar-rutina/editar-rutina';
 import { CrearRutina } from './crear-rutina/crear-rutina';
+
 @Component({
   selector: 'app-rutinas',
   standalone: true,
