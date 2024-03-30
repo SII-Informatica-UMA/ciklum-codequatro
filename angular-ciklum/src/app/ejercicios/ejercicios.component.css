@@ -72,4 +72,16 @@
     .dropdown:hover .dropbtn {
         background-color: #9e9e9e;
     }
+    .titulo_lista{
+        text-align: center;
+        margin-top: 50px;
+        padding: 10px 20px; /* Espaciado interno */
+        border-radius: 10px; /* Bordes redondeados */
+        border: none; /* Sin borde */
+        margin: 5px;
+        
+        background-color: #242324; /* Color de fondo - rosa pálido */
+        color: yellow; /* Color del texto*/
+       
+    }
 

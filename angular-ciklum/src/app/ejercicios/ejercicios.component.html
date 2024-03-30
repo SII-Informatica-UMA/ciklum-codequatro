@@ -6,57 +6,22 @@
     <title>Botones Desplegables</title>
 </head>
 <body>
-<!--
-    <div class="dropdown">
-        <button class="dropbtn">Ejercicios de tren inferior</button>
-        <div class="dropdown-content">
-            <button (click)="mostrarInformacion(ejercicios)">Prensa</button>
-            <button (click)="mostrarInformacion(ejercicio)">Sentadilla bulgara</button>
-            <button (click)="mostrarInformacion(ejercicio)">Extension de cuadriceps</button>
-            <button (click)="mostrarInformacion(ejercicio)">Extensión de isquiotibiales</button>
-        </div>
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn">Ejercicios de tren superior</button>
-        <div class="dropdown-content">
-            <button (click) ="mostrarInformacion(ejercicio)">Bench press</button>
-            <button (click)="mostrarInformacion(ejercicio)">Fly press</button>
-            <button (click)="mostrarInformacion(ejercicio)">Back</button>
-            <button (click)="mostrarInformacion(ejercicio)">Pull over</button>
-        </div>
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn">Ejercicios de brazos</button>
-        <div class="dropdown-content">
-            <button (click)="mostrarInformacion(ejercicio)">Triceps</button>
-            <button (click)="mostrarInformacion(ejercicio)">Biceps con barra Z</button>
-            <button (click)="mostrarInformacion(ejercicio)">Biceps martillo</button>
-            <button (click)="mostrarInformacion(ejercicio)">Press militar</button>          
-        </div>
-    </div> 
--->
-    <div class="dropdown">
-        <p>{{"Lista de ejercicios"}}</p>
-        @for (ejercicio of ejercicios; track ejercicio){
-            
-            <div class="dropdown-content">
-                <button (click) = "mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
-            </div>
-        }
-        <div *ngIf="ejercicioSeleccionado">
-            <h2>{{ ejercicioSeleccionado.nombre }}</h2>
-            <p>{{ ejercicioSeleccionado.descripcion }}</p>
-            <p>{{ ejercicioSeleccionado.observaciones }}</p>
-            <p>{{ ejercicioSeleccionado.tipo }}</p>
-            <p>{{ ejercicioSeleccionado.musculos_trabajados }}</p>
-            <p>{{ ejercicioSeleccionado.material }}</p>
-            <p>{{ ejercicioSeleccionado.dificultad }}</p>
-            <p>{{ ejercicioSeleccionado.multimedia }}</p>
-            <p>{{ ejercicioSeleccionado.id }}</p>
-            <button (click)="ejercicioSeleccionado = null">Cerrar</button>
-        </div>
-        
 
+    <div class="dropdown">
+        <h2 class = "titulo_lista">Lista de ejercicios</h2>
+        @for (ejercicio of ejercicios; track ejercicio){
+                        
+            <div class="dropdown-content">
+                <div class="btn-group" role = "group">
+                    <button (click) = "mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
+                    <button type="button" class="btn btn-primary" (click) = "editarEjercicio(ejercicio.id)">Editar<i class="bi bi-pencil-square"></i></button>
+                    <button type= "button" class="btn btn-primary" (click) = "eliminarEjercicio(ejercicio.nombre)">Eliminar <i class="bi bi-trash-fill"></i></button>
+                </div>
+                
+            </div>
+                
+        }
     </div>
+
 </body>
 </html>
