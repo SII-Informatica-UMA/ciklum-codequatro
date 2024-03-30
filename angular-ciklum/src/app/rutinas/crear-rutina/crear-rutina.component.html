@@ -1,13 +1,13 @@
 <div>
 
   <div class="modal-header">
-    <h4 class="modal-title">{{rutina.nombre}}</h4>
+    <h4 class="modal-title">Nueva rutina</h4>
   </div>
 
   <div class="modal-body">
     <div class="form-group">
       <label for="nombre">Nombre:</label>
-      <input class="form-control" id="nombre">
+      <input type="text" id="nombre"> <!-- [(ngModel)]="nuevaRutina.nombre" AHI ME QUEDO-->
       <label for="apellidos">Descripción:</label>
       <input class="form-control" id="descripcion">
       <label for="email">Observaciones:</label>
@@ -16,7 +16,7 @@
 
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="editarRutina()">Guardar</button>
-    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cancelar</button>
   </div>
   
 </div>

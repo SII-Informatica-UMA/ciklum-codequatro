@@ -5,8 +5,8 @@
           <li>
                 <p>{{rutina.nombre}}</p>
                 <button (click)="mostrarDetalles(rutina)">Detalles</button>
-                <button (click)="mostrarDetalles(rutina)">Editar</button> <!--TODO-->
-                <button (click)="eliminarRutina(rutina)">Eliminar</button>
+                <button type="button" class="btn btn-primary" (click) = "editarRutina(rutina)"><i class="bi bi-pencil-square"></i></button> <!--TODO-->
+                <button class="btn btn-outline-primary bi trash-button" (click)="eliminarRutina(rutina)"><i class="bi-trash"></i></button>
             </li>
         }
     </ul>
@@ -21,7 +21,7 @@
 
     <!-- Formulario para agregar una nueva rutina -->
     <div>
-        <button (click)="agregarRutina()">Agregar</button>
+        <button (click)="crearRutina()">Agregar</button>
     </div>
 
     <!-- Formulario para editar una rutina -->
