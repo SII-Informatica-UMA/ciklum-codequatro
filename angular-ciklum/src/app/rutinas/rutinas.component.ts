@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetallesRutina } from './detalles-rutina/detalles-rutina';
 import { EditarRutina } from './editar-rutina/editar-rutina';
+import { CrearRutina } from './crear-rutina/crear-rutina';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rutinas',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './rutinas.component.html',
   styleUrl: './rutinas.component.css'
 })
-export class RutinasComponent {
+export class RutinasComponent implements OnInit {
   rutinas: any[] = [
     {
       nombre: 'Rutina 1',
@@ -39,6 +41,10 @@ export class RutinasComponent {
 
   constructor(private modalService: NgbModal) {}
 
+  ngOnInit(): void {
+    this.rutinas = this.rutinas;
+  }
+
   agregarRutina() {
     this.rutinas.push({ ...this.nuevaRutina });
     this.nuevaRutina = {
@@ -54,10 +60,14 @@ export class RutinasComponent {
     modalRef.componentInstance.rutina = rutina;
   }
 
-
-  editarRutina(index: number) {
-    this.editarRutinaIndex = index;
-    this.nuevaRutina = { ...this.rutinas[index] };
+  editarRutina(rutina: any): void {
+    const modalRef = this.modalService.open(EditarRutina);
+    modalRef.componentInstance.rutina = rutina;
+    modalRef.componentInstance.accion = "Editar";
+    modalRef.result.then((r: any) => {
+      let indice = this.rutinas.findIndex(c => c.nombre == r.nombre);
+      this.rutinas[indice] = r;
+    }, (reason) => {});
   }
 
 
@@ -76,5 +86,14 @@ export class RutinasComponent {
   eliminarRutina(nombre: string) {
     let indice = this.rutinas.findIndex(c => c.nombre == nombre);
     this.rutinas.splice(indice, 1);
+  }
+
+  crearRutina(){
+    const modalRef = this.modalService.open(CrearRutina);
+    modalRef.componentInstance.accion = "Crear";
+    modalRef.result.then((r: any) => {
+      this.rutinas.push(r);
+    }, (reason) => {});
+    
   }
 }

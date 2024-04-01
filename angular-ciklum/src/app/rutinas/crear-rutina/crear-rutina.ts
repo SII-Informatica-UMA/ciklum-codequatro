@@ -1,19 +1,19 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 @Component({
-  selector: 'app-editar-rutina',
+  selector: 'app-crear-rutina',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './editar-rutina.component.html',
-  styleUrls: ['./editar-rutina.component.css']
+  templateUrl: './crear-rutina.component.html',
+  styleUrls: ['./crear-rutina.component.css']
 })
 
-export class EditarRutina {
-  @Input() rutina: any;
+export class CrearRutina {
   nuevaRutina: any = {nombre: '', detalles: '', observaciones: ''};
-  accion?: "Añadir";
+  accion?: "Crear";
 
 
   constructor( public activeModal: NgbActiveModal) {}

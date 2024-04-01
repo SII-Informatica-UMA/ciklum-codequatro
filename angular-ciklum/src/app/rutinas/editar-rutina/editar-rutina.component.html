@@ -1,13 +1,22 @@
-<!--Aqui lo que ha que hacer es un form para poder cambiar la informacion de la rutina-->
 <div>
+
   <div class="modal-header">
     <h4 class="modal-title">{{rutina.nombre}}</h4>
   </div>
-    <div class="modal-body">
-      <p>{{ rutina.descripcion }}</p>
-      <p>{{ rutina.observaciones }}</p>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input class="form-control" id="nombre" [(ngModel)]="rutina.nombre">
+      <label for="apellidos">Descripción:</label>
+      <input class="form-control" id="descripcion" [(ngModel)]="rutina.descripcion">
+      <label for="email">Observaciones:</label>
+      <input class="form-control" id="observaciones" [(ngModel)]="rutina.observaciones">
     </div>
+
     <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="editarRutina()">Guardar</button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
-    </div>  
-</div>
+    </div>
+
+  </div>
