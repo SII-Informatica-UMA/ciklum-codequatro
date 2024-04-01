@@ -7,17 +7,16 @@
   <div class="modal-body">
     <div class="form-group">
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre"> <!-- [(ngModel)]="nuevaRutina.nombre" AHI ME QUEDO-->
+      <input type="text" id="nombre" [(ngModel)]="nuevaRutina.nombre">
       <label for="apellidos">Descripción:</label>
-      <input class="form-control" id="descripcion">
+      <input class="form-control" id="descripcion" [(ngModel)]="nuevaRutina.descripcion">
       <label for="email">Observaciones:</label>
-      <input class="form-control" id="observaciones">
+      <input class="form-control" id="observaciones" [(ngModel)]="nuevaRutina.observaciones">
     </div>
 
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="editarRutina()">Guardar</button>
-    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cancelar</button>
-  </div>
-  
-</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="editarRutina()">Guardar</button>
+      <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cancelar</button>
+    </div>
 
+  </div>

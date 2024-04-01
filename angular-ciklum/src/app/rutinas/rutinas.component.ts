@@ -3,11 +3,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetallesRutina } from './detalles-rutina/detalles-rutina';
 import { EditarRutina } from './editar-rutina/editar-rutina';
 import { CrearRutina } from './crear-rutina/crear-rutina';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rutinas',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './rutinas.component.html',
   styleUrl: './rutinas.component.css'
 })

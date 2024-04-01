@@ -1,32 +1,20 @@
-
 <div>
     <ul>
         @for (rutina of rutinas; track rutina) {
-          <li>
-                <p>{{rutina.nombre}}</p>
-                <button (click)="mostrarDetalles(rutina)">Detalles</button>
-                <button type="button" class="btn btn-primary" (click) = "editarRutina(rutina)"><i class="bi bi-pencil-square"></i></button> <!--TODO-->
-                <button class="btn btn-outline-primary bi trash-button" (click)="eliminarRutina(rutina)"><i class="bi-trash"></i></button>
-            </li>
+        <li>
+            <p>{{rutina.nombre}}</p>
+            <button (click)="mostrarDetalles(rutina)">Detalles</button>
+            <button type="button" class="btn btn-primary" (click)="editarRutina(rutina)"><i
+                    class="bi bi-pencil-square"></i></button>
+            <button class="btn btn-outline-primary bi trash-button" (click)="eliminarRutina(rutina)"><i
+                    class="bi-trash"></i></button>
+        </li>
         }
     </ul>
-
-    <!-- Ventana emergente para detalles de la rutina -->
-    <div *ngIf="rutinaSeleccionada">
-        <h2>{{ rutinaSeleccionada.nombre }}</h2>
-        <p>{{ rutinaSeleccionada.descripcion }}</p>
-        <p>{{ rutinaSeleccionada.observaciones }}</p>
-        <button (click)="rutinaSeleccionada = null">Cerrar</button>
-    </div>
 
     <!-- Formulario para agregar una nueva rutina -->
     <div>
         <button (click)="crearRutina()">Agregar</button>
     </div>
 
-    <!-- Formulario para editar una rutina -->
-    <div *ngIf="editarRutinaIndex !== -1">
-        <h2>Editar Rutina</h2>
-        <button (click)="actualizarRutina()">Actualizar</button>
-    </div>
 </div>
