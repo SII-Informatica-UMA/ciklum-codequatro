@@ -3,6 +3,9 @@ import { ModalService } from '@developer-partners/ngx-modal-dialog';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Ejercicio } from '../ejercicio';
 import { DetallesEjercicio } from "./detalles-ejercicio/detalles.ejercicio.component";
+import {FormularioEjercicioComponent} from "./formulario-ejercicio/formulario-ejercicio.component";
+
+
 
 
 @Component({
@@ -167,6 +170,7 @@ export class EjercicioComponent{
       }
 
       agregarEjercicio(){
+        let ref = this.modalService.open(FormularioEjercicioComponent)
         this.ejercicios.push({...this.nuevoEjercicio})
         this.nuevoEjercicio = {
           nombre: '',
