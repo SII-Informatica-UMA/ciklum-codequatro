@@ -1,5 +1,5 @@
 
-export interface Ejercicios{
+export interface Ejercicio{
     nombre : String
     descripcion : String
     observaciones : String
