@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Ejercicio } from '../../ejercicio';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-formulario-ejercicio',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './formulario-ejercicio.component.html',
   styleUrl: './formulario-ejercicio.component.css'
 })
