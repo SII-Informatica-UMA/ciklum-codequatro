@@ -1,0 +1,32 @@
+<div>
+
+    <div class="modal-header">
+      <h4 class="modal-title">{{ejercicio.nombre}}</h4>
+    </div>
+  
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input class="form-control" id="nombre" [(ngModel)]="ejercicio.nombre">
+        <label for="apellidos">Descripción:</label>
+        <input class="form-control" id="descripcion" [(ngModel)]="ejercicio.descripcion">
+        <label for="email">Observaciones:</label>
+        <input class="form-control" id="observaciones" [(ngModel)] = "ejercicio.observaciones">         
+        <label for="form-control">Musculos trabajados:</label>         
+        <input class="form-control" id="musculos_trabajados" [(ngModel)] = "ejercicio.musculos_trabajados">        
+        <label for="form-control">Tipo:</label>         
+        <input class="form-control" id="tipo" [(ngModel)] = "ejercicio.tipo">         
+        <label for="form-control">Material:</label>         
+        <input class="form-control" id="material" [(ngModel)] = "ejercicio.material">         
+        <label for="form-control">Dificultad:</label>         
+        <input class="form-control" id="dificultad" [(ngModel)] = "ejercicio.dificultad">         
+        <label for="form-control">Multimedia:</label>         
+        <input class="form-control" id="multimedia" [(ngModel)] = "ejercicio.multimedia">
+      </div>
+  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="editarEjercicio()">Guardar</button>
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+      </div>
+  
+    </div>
