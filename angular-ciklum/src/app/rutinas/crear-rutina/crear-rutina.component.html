@@ -1,0 +1,34 @@
+<div>
+
+  <div class="modal-header">
+    <h4 class="modal-title">Nueva rutina</h4>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" [(ngModel)]="nuevaRutina.nombre">
+      <label for="apellidos">Descripción:</label>
+      <input class="form-control" id="descripcion" [(ngModel)]="nuevaRutina.descripcion">
+      <label for="email">Observaciones:</label>
+      <input class="form-control" id="observaciones" [(ngModel)]="nuevaRutina.observaciones">
+
+      @for (ejercicio of ejercicios; track ejercicio){
+                        
+        <div class="dropdown-content">
+            <div class="btn-group" role = "group">
+                <button>{{ejercicio.nombre}}</button>
+            </div>
+            
+        </div>
+            
+    }
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="editarRutina()">Guardar</button>
+      <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cancelar</button>
+    </div>
+
+  </div>
