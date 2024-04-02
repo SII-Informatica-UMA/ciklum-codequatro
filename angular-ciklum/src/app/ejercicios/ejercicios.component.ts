@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import { ModalService } from '@developer-partners/ngx-modal-dialog';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Ejercicio } from '../ejercicio';
 import { DetallesEjercicio } from "./detalles-ejercicio/detalles.ejercicio.component";
-import {FormularioEjercicioComponent} from "./formulario-ejercicio/formulario-ejercicio.component";
 
+
+import { EditarEjercicio } from "./editar-ejercicio/editar-ejercicio.component";
+import { FormsModule } from '@angular/forms';
 
 
 
 @Component({
   selector: 'app-ejercicios',
   standalone: true,
-  imports: [],
-  templateUrl: './ejercicios.component.html',
+  imports: [FormsModule],
+ templateUrl: './ejercicios.component.html',
   styleUrl: './ejercicios.component.css'
 })
 export class EjercicioComponent{
@@ -190,10 +191,16 @@ export class EjercicioComponent{
         modalRef.componentInstance.ejercicio = ejercicio
       }
 
-      editarEjercicio(index: number){
-        this.editarEjercicioIndex = index
-        this.nuevoEjercicio = {...this.ejercicios[index]}
+      editarEjercicio(ejercicio: any): void{
+       const modalRef = this.modalService.open(EditarEjercicio);
+        modalRef.componentInstance.ejercicio = ejercicio;
+        modalRef.componentInstance.accion = "Editar";
+        modalRef.result.then((r: any) => {
+          let indice = this.ejercicios.findIndex(x => x.nombre == r.nombre);
+          this.ejercicios[indice] = r;
+      }, (reason: any) => {});
       }
+      
 
       actualizarEjercicio(){
         this.ejercicios[this.editarEjercicioIndex] = {...this.nuevoEjercicio};
