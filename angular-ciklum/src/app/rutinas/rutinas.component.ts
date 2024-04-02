@@ -45,21 +45,13 @@ export class RutinasComponent implements OnInit {
     this.rutinas = this.rutinas;
   }
 
-  agregarRutina() {
-    this.rutinas.push({ ...this.nuevaRutina });
-    this.nuevaRutina = {
-      nombre: '',
-      descripcion: '',
-      observaciones: '',
-      ejercicios: []
-    };
-  }
 
   mostrarDetalles(rutina: any): void {
     const modalRef = this.modalService.open(DetallesRutina);
     modalRef.componentInstance.rutina = rutina;
   }
 
+  // Abre el modal para editar una rutina ya existente
   editarRutina(rutina: any): void {
     const modalRef = this.modalService.open(EditarRutina);
     modalRef.componentInstance.rutina = rutina;
@@ -71,23 +63,13 @@ export class RutinasComponent implements OnInit {
   }
 
 
-  actualizarRutina() {
-    this.rutinas[this.editarRutinaIndex] = { ...this.nuevaRutina };
-    this.editarRutinaIndex = -1;
-    this.nuevaRutina = {
-      nombre: '',
-      descripcion: '',
-      observaciones: '',
-      ejercicios: []
-    };
-  }
-
-
+  // Se llama a esta función al pulsar el botón 'borrar'
   eliminarRutina(nombre: string) {
     let indice = this.rutinas.findIndex(c => c.nombre == nombre);
     this.rutinas.splice(indice, 1);
   }
 
+  // Abre modal para crear nueva rutina
   crearRutina(){
     const modalRef = this.modalService.open(CrearRutina);
     modalRef.componentInstance.accion = "Crear";
