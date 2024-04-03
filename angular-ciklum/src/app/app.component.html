@@ -1,34 +1,32 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
 <main class="main">
-  <div>
-    <h1>Centro de entrenadores personales
-      <h2>Bienvenido,entrenador</h2>
-      <h3>Cicklum</h3>
-    </h1>
+  <!--Cabecera-->
+  <div class="header">
+      <h2 class="webName">Ciklum</h2>
   </div>
-    <div class="d-grid gap-2 col-6 mx-auto">
-      <button class="btn btn-outline-warning btn-lg" (click)=" toggleEjercicios()">Ejercicios</button>
-      <button class="btn btn-outline-warning btn-lg" (click)="toggleRutinas()">Rutinas</button>
-     
 
-      
-    </div>
+  <!--Cuerpo-->
+  <div class="mainComponents">
+    <button class="main-btn" (click)=" toggleEjercicios()">Ejercicios</button>
+    <button class="main-btn" (click)="toggleRutinas()">Rutinas</button>
  
+    <div *ngIf="mostrarRutinas">
+      <app-rutinas></app-rutinas>
+    </div>
 
-  <div *ngIf="mostrarRutinas">
-    <app-rutinas></app-rutinas>
+    <div *ngIf="mostrarEjercicios">
+      <app-ejercicios></app-ejercicios>
+    </div>
+
   </div>
 
-  <div *ngIf="mostrarEjercicios">
-    <app-ejercicios></app-ejercicios>
+  <!--Pie de pagina-->
+  <div class="fin">
+    <a href="https://github.com/SII-Informatica-UMA/ciklum-codequatro" target="_blank">
+      <img src="../assets/github-icon.png" class="icon">
+    </a>
   </div>
+  <div>
+    
+  </div>
+  
 </main>
