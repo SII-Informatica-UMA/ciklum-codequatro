@@ -171,7 +171,7 @@ export class EjercicioComponent{
       }
 
       agregarEjercicio(){
-        let ref = this.modalService.open(FormularioEjercicioComponent)
+        let ref = this.modalService.open(EditarEjercicio)
         this.ejercicios.push({...this.nuevoEjercicio})
         this.nuevoEjercicio = {
           nombre: '',
