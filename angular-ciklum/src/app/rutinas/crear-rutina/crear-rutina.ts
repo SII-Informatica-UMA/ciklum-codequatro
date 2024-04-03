@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Ejercicio } from '../../ejercicio';
-import { EjercicioComponent } from '../../ejercicios/ejercicios.component'; // OJO: TIENE QUE SER UN SERVICE
+import { EjerciciosService } from '../../ejercicios.service';
 
 @Component({
   selector: 'app-crear-rutina',
@@ -13,15 +13,16 @@ import { EjercicioComponent } from '../../ejercicios/ejercicios.component'; // O
   styleUrls: ['./crear-rutina.component.css']
 })
 
-export class CrearRutina implements OnInit {
+export class CrearRutina implements OnInit{
   nuevaRutina: any = {nombre: '', detalles: '', observaciones: ''};
   accion?: "Crear";
+  
   ejercicios!: Ejercicio[];
 
-  constructor( public activeModal: NgbActiveModal, private ejercicioService: EjercicioComponent) {}
+  constructor( public activeModal: NgbActiveModal, private ejerciciosService: EjerciciosService) {}
 
   ngOnInit(): void {
-    this.ejercicios = this.ejercicioService.ejercicios;
+    this.ejercicios = this.ejerciciosService.ejercicios;
   }
 
   editarRutina(){

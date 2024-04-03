@@ -1,4 +1,3 @@
-
 export interface Ejercicio{
     nombre : String
     descripcion : String
