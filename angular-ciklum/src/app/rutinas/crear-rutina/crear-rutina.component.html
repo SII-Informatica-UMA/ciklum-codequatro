@@ -13,21 +13,33 @@
       <label for="email">Observaciones:</label>
       <input class="form-control" id="observaciones" [(ngModel)]="nuevaRutina.observaciones">
      
-      @for (ejercicio of ejercicios; track ejercicio){
-                        
-        <div class="dropdown-content">
-            <div class="btn-group" role = "group">
-                <button>{{ejercicio.nombre}}</button>
-            </div>
-            
-        </div>
-            
-    }
+      <!--Tabla para mostrar los ejercicios-->
+      <table>
+        <thead>
+            <tr>
+                <th>Ejercicio</th>
+                <th>Series</th>
+                <th>Repeticiones</th>
+                <th>Duración</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (ejercicio of nuevaRutina.ejercicios; track ejercicio){
+                <tr>
+                    <td>{{ ejercicio.ejercicio.nombre }}</td>
+                    <td>{{ ejercicio.series }}</td>
+                    <td>{{ ejercicio.repeticiones }}</td>
+                    <td>{{ ejercicio.duracionMinutos }}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button (click)="aniadirEjercicio()">Añadir ejercicio</button>
 
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="editarRutina()">Guardar</button>
+      <button type="button" class="btn btn-secondary" (click)="crearRutina()">Guardar</button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cancelar</button>
     </div>
 

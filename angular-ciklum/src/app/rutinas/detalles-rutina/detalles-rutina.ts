@@ -14,8 +14,8 @@ export class DetallesRutina {
   @Input() rutina!: Rutina;
   constructor(public activeModal: NgbActiveModal, private modalService: NgbModal) {}
 
-  mostrarDetalles(ejercicio: Ejercicio): void{
-    const modalRef = this.modalService.open(DetallesEjercicio)
-    modalRef.componentInstance.ejercicio = ejercicio
+  mostrarDetallesEjercicio(ejercicio: Ejercicio): void{
+    const modalRef = this.modalService.open(DetallesEjercicio);
+    modalRef.componentInstance.ejercicio = ejercicio;
   }
 }

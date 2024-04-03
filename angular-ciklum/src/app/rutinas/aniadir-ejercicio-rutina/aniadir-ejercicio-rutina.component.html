@@ -1,0 +1,25 @@
+<div>
+
+    <div class="modal-header">
+      <h4 class="modal-title">Añadir ejercicio</h4>
+    </div>
+  
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="nombre">Series:</label>
+        <input type="text" id="series" [(ngModel)]="nuevoEjercicio.series">
+        <label for="apellidos">Repeticiones:</label>
+        <input class="form-control" id="repeticiones" [(ngModel)]="nuevoEjercicio.repeticiones">
+        <label for="email">Duración en minutos:</label>
+        <input class="form-control" id="duracion" [(ngModel)]="nuevoEjercicio.duracionMinutos">
+        <select [(ngModel)]="nuevoEjercicio.ejercicio" name="ejercicio">
+            <option *ngFor="let ejercicio of ejercicios" [ngValue]="ejercicio">{{ ejercicio.nombre }}</option>
+        </select>
+      </div>
+  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="aniadirEjercicio()">Guardar</button>
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cancelar</button>
+      </div>
+  
+    </div>

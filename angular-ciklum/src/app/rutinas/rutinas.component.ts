@@ -111,8 +111,11 @@ export class RutinasComponent implements OnInit {
     const modalRef = this.modalService.open(CrearRutina);
     modalRef.componentInstance.accion = "Crear";
     modalRef.result.then((r: Rutina) => {
+      console.log(r);
       this.rutinas.push(r);
-    }, (reason) => {});
+    }, (reason) => {
+      console.log('No se creó una nueva rutina');
+    });
     
   }
 }
