@@ -5,6 +5,33 @@
     <div class="modal-body">
       <p>{{ rutina.descripcion }}</p>
       <p>{{ rutina.observaciones }}</p>
+
+      <!--Tabla para mostrar los ejercicios-->
+      <table>
+        <thead>
+            <tr>
+                <th>Ejercicio</th>
+                <th>Series</th>
+                <th>Repeticiones</th>
+                <th>Duración</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (ejercicio of rutina.ejercicios; track ejercicio){
+                <tr>
+                    <td>
+                        <div class="btn-group" (click) = "mostrarDetalles(ejercicio.ejercicio)">
+                            <button>{{ ejercicio.ejercicio.nombre }}</button>
+                        </div>
+                    </td>
+                    <td>{{ ejercicio.series }}</td>
+                    <td>{{ ejercicio.repeticiones }}</td>
+                    <td>{{ ejercicio.duracionMinutos }}</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>                          

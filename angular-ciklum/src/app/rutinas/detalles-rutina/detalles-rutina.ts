@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Rutina } from '../../rutina';
+import { Ejercicio } from '../../ejercicio';
+import { DetallesEjercicio } from '../../ejercicios/detalles-ejercicio/detalles.ejercicio.component';
 
 @Component({
   selector: 'app-detalles-rutina',
@@ -8,6 +11,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class DetallesRutina {
-  @Input() rutina: any;
-  constructor(public activeModal: NgbActiveModal) {}
+  @Input() rutina!: Rutina;
+  constructor(public activeModal: NgbActiveModal, private modalService: NgbModal) {}
+
+  mostrarDetalles(ejercicio: Ejercicio): void{
+    const modalRef = this.modalService.open(DetallesEjercicio)
+    modalRef.componentInstance.ejercicio = ejercicio
+  }
 }
