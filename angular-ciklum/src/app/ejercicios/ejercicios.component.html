@@ -9,19 +9,21 @@
 
     <div class="dropdown">
         <h2 class = "titulo_lista">Lista de ejercicios</h2>
+        <button type="button" class="btn btn-ouline-dark bi bi-plus-lg" (click) = agregarEjercicio() ></button>
         @for (ejercicio of ejercicios; track ejercicio){
                         
             <div class="dropdown-content">
                 <div class="btn-group" role = "group">
                     <button (click) = "mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
+                    <div class="boton">
                     <button type="button" class="btn btn-primary" (click) = "editarEjercicio(ejercicio)">Editar<i class="bi bi-pencil-square"></i></button>
                     <button type= "button" class="btn btn-primary" (click) = "eliminarEjercicio(ejercicio.nombre)">Eliminar <i class="bi bi-trash-fill"></i></button>
+                </div>
                 </div>
                 
             </div>
                 
         }
-        <button type="button" class="btn btn-ouline-dark bi bi-plus-lg" (click) = agregarEjercicio(ejercicio) ></button>
     </div>
 
 </body>
