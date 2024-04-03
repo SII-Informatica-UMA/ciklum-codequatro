@@ -171,20 +171,27 @@ export class EjercicioComponent{
       }
 
       agregarEjercicio(){
-        let ref = this.modalService.open(EditarEjercicio)
-        this.ejercicios.push({...this.nuevoEjercicio})
-        this.nuevoEjercicio = {
-          nombre: '',
-          descripcion: '',
-          observaciones: '',
-          tipo: '',
-          musculos_trabajados: '',
-          material: '',
-          dificultad: '',
-          multimedia: [],
-          id: 0
-        }
+        let ref = this.modalService.open(EditarEjercicio);
+        ref.componentInstance.ejercicio = {...this.nuevoEjercicio}; // Pasar el nuevo ejercicio al modal
+        ref.result.then((nuevoEjercicio: Ejercicio) => {
+          if (nuevoEjercicio) {
+            this.ejercicios.push(nuevoEjercicio); // Agregar el nuevo ejercicio al arreglo
+          }
+          // Restablecer el nuevo ejercicio
+          this.nuevoEjercicio = {
+            nombre: '',
+            descripcion: '',
+            observaciones: '',
+            tipo: '',
+            musculos_trabajados: '',
+            material: '',
+            dificultad: '',
+            multimedia: [],
+            id: 0
+          };
+        }, () => {}); // Manejar el caso en que el usuario cancele la operación
       }
+      
 
       mostrarDetalles(ejercicio: Ejercicio): void{
         const modalRef = this.modalService.open(DetallesEjercicio)
