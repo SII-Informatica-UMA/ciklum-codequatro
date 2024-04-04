@@ -16,22 +16,7 @@ import { Ejercicio } from '../ejercicio';
   styleUrl: './rutinas.component.css'
 })
 export class RutinasComponent implements OnInit {
-  rutinas2: any[] = [
-    {
-      nombre: 'Rutina 1',
-      descripcion: 'Descripción de la rutina 1',
-      observaciones: 'Observaciones de la rutina 1',
-      ejercicios: ['Ejercicio 1', 'Ejercicio 2', 'Ejercicio 3']
-    },
-    {
-      nombre: 'Rutina 2',
-      descripcion: 'Descripción de la rutina 2',
-      observaciones: 'Observaciones de la rutina 2',
-      ejercicios: ['Ejercicio 4', 'Ejercicio 5', 'Ejercicio 6']
-    }
-  ]; 
-
-
+  
   rutinas: Rutina[] = [
     {
         nombre: 'Rutina de calentamiento',
@@ -58,15 +43,15 @@ export class RutinasComponent implements OnInit {
                 repeticiones: 12,
                 duracionMinutos: 6,
                 ejercicio: {
-                  nombre: 'Press militar',
-                  descripcion: 'Ejercicio de press militar',
-                  observaciones: 'Mantener la espalda recta',
-                  tipo: 'Brazos',
-                  musculos_trabajados: 'Hombros, tríceps',
-                  material: 'Barra, discos',
+                  nombre: 'Sentadilla Bulgara',
+                  descripcion: 'Ejercicio de sentadilla búlgara',
+                  observaciones: 'Mantener el equilibrio',
+                  tipo: 'Tren inferior',
+                  musculos_trabajados: 'Cuádriceps, glúteos',
+                  material: 'Barra, pesas',
                   dificultad: 'Intermedia',
-                  multimedia: ['imagen_press_militar.jpg', 'video_press_militar.mp4'],
-                  id: 11
+                  multimedia: ['imagen_sentadilla_bulgara.jpg', 'video_sentadilla_bulgara.mp4'],
+                  id: 1
                  }
             },
             // Más ejercicios aquí
@@ -97,7 +82,7 @@ export class RutinasComponent implements OnInit {
     modalRef.result.then((r: any) => {
       let indice = this.rutinas.findIndex(c => c.nombre == r.nombre);
       this.rutinas[indice] = r;
-    }, (reason) => {});
+    })
   }
 
   // Se llama a esta función al pulsar el botón 'borrar'
