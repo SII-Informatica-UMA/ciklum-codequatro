@@ -6,16 +6,21 @@
 
   <!--Cuerpo-->
   <div class="mainComponents">
-    <button class="main-btn" (click)=" toggleEjercicios()">Ejercicios</button>
-    <button class="main-btn" (click)="toggleRutinas()">Rutinas</button>
- 
-    <div *ngIf="mostrarRutinas">
-      <app-rutinas></app-rutinas>
-    </div>
+    <div class="ejercicios">
+      <button class="main-btn" (click)=" toggleEjercicios()">Ejercicios</button>
 
-    <div *ngIf="mostrarEjercicios">
-      <app-ejercicios></app-ejercicios>
-    </div>
+      <div *ngIf="mostrarEjercicios">
+        <app-ejercicios></app-ejercicios>
+      </div>
+  </div>
+
+    <div class="rutinas">
+      <button class="main-btn" (click)="toggleRutinas()">Rutinas</button>
+  
+      <div *ngIf="mostrarRutinas">
+        <app-rutinas></app-rutinas>
+      </div>
+  </div>
 
   </div>
 

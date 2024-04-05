@@ -21,10 +21,16 @@
     border: 2px solid whitesmoke;
     margin: auto;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
   }
+
+.ejercicios{
+  width: 50%;
+}
+
+.rutinas{
+  width: 50%;
+}
 
 .main-btn {
     padding: 10px 20px;
@@ -47,6 +53,6 @@
   
   .icon {
     margin: 20px;
-    width: 30px; /* Ajusta el ancho del icono según sea necesario */
-    height: auto; /* Mantiene la proporción de aspecto */
+    width: 30px;
+    height: auto;
   }
