@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule // Asegúrate de importar FormsModule aquí
+    FormsModule
   ],
   styleUrls: ['./aniadir-ejercicio-rutina.component.css']
 })

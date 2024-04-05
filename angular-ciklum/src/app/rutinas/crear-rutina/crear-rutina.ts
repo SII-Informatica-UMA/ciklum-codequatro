@@ -55,13 +55,21 @@ export class CrearRutina implements OnInit{
     modalRef.componentInstance.accion = "Aniadir";
     modalRef.result.then((ej: {series: number; repeticiones: number; duracionMinutos: number; ejercicio: Ejercicio;}) => {
       console.log(ej);
-      this.nuevaRutina.ejercicios.push(ej);
+      // Si es el primer ejercicio
+      if(this.nuevaRutina.ejercicios[0].ejercicio.nombre == ''){
+        this.nuevaRutina.ejercicios[0] = ej;
+      }
+      // Si ya tenemos mas
+      else{
+        this.nuevaRutina.ejercicios.push(ej);
+      }
     }, (reason) => {
       console.log('No se añadió ningún ejercicio');
     });
     
   }
 
+  // Función para cerrar el modal y confirmar cambios
   crearRutina(){
     this.activeModal.close(this.nuevaRutina);
   }
