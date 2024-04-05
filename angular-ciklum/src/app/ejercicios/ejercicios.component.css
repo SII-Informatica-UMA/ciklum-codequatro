@@ -39,11 +39,10 @@
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
         text-align: center;
- 
-    }
         
-
-
+        overflow-y: auto; /* Establece desbordamiento vertical */
+        max-height: 200px; /* Establece la altura máxima de la lista de ejercicios */
+    }
         
     /* Buttons inside the dropdown */
     .dropdown-content button {
@@ -58,7 +57,7 @@
         text-align: left; /* Centro horizontal */
         margin: auto; /* Centro vertical */
     }
-         .boton {
+    .boton {
         color: black;
         padding: 12px 16px;
         padding-bottom: 10px;
@@ -94,11 +93,32 @@
         margin: 5px;
         
         background-color: #242324; /* Color de fondo - rosa pálido */
-        color: yellow; /* Color del texto*/
-       
+        color: rgb(255, 255, 255); /* Color del texto*/
+
     }
+    .titulo_lista:hover {
+        background-color: #ccc; 
+        color: #242324;
+    }
+
     button {
         text-align: center;
         padding-right: 10px;
+        margin: 10px;
     }
 
+    .boton-group {
+        display: flex; /* Utilizar flexbox para los elementos internos */
+        justify-content: space-between; /* Espaciado uniforme entre los botones */
+        margin: 10px;
+    }
+
+    .boton-group button {
+        width: auto; 
+        max-width: 100px; 
+        margin: 10px;
+        flex-grow: 1;
+    }
+
+
+    
