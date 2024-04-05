@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EjerciciosService } from '../../ejercicios.service';
 import { Ejercicio } from '../../ejercicio';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-aniadir-ejercicio-rutina',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
   templateUrl: './aniadir-ejercicio-rutina.component.html',
-  styleUrl: './aniadir-ejercicio-rutina.component.css'
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule // Asegúrate de importar FormsModule aquí
+  ],
+  styleUrls: ['./aniadir-ejercicio-rutina.component.css']
 })
-export class AniadirEjercicioRutina {
+export class AniadirEjercicioRutina implements OnInit {
 
-  ejercicios!: Ejercicio[];
-
+  ejercicios: Ejercicio[] = [];
+  
   nuevoEjercicio: {
     series: number,
     repeticiones: number,
@@ -37,12 +40,14 @@ export class AniadirEjercicioRutina {
       id: 0
     }
   };
- 
-  constructor(private modalService: NgbModal, public activeModal: NgbActiveModal, private ejerciciosService: EjerciciosService) {}
+
+  constructor(public activeModal: NgbActiveModal, private ejerciciosService: EjerciciosService) {}
+
   ngOnInit(): void {
     this.ejercicios = this.ejerciciosService.ejercicios;
   }
-  aniadirEjercicio(){
+
+  aniadirEjercicio(): void {
     this.activeModal.close(this.nuevoEjercicio);
   }
 }

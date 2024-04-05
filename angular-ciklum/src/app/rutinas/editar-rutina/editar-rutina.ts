@@ -6,6 +6,7 @@ import { Ejercicio } from '../../ejercicio';
 import { DetallesEjercicio } from '../../ejercicios/detalles-ejercicio/detalles.ejercicio.component';
 import { AniadirEjercicioRutina } from '../aniadir-ejercicio-rutina/aniadir-ejercicio-rutina.component';
 import { EjerciciosService } from '../../ejercicios.service';
+import { Rutina } from '../../rutina';
 
 
 @Component({
@@ -17,14 +18,15 @@ import { EjerciciosService } from '../../ejercicios.service';
 })
 
 export class EditarRutina {
-  @Input() rutina: any;
-  nuevaRutina: any = {nombre: '', detalles: '', observaciones: ''};
-  accion?: "Crear";
+  @Input() rutina!: Rutina;
+  nuevaRutina!: Rutina;
+  accion?: "Editar";
 
 
   constructor( public activeModal: NgbActiveModal, private modalService: NgbModal, private ejerciciosService: EjerciciosService) {}
 
   editarRutina(){
+    this.nuevaRutina = this.rutina;
     this.activeModal.close(this.nuevaRutina);
   }
 
@@ -38,13 +40,16 @@ export class EditarRutina {
     modalRef.componentInstance.accion = "Aniadir";
     modalRef.result.then((ej: {series: number; repeticiones: number; duracionMinutos: number; ejercicio: Ejercicio;}) => {
       console.log(ej);
-      this.nuevaRutina.ejercicios.push(ej);
+      this.rutina.ejercicios.push(ej);
     }, (reason) => {
       console.log('No se añadió ningún ejercicio');
     });
   }
 
-  eliminarEjercicio(ejercicio: Ejercicio){
-
+  eliminarEjercicio(ejercicio: {series: number; repeticiones: number; duracionMinutos: number; ejercicio: Ejercicio;}){
+    let indice = this.rutina.ejercicios.findIndex(c => c == ejercicio);
+    this.rutina.ejercicios.splice(indice, 1);
   }
 }
+
+// OJO: SI SE PULSA CLOSE ES LO MISMO QUE SI SE LE DA A GUARDAR
