@@ -2,8 +2,8 @@
     <ul>
         @for (rutina of rutinas; track rutina) {
         <li>
-            <p>{{rutina.nombre}}</p>
-            <button (click)="mostrarDetalles(rutina)">Detalles</button>
+            <p></p>
+            <button (click)="mostrarDetalles(rutina)">{{rutina.nombre}}</button>
             <button type="button" class="btn btn-primary" (click)="editarRutina(rutina)"><i
                     class="bi bi-pencil-square"></i></button>
             <button class="btn btn-outline-primary bi trash-button" (click)="eliminarRutina(rutina)"><i
@@ -14,7 +14,7 @@
 
     <!-- Formulario para agregar una nueva rutina -->
     <div>
-        <button (click)="crearRutina()">Agregar</button>
+        <button (click)="crearRutina()">Nueva rutina</button>
     </div>
 
 </div>
