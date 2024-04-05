@@ -1,7 +1,7 @@
 <main class="main">
   <!--Cabecera-->
   <div class="header">
-      <h2 class="webName">Ciklum</h2>
+    <h2 class="webName">Lifefit</h2>
   </div>
 
   <!--Cuerpo-->
@@ -12,15 +12,15 @@
       <div *ngIf="mostrarEjercicios">
         <app-ejercicios></app-ejercicios>
       </div>
-  </div>
+    </div>
 
     <div class="rutinas">
       <button class="main-btn" (click)="toggleRutinas()">Rutinas</button>
-  
+
       <div *ngIf="mostrarRutinas">
         <app-rutinas></app-rutinas>
       </div>
-  </div>
+    </div>
 
   </div>
 
@@ -31,7 +31,7 @@
     </a>
   </div>
   <div>
-    
+
   </div>
-  
+
 </main>

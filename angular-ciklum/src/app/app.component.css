@@ -1,6 +1,10 @@
 .main {
     width: 100%;
     height: 90vh;
+    display:block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .header {
@@ -13,6 +17,7 @@
 .webName{
     padding-top: 25px;
     padding-left: 25px;
+    font-size: 50px;
 }
 
 .mainComponents {
@@ -33,26 +38,30 @@
 }
 
 .main-btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-    border-width: 3px;
-    margin: 5px;
-    border-color: whitesmoke;
-    background-color: transparent;
-    color: whitesmoke;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border-width: 3px;
+  margin: 5px;
+  border-color: whitesmoke;
+  background-color: whitesmoke; /* Cambiamos el color de fondo a blanco */
+  color: black; /* Cambiamos el color del texto a negro */
+  transition: background-color 0.3s, color 0.3s; /* Agregamos una transición suave */
+
 }
 
 .main-btn:hover{
-    border-color: #B22222;
-    color: #B22222;
+  background-color: #808080; /* Cambiamos el color de fondo a gris al pasar el cursor sobre el botón */
+  color: whitesmoke; /* Cambiamos el color del texto a blanco */
+  border-color: #808080; /* Cambiamos el color del borde a gris al pasar el cursor sobre el botón */
+
 }
 
 .fin {
     text-align: right;
   }
   
-  .icon {
-    margin: 20px;
-    width: 30px;
-    height: auto;
-  }
+.icon {
+  margin: 20px;
+  width: 30px;
+  height: auto;
+}
