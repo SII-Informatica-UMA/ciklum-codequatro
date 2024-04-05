@@ -9,7 +9,7 @@
     <div class="ejercicios">
       <button class="main-btn" (click)=" toggleEjercicios()">Ejercicios</button>
 
-      <div *ngIf="mostrarEjercicios">
+      <div class="info" *ngIf="mostrarEjercicios">
         <app-ejercicios></app-ejercicios>
       </div>
     </div>
@@ -17,7 +17,7 @@
     <div class="rutinas">
       <button class="main-btn" (click)="toggleRutinas()">Rutinas</button>
 
-      <div *ngIf="mostrarRutinas">
+      <div class="info" *ngIf="mostrarRutinas">
         <app-rutinas></app-rutinas>
       </div>
     </div>

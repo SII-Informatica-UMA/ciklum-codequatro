@@ -37,6 +37,11 @@
   width: 50%;
 }
 
+.info{
+  text-align: center;
+  
+}
+
 .main-btn {
   padding: 10px 20px;
   border-radius: 10px;
