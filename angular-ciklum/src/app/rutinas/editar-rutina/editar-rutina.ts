@@ -26,9 +26,10 @@ export class EditarRutina {
   constructor( public activeModal: NgbActiveModal, private modalService: NgbModal, private ejerciciosService: EjerciciosService) {}
 
   editarRutina(){
+    console.log("Se han guardado los cambios")
     this.nuevaRutina = this.rutina;
     this.activeModal.close(this.nuevaRutina);
-  }
+  } 
 
   mostrarDetallesEjercicio(ejercicio: Ejercicio): void{
     const modalRef = this.modalService.open(DetallesEjercicio);
@@ -51,5 +52,3 @@ export class EditarRutina {
     this.rutina.ejercicios.splice(indice, 1);
   }
 }
-
-// OJO: SI SE PULSA CLOSE ES LO MISMO QUE SI SE LE DA A GUARDAR
