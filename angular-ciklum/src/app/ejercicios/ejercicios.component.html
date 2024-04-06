@@ -1,35 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
+<div class="lista">
+    <button type="button" class="btn btn-ouline-dark bi bi-plus-lg" (click)=agregarEjercicio()></button>
+    @for (ejercicio of ejercicios; track ejercicio){
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botones Desplegables</title>
-</head>
-
-<body>
-
-    <div class="dropdown">
-        <h2 class="titulo_lista">Lista de ejercicios</h2>
-        <button type="button" class="btn btn-ouline-dark bi bi-plus-lg" (click)=agregarEjercicio()></button>
-        @for (ejercicio of ejercicios; track ejercicio){
-
-        <div class="dropdown-content">
-            <div class="btn-group" role="group">
-                <button (click)="mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
-                <!-- Envolver los botones "Editar" y "Eliminar" en un div -->
-                <div class="boton-group">
-                    <button class="btn btn-primary" (click)="editarEjercicio(ejercicio)"><i
-                            class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-primary" (click)="eliminarEjercicio(ejercicio.nombre)">
-                        <i class="bi bi-trash-fill"></i></button>
-                </div>
-            </div>
-        </div>
-
-        }
+    <div>
+        <hr>
+        <button (click)="mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
+        <!-- Envolver los botones "Editar" y "Eliminar" en un div -->
+        <button class="btn btn-primary" (click)="editarEjercicio(ejercicio)"><i
+                class="bi bi-pencil-square"></i></button>
+        <button class="btn btn-primary" (click)="eliminarEjercicio(ejercicio.nombre)"><i
+                class="bi bi-trash-fill"></i></button>
     </div>
-
-</body>
-
-</html>
+    }
+</div>

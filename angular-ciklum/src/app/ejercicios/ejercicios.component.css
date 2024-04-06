@@ -24,39 +24,7 @@
         background-color: #242324;
 
     }
-    .dropdown {
-        display: block; /*Para arreglar la hitbox de los botones es aqui*/
-        width: 500px;
-        margin: auto;
-        
-    }
-        
-    /*Cajita donde aparecen los ejercicios despues de pinchar en tren inferior,superior...*/
-    .dropdown-content {
-        display: none; /* Display-box para hacer una lista*/
-        position: relative;
-        background-color: #ffffff;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        text-align: center;
-        
-        overflow-y: auto; /* Establece desbordamiento vertical */
-        max-height: 200px; /* Establece la altura máxima de la lista de ejercicios */
-    }
-        
-    /* Buttons inside the dropdown */
-    .dropdown-content button {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        border: none;
-        border-radius: 10px;
-        background-color: rgb(181, 180, 180);
-        width: 200px;
-        text-align: left; /* Centro horizontal */
-        margin: auto; /* Centro vertical */
-    }
+   
     .boton {
         color: black;
         padding: 12px 16px;
@@ -102,7 +70,7 @@
     }
 
     button {
-        text-align: center;
+        
         padding-right: 10px;
         margin: 10px;
     }
@@ -121,4 +89,11 @@
     }
 
 
-    
+    .lista{
+        max-height: 60vh; /* Altura máxima de la lista */
+        overflow-y: auto; /* Habilitar scroll vertical */
+        border: 1px solid #ccc; /* Borde para visualización */
+        margin-left:20px;
+        background-color: whitesmoke;
+        
+    }
