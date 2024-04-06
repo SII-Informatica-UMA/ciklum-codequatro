@@ -74,4 +74,10 @@ export class CrearRutina implements OnInit{
     this.activeModal.close(this.nuevaRutina);
   }
 
+  camposCompletos(): boolean {
+    return this.nuevaRutina.nombre && this.nuevaRutina.descripcion && this.nuevaRutina.observaciones && this.nuevaRutina.ejercicios[0].ejercicio.nombre !== '';
+  }
+
+
+
 }

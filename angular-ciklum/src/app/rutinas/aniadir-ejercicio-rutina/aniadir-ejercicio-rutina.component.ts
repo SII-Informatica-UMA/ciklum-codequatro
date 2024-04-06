@@ -50,4 +50,12 @@ export class AniadirEjercicioRutina implements OnInit {
   aniadirEjercicio(): void {
     this.activeModal.close(this.nuevoEjercicio);
   }
+
+  camposCompletos(): boolean {
+    if (this.nuevoEjercicio.series && this.nuevoEjercicio.repeticiones && this.nuevoEjercicio.duracionMinutos !== 0 && this.nuevoEjercicio.ejercicio.nombre!== ''){
+      return true;
+    }else {
+      return false;
+    }
+  }
 }

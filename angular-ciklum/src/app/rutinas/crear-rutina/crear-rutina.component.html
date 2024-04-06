@@ -6,18 +6,18 @@
 
   <div class="modal-body">
     <div class="form-group">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" [(ngModel)]="nuevaRutina.nombre">
+      <label for="name">Nombre:</label><br>
+      <input class="form-control" id="nombre" [(ngModel)]="nuevaRutina.nombre" #name="ngModel" required>
     </div>
 
     <div class="form-group">
-      <label for="apellidos">Descripción:</label>
-      <input class="form-control" id="descripcion" [(ngModel)]="nuevaRutina.descripcion">
+      <label for="descripcion">Descripción:</label>
+      <input class="form-control" id="descripcion" [(ngModel)]="nuevaRutina.descripcion" #des="ngModel" required>
     </div>
 
     <div class="form-group">
-      <label for="email">Observaciones:</label>
-      <input class="form-control" id="observaciones" [(ngModel)]="nuevaRutina.observaciones">
+      <label for="observaciones">Observaciones:</label>
+      <input class="form-control" id="observaciones" [(ngModel)]="nuevaRutina.observaciones" #obs="ngModel" required>
     </div>
     <!--Tabla para mostrar los ejercicios-->
     <table *ngIf="nuevaRutina.ejercicios[0].ejercicio.nombre != ''">
@@ -43,7 +43,12 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="crearRutina()">Guardar</button>
+    <div class="alerta"
+      *ngIf="name.errors?.['required'] || des.errors?.['required'] || obs.errors?.['required'] || nuevaRutina.ejercicios[0].ejercicio.nombre == ''">
+      Hay campos vacíos.
+    </div>
+    <button type="button" class="btn btn-secondary" (click)="crearRutina()"
+      [disabled]="!camposCompletos()">Guardar</button>
     <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('cancelado')">Cancelar</button>
   </div>
 
