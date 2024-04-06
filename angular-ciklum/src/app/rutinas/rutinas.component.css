@@ -33,3 +33,12 @@ body {
     padding: 20px;
   }
   
+
+  .lista{
+    max-height: 60vh;
+    overflow-y: auto;
+    border: 1px solid #ccc; 
+    margin-left:20px;
+    background-color: whitesmoke;
+    
+}

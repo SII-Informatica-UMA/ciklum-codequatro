@@ -2,20 +2,18 @@
   <div class="modal-header">
     <h4 class="modal-title">{{ejercicio.nombre}}</h4>
   </div>
-    <div class="modal-body">
-      <p>Nombre: {{ ejercicio.nombre }}</p>
-      <p>Descripcion: {{ ejercicio.descripcion }}</p>
-      <p>Observaciones: {{ ejercicio.observaciones }}</p>
-      <p>Tipo: {{ ejercicio.tipo }}</p>
-      <p>musculos trabajados: {{ ejercicio.musculos_trabajados }}</p>
-      <p>Material: {{ ejercicio.material }}</p>
-      <p>Dificultad: {{ ejercicio.dificultad }}</p>
-      <p>Multimedia(imagen):  {{ ejercicio.multimedia[0] }}</p>
-      <p>Multimedia(video): {{ ejercicio.multimedia[1]}}</p>
-      <p>Id: {{ ejercicio.id }}</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
-    </div>  
+  <div class="modal-body">
+    <p>Nombre: {{ ejercicio.nombre }}</p>
+    <p>Descripcion: {{ ejercicio.descripcion }}</p>
+    <p>Observaciones: {{ ejercicio.observaciones }}</p>
+    <p>Tipo: {{ ejercicio.tipo }}</p>
+    <p>musculos trabajados: {{ ejercicio.musculos_trabajados }}</p>
+    <p>Material: {{ ejercicio.material }}</p>
+    <p>Dificultad: {{ ejercicio.dificultad }}</p>
+    <p>Multimedia(imagen): {{ ejercicio.multimedia[0] }}</p>
+    <p>Multimedia(video): {{ ejercicio.multimedia[1]}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
+  </div>
 </div>
-

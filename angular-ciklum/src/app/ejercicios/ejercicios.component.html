@@ -1,5 +1,5 @@
 <div class="lista">
-    <button type="button" class="btn btn-ouline-dark bi bi-plus-lg" (click)=agregarEjercicio()></button>
+    <button type="button" class="btn btn-outline-success" (click)=agregarEjercicio()>Nuevo ejercicio</button>
     @for (ejercicio of ejercicios; track ejercicio){
 
     <div>
@@ -8,7 +8,7 @@
         <!-- Envolver los botones "Editar" y "Eliminar" en un div -->
         <button class="btn btn-primary" (click)="editarEjercicio(ejercicio)"><i
                 class="bi bi-pencil-square"></i></button>
-        <button class="btn btn-primary" (click)="eliminarEjercicio(ejercicio.nombre)"><i
+        <button class="btn btn-danger" (click)="eliminarEjercicio(ejercicio.nombre)"><i
                 class="bi bi-trash-fill"></i></button>
     </div>
     }

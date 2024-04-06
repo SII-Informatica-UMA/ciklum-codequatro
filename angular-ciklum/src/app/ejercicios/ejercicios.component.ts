@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './ejercicios.component.css'
 })
 export class EjercicioComponent{
+    id = 11;
     ejercicios: Ejercicio[] = [
         { 
           nombre: 'Prensa',
@@ -160,7 +161,7 @@ export class EjercicioComponent{
         material: '',
         dificultad: '',
         multimedia: [],
-        id: 0
+        id : this.id
       };
 
       ejercicioSeleccionado: any = null;
@@ -187,7 +188,7 @@ export class EjercicioComponent{
             material: '',
             dificultad: '',
             multimedia: [],
-            id: 0
+            id: this.id++
           };
         }, () => {}); // Manejar el caso en que el usuario cancele la operación
       }

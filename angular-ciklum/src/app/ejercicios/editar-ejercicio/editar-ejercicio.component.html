@@ -25,7 +25,8 @@
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="editarEjercicio()">Guardar</button>
+      <button type="button" class="btn btn-secondary" (click)="editarEjercicio()"
+        [disabled]="!camposCompletos()">Guardar</button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
     </div>
 
