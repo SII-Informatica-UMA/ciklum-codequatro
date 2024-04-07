@@ -19,6 +19,13 @@ button {
     border-radius: 5px;
   }
 
+
+  .nombreEjercicio:hover{
+    background-color: rgb(175, 174, 174); /* Cambiamos el color de fondo a gris al pasar el cursor sobre el botón */
+    color: black; /* Cambiamos el color del texto a blanco */
+  
+  }
+
 table{
     width: 100%;
 }

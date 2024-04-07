@@ -2,38 +2,38 @@
   <div class="modal-header">
     <h4 class="modal-title">{{rutina.nombre}}</h4>
   </div>
-    <div class="modal-body">
-      <p>{{ rutina.descripcion }}</p>
-      <p>{{ rutina.observaciones }}</p>
+  <div class="modal-body">
+    <p><strong>Descripción: </strong> {{ rutina.descripcion }}</p>
+    <p><strong>Observaciones: </strong>{{ rutina.observaciones }}</p>
 
-      <!--Tabla para mostrar los ejercicios-->
-      <table>
-        <thead>
-            <tr>
-                <th>Ejercicio</th>
-                <th>Series</th>
-                <th>Repeticiones</th>
-                <th>Duración</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (ejercicio of rutina.ejercicios; track ejercicio){
-                <tr>
-                    <td>
-                        <div class="btn-group" (click) = "mostrarDetallesEjercicio(ejercicio.ejercicio)">
-                            <button>{{ ejercicio.ejercicio.nombre }}</button>
-                        </div>
-                    </td>
-                    <td>{{ ejercicio.series }}</td>
-                    <td>{{ ejercicio.repeticiones }}</td>
-                    <td>{{ ejercicio.duracionMinutos }}</td>
+    <!--Tabla para mostrar los ejercicios-->
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Series</th>
+          <th>Repeticiones</th>
+          <th>Duración</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ejercicio of rutina.ejercicios; track ejercicio){
+        <tr>
+          <td>
+            <div class="btn-group" (click)="mostrarDetallesEjercicio(ejercicio.ejercicio)">
+              <button class="nombres">{{ ejercicio.ejercicio.nombre }}</button>
+            </div>
+          </td>
+          <td>{{ ejercicio.series }}</td>
+          <td>{{ ejercicio.repeticiones }}</td>
+          <td>{{ ejercicio.duracionMinutos }}</td>
 
-                </tr>
-            }
-        </tbody>
+        </tr>
+        }
+      </tbody>
     </table>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>                          
-    </div>  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
+  </div>
 </div>

@@ -28,14 +28,15 @@
           <tr *ngFor="let ejercicio of rutina.ejercicios; let i = index">
             <td>
               <div class="btn-group" (click)="mostrarDetallesEjercicio(ejercicio.ejercicio)">
-                <button>{{ ejercicio.ejercicio.nombre }}</button>
+                <button class="nombres">{{ ejercicio.ejercicio.nombre }}</button>
               </div>
             </td>
             <td>{{ ejercicio.series }}</td>
             <td>{{ ejercicio.repeticiones }}</td>
             <td>{{ ejercicio.duracionMinutos }}</td>
             <td>
-              <button class="btn btn-outline-primary bi trash-button" (click)="eliminarEjercicio(ejercicio)"><i class="bi-trash"></i></button>
+              <button class="btn btn-danger bi trash-button" (click)="eliminarEjercicio(ejercicio)"><i
+                  class="bi-trash"></i></button>
             </td>
           </tr>
         </tbody>
@@ -43,10 +44,8 @@
       </table>
     </div>
 
-    <div>
-      <button type="button" class="btn btn-secondary" (click)="aniadirEjercicio()">Añadir ejercicio</button>
-    </div>
     <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="aniadirEjercicio()">Añadir ejercicio</button>
       <button type="button" class="btn btn-secondary" (click)="editarRutina()">Guardar</button>
     </div>
 

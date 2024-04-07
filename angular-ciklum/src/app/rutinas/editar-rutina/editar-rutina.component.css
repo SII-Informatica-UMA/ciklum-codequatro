@@ -1,0 +1,29 @@
+tr {
+    text-align: center;
+    
+}
+
+th {
+    padding: 10px;
+}
+
+.nombres {
+    margin-left: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+
+.nombres:hover{
+    background-color: rgb(175, 174, 174); /* Cambiamos el color de fondo a gris al pasar el cursor sobre el botón */
+    color: black; /* Cambiamos el color del texto a blanco */
+  
+  }
+
+.aniadir {
+    margin-top: 10px;
+    margin-left: 5px;
+}
