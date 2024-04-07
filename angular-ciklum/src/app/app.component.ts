@@ -26,4 +26,6 @@ export class AppComponent {
     this.mostrarRutinas = false;
     this.mostrarEjercicios = !this.mostrarEjercicios;
   }
+
+  
 }

@@ -1,15 +1,23 @@
-<div class="lista">
-    <button type="button" class="btn btn-outline-success" (click)=agregarEjercicio()>Nuevo ejercicio</button>
-    @for (ejercicio of ejercicios; track ejercicio){
-
-    <div>
-        <hr>
-        <button (click)="mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button>
-        <!-- Envolver los botones "Editar" y "Eliminar" en un div -->
-        <button class="btn btn-primary" (click)="editarEjercicio(ejercicio)"><i
-                class="bi bi-pencil-square"></i></button>
-        <button class="btn btn-danger" (click)="eliminarEjercicio(ejercicio.nombre)"><i
-                class="bi bi-trash-fill"></i></button>
+<div>
+    <div class="lista">
+        <table>
+            <thead>
+            <th></th>
+            <th></th>
+            <th></th>
+            </thead>
+            <tbody>
+                @for (ejercicio of ejercicios; track ejercicio) {
+                <tr>
+                    <td><button class="nombreEjercicio" (click)="mostrarDetalles(ejercicio)">{{ejercicio.nombre}}</button></td>
+                    <td><button class="btn btn-primary" (click)="editarEjercicio(ejercicio)"><i class="bi bi-pencil-square"></i></button></td>
+                    <td><button class="btn btn-danger" (click)="eliminarEjercicio(ejercicio.nombre)"><i class="bi bi-trash"></i></button></td>
+                    <hr>
+                </tr>
+            }
+            </tbody>
+            </table>
     </div>
-    }
+    <button type="button" class="btn btn-success" (click)=agregarEjercicio()>Nuevo ejercicio</button>
 </div>
+

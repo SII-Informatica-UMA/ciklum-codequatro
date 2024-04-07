@@ -1,14 +1,13 @@
 <main class="main">
   <!--Cabecera-->
   <div class="header">
-    <h2 class="webName">Lifefit</h2>
+    <h2 class="webName">LifeFit</h2>
   </div>
 
   <!--Cuerpo-->
   <div class="mainComponents">
     <div class="ejercicios">
       <button class="main-btn" (click)=" toggleEjercicios()">Ejercicios</button>
-
       <div class="info" *ngIf="mostrarEjercicios">
         <app-ejercicios></app-ejercicios>
       </div>
