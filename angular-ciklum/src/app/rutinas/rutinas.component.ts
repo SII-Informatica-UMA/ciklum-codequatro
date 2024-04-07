@@ -57,7 +57,85 @@ export class RutinasComponent implements OnInit {
             // Más ejercicios aquí
         ],
         id: 1
-    }
+    },
+    {
+      nombre: 'Rutina de fuerza',
+      descripcion: 'Rutina diseñada para desarrollar fuerza muscular en todo el cuerpo.',
+      observaciones: 'Realizar con buena técnica y descansar lo necesario entre series.',
+      ejercicios: [
+          {
+              series: 3,
+              repeticiones: 8,
+              duracionMinutos: 10,
+              ejercicio: {
+                  nombre: 'Prensa',
+                  descripcion: 'Ejercicio de prensa',
+                  observaciones: 'Mantener el abdomen contraído',
+                  tipo: 'Tren inferior',
+                  musculos_trabajados: 'Piernas, glúteos',
+                  material: 'Máquina de prensa',
+                  dificultad: 'Intermedia',
+                  multimedia: ['imagen_prensa.jpg', 'video_prensa.mp4'],
+                  id: 1
+              }
+          },
+          // Más ejercicios aquí
+      ],
+      id: 1
+  },
+  
+  {
+      nombre: 'Rutina de piernas',
+      descripcion: 'Rutina enfocada en el desarrollo de piernas y glúteos.',
+      observaciones: 'Realizar cada ejercicio con amplitud de movimiento controlada.',
+      ejercicios: [
+          {
+              series: 4,
+              repeticiones: 12,
+              duracionMinutos: 15,
+              ejercicio: {
+                  nombre: 'Sentadilla búlgara',
+                  descripcion: 'Ejercicio de sentadilla búlgara',
+                  observaciones: 'Mantener el equilibrio',
+                  tipo: 'Tren inferior',
+                  musculos_trabajados: 'Cuádriceps, glúteos',
+                  material: 'Barra, pesas',
+                  dificultad: 'Intermedia',
+                  multimedia: ['imagen_sentadilla_bulgara.jpg', 'video_sentadilla_bulgara.mp4'],
+                  id: 2
+              }
+          },
+          // Más ejercicios aquí
+      ],
+      id: 3
+  },
+  
+  {
+      nombre: 'Rutina de espalda y pecho',
+      descripcion: 'Rutina diseñada para fortalecer la espalda y el pecho.',
+      observaciones: 'Mantener la espalda recta en todos los ejercicios de espalda.',
+      ejercicios: [
+          {
+              series: 3,
+              repeticiones: 10,
+              duracionMinutos: 12,
+              ejercicio: {
+                  nombre: 'Bench press',
+                  descripcion: 'Ejercicio de bench press',
+                  observaciones: 'Mantener los codos estables',
+                  tipo: 'Pecho',
+                  musculos_trabajados: 'Pectorales, tríceps',
+                  material: 'Barra, discos',
+                  dificultad: 'Intermedia',
+                  multimedia: ['imagen_bench_press.jpg', 'video_bench_press.mp4'],
+                  id: 3
+              }
+          },
+          // Más ejercicios aquí
+      ],
+      id: 4
+  },
+  
 ];
 
   ejercicios!: Ejercicio[];
