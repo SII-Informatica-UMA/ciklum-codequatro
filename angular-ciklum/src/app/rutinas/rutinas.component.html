@@ -1,20 +1,20 @@
-<div class="lista">
-    <ul>
-        @for (rutina of rutinas; track rutina) {
-        <li>
-            <p></p>
-            <button (click)="mostrarDetalles(rutina)">{{rutina.nombre}}</button>
-            <button type="button" class="btn btn-primary" (click)="editarRutina(rutina)"><i
-                    class="bi bi-pencil-square"></i></button>
-            <button class="btn btn-outline-primary bi trash-button" (click)="eliminarRutina(rutina)"><i
-                    class="bi-trash"></i></button>
-        </li>
-        }
-    </ul>
-
-    <!-- Formulario para agregar una nueva rutina -->
-    <div>
-        <button (click)="crearRutina()">Nueva rutina</button>
+<div>
+    <div class="lista">
+        <table>
+            <thead>
+            </thead>
+            <tbody>
+                @for (rutina of rutinas; track rutina) {
+                <tr>
+                    <td><button class="nombreRutina" (click)="mostrarDetalles(rutina)">{{rutina.nombre}}</button></td>
+                    <td><button type="button" class="btn btn-primary" (click)="editarRutina(rutina)"><i class="bi bi-pencil-square"></i></button></td>
+                    <td><button class="btn btn-danger bi trash-button" (click)="eliminarRutina(rutina)"><i class="bi-trash"></i></button></td>
+                    <hr>
+                </tr>
+            }
+            </tbody>
+            </table>
     </div>
-
+    <button type="button" class="btn btn-success" (click)=crearRutina()>Nueva rutina</button>
 </div>
+
