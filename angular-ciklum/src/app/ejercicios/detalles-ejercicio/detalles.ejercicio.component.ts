@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Ejercicio } from '../../ejercicio';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detalles.ejercicio',
@@ -9,8 +10,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './detalles.ejercicio.component.html',
   styleUrl: './detalles.ejercicio.component.css'
 })
-export class DetallesEjercicio {
-  @Input() ejercicio: any;
-  constructor(public activeModal: NgbActiveModal){
+export class DetallesEjercicio implements OnInit{
+  @Input() ejercicio!: Ejercicio;
+  videoURL!: SafeResourceUrl;
+
+  constructor(public activeModal: NgbActiveModal, private sanitizer: DomSanitizer){
   }
+
+  ngOnInit(): void {
+    this.videoURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.ejercicio.multimedia[1]);
+  }
+
 }

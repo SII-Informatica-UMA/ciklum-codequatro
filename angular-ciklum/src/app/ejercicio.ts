@@ -6,6 +6,6 @@ export interface Ejercicio{
     tipo: String
     material : String
     dificultad : String
-    multimedia : String[]
+    multimedia : string[]
     id : number
 }

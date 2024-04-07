@@ -38,7 +38,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Cuádriceps, glúteos',
           material: 'Barra, pesas',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_sentadilla_bulgara.jpg', 'video_sentadilla_bulgara.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/sentadilla-bulgara.jpg', 'https://www.youtube.com/embed/hbMgXooX2zo'],
           id: 1
         },
         { 

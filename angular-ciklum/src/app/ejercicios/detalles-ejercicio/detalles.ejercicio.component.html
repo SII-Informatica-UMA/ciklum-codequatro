@@ -10,8 +10,8 @@
     <p>musculos trabajados: {{ ejercicio.musculos_trabajados }}</p>
     <p>Material: {{ ejercicio.material }}</p>
     <p>Dificultad: {{ ejercicio.dificultad }}</p>
-    <p>Multimedia(imagen): {{ ejercicio.multimedia[0] }}</p>
-    <p>Multimedia(video): {{ ejercicio.multimedia[1]}}</p>
+    <img src={{ejercicio.multimedia[0]}} width="280px" height="200px">
+    <iframe [src]='videoURL' width="420" height="236" allowfullscreen></iframe>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
