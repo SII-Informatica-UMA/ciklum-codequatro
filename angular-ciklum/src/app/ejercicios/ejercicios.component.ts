@@ -27,7 +27,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Cuádriceps, glúteos, isquiotibiales',
           material: 'Máquina de prensa',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_prensa.jpg', 'video_prensa.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/prensa.jpg', 'https://www.youtube.com/embed/xvCynwyNoP4?si=88naJYgYUTuZa8IN'],
           id: 0
         },
         { 
@@ -49,7 +49,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Cuádriceps',
           material: 'Máquina de cuádriceps',
           dificultad: 'Baja',
-          multimedia: ['imagen_extension_cuadriceps.jpg', 'video_extension_cuadriceps.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/extension-de-cuadriceps.gif', 'https://www.youtube.com/embed/r7ZMTzfiICA?si=E1t74aFlOCERKDXL'],
           id: 2
         },
         { 
@@ -60,7 +60,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Isquiotibiales',
           material: 'Máquina de isquiotibiales',
           dificultad: 'Baja',
-          multimedia: ['imagen_extension_isquiotibiales.jpg', 'video_extension_isquiotibiales.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/extension-de-isquiotibiales.jpeg', 'https://www.youtube.com/embed/5X3NqbieXhg?si=s7qGc_e31bJPBtY8'],
           id: 3
         },
         { 
@@ -71,7 +71,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Pectorales, tríceps, deltoides',
           material: 'Banco de press, barra y discos',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_bench_press.jpg', 'video_bench_press.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/bench-press.gif', 'https://www.youtube.com/embed/SCVCLChPQFY?si=fhCajzCQmf3Q1dZm'],
           id: 4
         },
         { 
@@ -82,7 +82,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Pectorales',
           material: 'Máquina de fly press',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_fly_press.jpg', 'video_fly_press.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/fly-press.jpg', 'https://www.youtube.com/embed/x2mfixsQW9s?si=cJIVJY-BjSyR2hKQ'],
           id: 5
         },
         { 
@@ -93,7 +93,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Dorsales, bíceps',
           material: 'Barra, mancuernas',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_back.jpg', 'video_back.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/back.gif', 'https://www.youtube.com/embed/x2Y6Mb41zjY?si=EZlHSr5Av1b5jSVn'],
           id: 6
         },
         { 
@@ -104,7 +104,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Pectorales, dorsal ancho',
           material: 'Máquina de pull over, mancuerna',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_pull_over.jpg', 'video_pull_over.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/pull-over.jpg', 'https://www.youtube.com/embed/i0ctwS0wD4Y?si=jsX0rrWI6kjrdTpR'],
           id: 7
         },
         { 
@@ -115,7 +115,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Tríceps',
           material: 'Máquina de tríceps, mancuerna',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_triceps.jpg', 'video_triceps.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/triceps.jpg', 'https://www.youtube.com/embed/dRkTreltpnc?si=1zW1jsRGMzoEAvGs'],
           id: 8
         },
         { 
@@ -126,7 +126,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Bíceps',
           material: 'Barra Z, discos',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_biceps_barra_z.jpg', 'video_biceps_barra_z.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/biceps-con-barra-z.jpg', 'https://www.youtube.com/embed/0l5EiITOB9E?si=es4d9LIP_XxKBdsZ'],
           id: 9
         },
         { 
@@ -137,7 +137,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Bíceps, antebrazo',
           material: 'Mancuernas',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_biceps_martillo.jpg', 'video_biceps_martillo.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/biceps-martillo.gif', 'https://www.youtube.com/embed/de4AdSz4gcU?si=miy1WP0JKPvVPtA5'],
           id: 10
         },
         { 
@@ -148,7 +148,7 @@ export class EjercicioComponent{
           musculos_trabajados: 'Hombros, tríceps',
           material: 'Barra, discos',
           dificultad: 'Intermedia',
-          multimedia: ['imagen_press_militar.jpg', 'video_press_militar.mp4'],
+          multimedia: ['../../../assets/imagenes_ejercicios/press-militar.gif', 'https://www.youtube.com/embed/o5M9RZ-vWrc?si=sAxhQu1dKBxF7vsq'],
           id: 11
         },
       ];
