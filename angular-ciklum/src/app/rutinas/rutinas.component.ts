@@ -35,7 +35,7 @@ export class RutinasComponent implements OnInit {
                   musculos_trabajados: 'Hombros, tríceps',
                   material: 'Barra, discos',
                   dificultad: 'Intermedia',
-                  multimedia: ['imagen_press_militar.jpg', 'video_press_militar.mp4'],
+                  multimedia: ['../../../assets/imagenes_ejercicios/press-militar.gif', 'https://www.youtube.com/embed/o5M9RZ-vWrc?si=sAxhQu1dKBxF7vsq'],
                   id: 11 }
             },
             {
@@ -50,7 +50,7 @@ export class RutinasComponent implements OnInit {
                   musculos_trabajados: 'Cuádriceps, glúteos',
                   material: 'Barra, pesas',
                   dificultad: 'Intermedia',
-                  multimedia: ['imagen_sentadilla_bulgara.jpg', 'video_sentadilla_bulgara.mp4'],
+                  multimedia: ['../../../assets/imagenes_ejercicios/sentadilla-bulgara.jpg', 'https://www.youtube.com/embed/hbMgXooX2zo'],
                   id: 1
                  }
             },
@@ -75,7 +75,7 @@ export class RutinasComponent implements OnInit {
                   musculos_trabajados: 'Piernas, glúteos',
                   material: 'Máquina de prensa',
                   dificultad: 'Intermedia',
-                  multimedia: ['imagen_prensa.jpg', 'video_prensa.mp4'],
+                  multimedia: ['../../../assets/imagenes_ejercicios/prensa.jpg', 'https://www.youtube.com/embed/xvCynwyNoP4?si=88naJYgYUTuZa8IN'],
                   id: 1
               }
           },
@@ -101,7 +101,7 @@ export class RutinasComponent implements OnInit {
                   musculos_trabajados: 'Cuádriceps, glúteos',
                   material: 'Barra, pesas',
                   dificultad: 'Intermedia',
-                  multimedia: ['imagen_sentadilla_bulgara.jpg', 'video_sentadilla_bulgara.mp4'],
+                  multimedia: ['../../../assets/imagenes_ejercicios/sentadilla-bulgara.jpg', 'https://www.youtube.com/embed/hbMgXooX2zo'],
                   id: 2
               }
           },
@@ -127,7 +127,7 @@ export class RutinasComponent implements OnInit {
                   musculos_trabajados: 'Pectorales, tríceps',
                   material: 'Barra, discos',
                   dificultad: 'Intermedia',
-                  multimedia: ['imagen_bench_press.jpg', 'video_bench_press.mp4'],
+                  multimedia: ['../../../assets/imagenes_ejercicios/bench-press.gif', 'https://www.youtube.com/embed/SCVCLChPQFY?si=fhCajzCQmf3Q1dZm'],
                   id: 3
               }
           },
