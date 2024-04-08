@@ -7,9 +7,9 @@
   <div class="modal-body">
     <div class="form-group">
       <label for="nombre">Nombre:</label>
-      <input class="form-control" id="nombre" [(ngModel)]="ejercicio.nombre">
+      <input class="form-control" id="nombre" [(ngModel)]="ejercicio.nombre"  #name="ngModel" required>
       <label for="apellidos">Descripción:</label>
-      <input class="form-control" id="descripcion" [(ngModel)]="ejercicio.descripcion">
+      <input class="form-control" id="descripcion" [(ngModel)]="ejercicio.descripcion" #des="ngModel" required>
       <label for="email">Observaciones:</label>
       <input class="form-control" id="observaciones" [(ngModel)]="ejercicio.observaciones">
       <label for="form-control">Musculos trabajados:</label>
@@ -25,6 +25,10 @@
     </div>
 
     <div class="modal-footer">
+      <div class="alerta"
+      *ngIf="name.errors?.['required'] || des.errors?.['required'] == ''">
+      Hay campos vacíos.
+    </div>
       <button type="button" class="btn btn-secondary" (click)="editarEjercicio()"
         [disabled]="!camposCompletos()">Guardar</button>
       <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
