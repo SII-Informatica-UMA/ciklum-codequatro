@@ -55,7 +55,7 @@ public class Rutinas {
         this.observaciones = observaciones;
     }
 
-    @Column(name = "EJERCICIOS" , nullable = false, length = 50)
+    @JoinColumn(name = "EJERCICIOS" , nullable = false)
     public List<SubEntidad_Ejercicio> getEjercicios() {
         return ejercicios;
     }

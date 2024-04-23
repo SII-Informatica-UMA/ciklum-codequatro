@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
 public class Ejercicios {
+    @Id
     private Long idEjercicio;
     private String nombre;
     private String descripcion;
