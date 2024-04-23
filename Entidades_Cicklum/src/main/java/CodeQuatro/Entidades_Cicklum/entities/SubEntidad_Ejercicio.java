@@ -1,10 +1,7 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 
 /*ESTA CLASE SIRVE COMO CLASE AUXILIAR PARA EL ARRAY DE EJERCICIOS DE LAS RUTINAS */
 

@@ -3,14 +3,8 @@ package CodeQuatro.Entidades_Cicklum.entities;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+
 
 @Entity
 @Access (AccessType.PROPERTY)
