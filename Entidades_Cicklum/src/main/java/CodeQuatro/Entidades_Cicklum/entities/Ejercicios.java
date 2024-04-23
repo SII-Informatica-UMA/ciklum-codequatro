@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Access (AccessType.PROPERTY)
+
 public class Ejercicios {
     private Long idEjercicio;
     private String nombre;
