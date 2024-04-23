@@ -1,16 +1,22 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 
+
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToMany;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Access (AccessType.PROPERTY)
 public class Ejercicios {
-    @Id
-    @GeneratedValue
     private Long idEjercicio;
     private String nombre;
     private String descripcion;
@@ -18,26 +24,32 @@ public class Ejercicios {
     private String musculosTrabajados;
     private String material;
     private String dificultad;
-    private String multimedia[];
+    private List<String> multimedia;
+    @ManyToMany
+    private Set<Rutinas> rutinas; // Coleccion para la relacion de mucho a mucho entre ejercicio y rutinas
 
    
-
+    @Id
+    @GeneratedValue
+    @Column(name = "ID" , nullable = false, length = 50)
     public Long getIdEjercicio() {
         return idEjercicio;
     }
-
+    
     public void setIdEjercicio(Long idEjercicio) {
         this.idEjercicio = idEjercicio;
     }
-
+    
+    @Column(name = "NOMBRE" , nullable = false, length = 50)
     public String getNombre() {
         return nombre;
     }
-
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
+    @Column(name = "DESCRIPCION" , nullable = false, length = 50)
     public String getDescripcion() {
         return descripcion;
     }
@@ -45,7 +57,7 @@ public class Ejercicios {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    @Column(name = "TIPO" , nullable = false, length = 50)
     public String getTipo() {
         return tipo;
     }
@@ -53,7 +65,7 @@ public class Ejercicios {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
+    @Column(name = "MUSCULOS_TRABAJADOS" , nullable = false, length = 50)
     public String getMusculosTrabajados() {
         return musculosTrabajados;
     }
@@ -61,7 +73,7 @@ public class Ejercicios {
     public void setMusculosTrabajados(String musculosTrabajados) {
         this.musculosTrabajados = musculosTrabajados;
     }
-
+    @Column(name = "MATERIAL" , nullable = false, length = 50)
     public String getMaterial() {
         return material;
     }
@@ -69,7 +81,7 @@ public class Ejercicios {
     public void setMaterial(String material) {
         this.material = material;
     }
-
+    @Column(name = "DIFICULTAD" , nullable = false, length = 50)
     public String getDificultad() {
         return dificultad;
     }
@@ -77,12 +89,12 @@ public class Ejercicios {
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
     }
-
-    public String[] getMultimedia() {
+    @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
+    public List<String> getMultimedia() {
         return multimedia;
     }
 
-    public void setMultimedia(String[] multimedia) {
+    public void setMultimedia(List<String> multimedia) {
         this.multimedia = multimedia;
     }
 
