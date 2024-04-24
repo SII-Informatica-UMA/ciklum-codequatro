@@ -1,0 +1,16 @@
+create sequence ejercicios_seq start with 1 increment by 50;
+create sequence rutinas_seq start with 1 increment by 50;
+create table ejercicios (id bigint not null, descripcion varchar(50) not null, dificultad varchar(50) not null, material varchar(50) not null, musculos_trabajados varchar(50) not null, nombre varchar(50) not null, tipo varchar(50) not null, multimedia varchar(50) array not null, primary key (id));
+create table rel_rutina_ejercicio (ejercicios_id bigint not null, relacion_rutina_id bigint not null);
+create table rutinas (id bigint not null, descripcion varchar(50) not null, nombre varchar(50) not null, observaciones varchar(50) not null, primary key (id));
+create table subentidad (duracion_minutos bigint not null, id bigint not null, repeticiones bigint not null, series bigint not null, descripcion varchar(50) not null, dificultad varchar(50) not null, material varchar(50) not null, musculos_trabajados varchar(50) not null, nombre varchar(50) not null, tipo varchar(50) not null, multimedia varchar(50) array not null, primary key (id));
+alter table if exists rel_rutina_ejercicio add constraint FKnv7xwxct0fbswm8nncai30gqv foreign key (ejercicios_id) references subentidad;
+alter table if exists rel_rutina_ejercicio add constraint FK2lf0q5rs83ikbvg88t6r0dfmy foreign key (relacion_rutina_id) references rutinas;
+create sequence ejercicios_seq start with 1 increment by 50;
+create sequence rutinas_seq start with 1 increment by 50;
+create table ejercicios (id bigint not null, descripcion varchar(50) not null, dificultad varchar(50) not null, material varchar(50) not null, musculos_trabajados varchar(50) not null, nombre varchar(50) not null, tipo varchar(50) not null, multimedia varchar(50) array not null, primary key (id));
+create table rel_rutina_ejercicio (ejercicios_id bigint not null, relacion_rutina_id bigint not null);
+create table rutinas (id bigint not null, descripcion varchar(50) not null, nombre varchar(50) not null, observaciones varchar(50) not null, primary key (id));
+create table subentidad (duracion_minutos bigint not null, id bigint not null, repeticiones bigint not null, series bigint not null, descripcion varchar(50) not null, dificultad varchar(50) not null, material varchar(50) not null, musculos_trabajados varchar(50) not null, nombre varchar(50) not null, tipo varchar(50) not null, multimedia varchar(50) array not null, primary key (id));
+alter table if exists rel_rutina_ejercicio add constraint FKnv7xwxct0fbswm8nncai30gqv foreign key (ejercicios_id) references subentidad;
+alter table if exists rel_rutina_ejercicio add constraint FK2lf0q5rs83ikbvg88t6r0dfmy foreign key (relacion_rutina_id) references rutinas;

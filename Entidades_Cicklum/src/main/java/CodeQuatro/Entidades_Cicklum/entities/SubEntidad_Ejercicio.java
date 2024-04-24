@@ -39,6 +39,14 @@ public class SubEntidad_Ejercicio extends Ejercicios {
         this.duracionMinutos = duracionMinutos;
     }
 
+    public List<Rutinas> getRelacionRutina(){
+        return relacionRutina;
+    }
+
+    public void setRelacionRutina(List<Rutinas> relacionRutina){
+        this.relacionRutina = relacionRutina;
+    }
+
     @Override
     public boolean equals(Object obj) {
        if(obj instanceof SubEntidad_Ejercicio){

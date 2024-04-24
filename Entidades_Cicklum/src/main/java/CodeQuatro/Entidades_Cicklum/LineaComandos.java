@@ -7,12 +7,14 @@ package CodeQuatro.Entidades_Cicklum;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-/* 
+
+import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
+import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
 
 @Component
 public class LineaComandos implements CommandLineRunner {
-	private BookRepository repository;
-	public LineaComandos(BookRepository repository) {
+	private EjerciciosRepository repository;
+	public LineaComandos(EjerciciosRepository repository) {
 		this.repository = repository;
 	}
 
@@ -25,11 +27,10 @@ public class LineaComandos implements CommandLineRunner {
 		}
 
 		if (args.length > 0) {
-			for (Book b: repository.findByNombre(args[0])) {
-				System.out.println(b);
+			for (Ejercicios e: repository.findEjercicioByName(args[0])) {
+				System.out.println("hola");
 			}
 		}
 	}
 
 }
-*/
