@@ -2,13 +2,14 @@ package CodeQuatro.Entidades_Cicklum.entities;
 
 import java.util.List;
 import java.util.Set;
+import java.io.Serializable;
 
 import jakarta.persistence.*;
 
 
 @Entity
 @Access (AccessType.FIELD)
-public class Rutinas {
+public class Rutinas implements Serializable{
     @Id
     @GeneratedValue
     @Column(name = "ID" , nullable = false, length = 50)
@@ -22,6 +23,16 @@ public class Rutinas {
     @ManyToMany 
     @JoinTable (name = "relRutinaEjercicio")
     private List<SubEntidad_Ejercicio> ejercicios;
+
+    public Rutinas() {
+    }
+    public Rutinas (Long idRutinas, String nombre, String descripcion, String observaciones, List<SubEntidad_Ejercicio> ejercicios){
+        this.idRutinas = idRutinas;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.observaciones = observaciones;
+        this.ejercicios = ejercicios;
+    }
 
     
     public Long getIdRutinas() {

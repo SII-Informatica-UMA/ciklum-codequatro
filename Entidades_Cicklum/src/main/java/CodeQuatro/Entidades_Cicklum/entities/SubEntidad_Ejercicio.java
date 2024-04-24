@@ -1,6 +1,7 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
 import java.util.List;
+import java.io.Serializable;
 
 import jakarta.persistence.*;
 
@@ -10,7 +11,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Subentidad" )
 @Access (AccessType.FIELD)
-public class SubEntidad_Ejercicio extends Ejercicios {
+public class SubEntidad_Ejercicio extends Ejercicios implements Serializable{
     @Column(name = "SERIES" , nullable = false, length = 50)
     private Long series;
     @Column(name = "REPETICIONES" , nullable = false, length = 50)
@@ -19,6 +20,16 @@ public class SubEntidad_Ejercicio extends Ejercicios {
     private Long duracionMinutos;
     @ManyToMany (mappedBy = "ejercicios")
     private List<Rutinas> relacionRutina;
+
+    public SubEntidad_Ejercicio() {
+    }
+    
+    public SubEntidad_Ejercicio (Long idEjercicio, String nombre, String descripcion, String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia, Long series, Long repeticiones, Long duracionMinutos){
+        super(idEjercicio, nombre, descripcion, tipo, musculosTrabajados, material, dificultad, multimedia);
+        this.series = series;
+        this.repeticiones = repeticiones;
+        this.duracionMinutos = duracionMinutos;
+    }
 
     public Long getSeries() {
         return series;

@@ -10,4 +10,6 @@ public class EntidadesCicklumApplication {
 		SpringApplication.run(EntidadesCicklumApplication.class, args);
 	}
 
+	
+
 }

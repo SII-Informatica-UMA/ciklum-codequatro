@@ -2,12 +2,13 @@ package CodeQuatro.Entidades_Cicklum.entities;
 
 import java.util.List;
 import java.util.Set;
+import java.io.Serializable;
 
 import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Ejercicios {
+public class Ejercicios implements Serializable{
     @Id
     @GeneratedValue
     @Column(name = "ID" , nullable = false, length = 50)
@@ -26,6 +27,19 @@ public class Ejercicios {
     private String dificultad;
     @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
     private List<String> multimedia;
+
+    public Ejercicios() {
+    }
+    public Ejercicios (Long idEjercicio, String nombre, String descripcion, String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia){
+        this.idEjercicio = idEjercicio;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+        this.musculosTrabajados = musculosTrabajados;
+        this.material = material;
+        this.dificultad = dificultad;
+        this.multimedia = multimedia;
+    }
 
 
     public Long getIdEjercicio() {
@@ -86,8 +100,8 @@ public class Ejercicios {
         return multimedia;
     }
 
-    public void setMultimedia(List<String> multimedia) {
-        this.multimedia = multimedia;
+    public void setMultimedia(String multimedia) {
+        this.multimedia.add(multimedia);
     }
 
     @Override

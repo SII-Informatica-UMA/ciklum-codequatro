@@ -13,4 +13,5 @@ public interface EjerciciosRepository extends JpaRepository<Ejercicios, Long> {
 	
 	@Query("select e from Ejercicio e where e.nombre = :nombre")
 	List<Ejercicios> miConsultaCompleja(@Param("nombre") String nombre);
+
 }
