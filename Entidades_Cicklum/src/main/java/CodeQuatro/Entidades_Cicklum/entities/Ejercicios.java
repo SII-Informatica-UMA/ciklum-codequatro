@@ -8,18 +8,26 @@ import jakarta.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Ejercicios {
-    private Long idEjercicio;
-    private String nombre;
-    private String descripcion;
-    private String tipo;
-    private String musculosTrabajados;
-    private String material;
-    private String dificultad;
-    private List<String> multimedia;
-
     @Id
     @GeneratedValue
     @Column(name = "ID" , nullable = false, length = 50)
+    private Long idEjercicio;
+    @Column(name = "NOMBRE" , nullable = false, length = 50)
+    private String nombre;
+    @Column(name = "DESCRIPCION" , nullable = false, length = 50)
+    private String descripcion;
+    @Column(name = "TIPO" , nullable = false, length = 50)
+    private String tipo;
+    @Column(name = "MUSCULOS_TRABAJADOS" , nullable = false, length = 50)
+    private String musculosTrabajados;
+    @Column(name = "MATERIAL" , nullable = false, length = 50)
+    private String material;
+    @Column(name = "DIFICULTAD" , nullable = false, length = 50)
+    private String dificultad;
+    @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
+    private List<String> multimedia;
+
+
     public Long getIdEjercicio() {
         return idEjercicio;
     }
@@ -28,7 +36,6 @@ public class Ejercicios {
         this.idEjercicio = idEjercicio;
     }
     
-    @Column(name = "NOMBRE" , nullable = false, length = 50)
     public String getNombre() {
         return nombre;
     }
@@ -37,7 +44,6 @@ public class Ejercicios {
         this.nombre = nombre;
     }
     
-    @Column(name = "DESCRIPCION" , nullable = false, length = 50)
     public String getDescripcion() {
         return descripcion;
     }
@@ -45,7 +51,6 @@ public class Ejercicios {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    @Column(name = "TIPO" , nullable = false, length = 50)
     public String getTipo() {
         return tipo;
     }
@@ -53,7 +58,7 @@ public class Ejercicios {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    @Column(name = "MUSCULOS_TRABAJADOS" , nullable = false, length = 50)
+
     public String getMusculosTrabajados() {
         return musculosTrabajados;
     }
@@ -61,7 +66,7 @@ public class Ejercicios {
     public void setMusculosTrabajados(String musculosTrabajados) {
         this.musculosTrabajados = musculosTrabajados;
     }
-    @Column(name = "MATERIAL" , nullable = false, length = 50)
+
     public String getMaterial() {
         return material;
     }
@@ -69,7 +74,6 @@ public class Ejercicios {
     public void setMaterial(String material) {
         this.material = material;
     }
-    @Column(name = "DIFICULTAD" , nullable = false, length = 50)
     public String getDificultad() {
         return dificultad;
     }
@@ -77,7 +81,7 @@ public class Ejercicios {
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
     }
-    @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
+
     public List<String> getMultimedia() {
         return multimedia;
     }

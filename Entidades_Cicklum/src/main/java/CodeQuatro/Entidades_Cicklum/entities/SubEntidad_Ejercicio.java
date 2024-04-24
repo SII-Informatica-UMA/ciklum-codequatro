@@ -8,35 +8,35 @@ import jakarta.persistence.*;
 /*ESTA CLASE SIRVE COMO CLASE AUXILIAR PARA EL ARRAY DE EJERCICIOS DE LAS RUTINAS */
 
 @Entity
-@Table(name = "EjercicioR" )
-@Access (AccessType.PROPERTY)
+@Table(name = "Subentidad" )
+@Access (AccessType.FIELD)
 public class SubEntidad_Ejercicio extends Ejercicios {
+    @Column(name = "SERIES" , nullable = false, length = 50)
     private Long series;
+    @Column(name = "REPETICIONES" , nullable = false, length = 50)
     private Long repeticiones;
-    private Long duracionMInutos;
+    @Column(name = "DURACION_MINUTOS" , nullable = false, length = 50)
+    private Long duracionMinutos;
     @ManyToMany (mappedBy = "ejercicios")
     private List<Rutinas> relacionRutina;
 
-    @Column(name = "SERIES" , nullable = false, length = 50)
     public Long getSeries() {
         return series;
     }
     public void setSeries(Long series) {
         this.series = series;
     }
-    @Column(name = "REPETICIONES" , nullable = false, length = 50)
     public Long getRepeticiones() {
         return repeticiones;
     }
     public void setRepeticiones(Long repeticiones) {
         this.repeticiones = repeticiones;
     }
-    @Column(name = "DURACION_MINUTOS" , nullable = false, length = 50)
-    public Long getDuracionMInutos() {
-        return duracionMInutos;
+    public Long getDuracionMinutos() {
+        return duracionMinutos;
     }
-    public void setDuracionMInutos(Long duracionMInutos) {
-        this.duracionMInutos = duracionMInutos;
+    public void setDuracionMinutos(Long duracionMinutos) {
+        this.duracionMinutos = duracionMinutos;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class SubEntidad_Ejercicio extends Ejercicios {
         sb.append(",Repeticiones= ");
         sb.append(this.getRepeticiones());
         sb.append(", Duracion en minutos= ");
-        sb.append(this.getDuracionMInutos());
+        sb.append(this.getDuracionMinutos());
         sb.append("Ejercicio [id= ");
         sb.append(this.getIdEjercicio());
         sb.append(", nombre= ");

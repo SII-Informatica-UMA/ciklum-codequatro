@@ -7,20 +7,23 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Access (AccessType.PROPERTY)
+@Access (AccessType.FIELD)
 public class Rutinas {
-
+    @Id
+    @GeneratedValue
+    @Column(name = "ID" , nullable = false, length = 50)
     private Long idRutinas;
+    @Column(name = "NOMBRE" , nullable = false, length = 50)
     private String nombre;
+    @Column(name = "DESCRIPCION" , nullable = false, length = 50)
     private String descripcion;
+    @Column(name = "OBSERVACIONES" , nullable = false, length = 50)
     private String observaciones;
     @ManyToMany 
     @JoinTable (name = "relRutinaEjercicio")
     private List<SubEntidad_Ejercicio> ejercicios;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "ID" , nullable = false, length = 50)
+    
     public Long getIdRutinas() {
         return idRutinas;
     }
@@ -28,7 +31,7 @@ public class Rutinas {
     public void setIdRutinas(Long id) {
         this.idRutinas = id;
     }
-    @Column(name = "NOMBRE" , nullable = false, length = 50)
+
     public String getNombre() {
         return nombre;
     }
@@ -36,7 +39,7 @@ public class Rutinas {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    @Column(name = "DESCRIPCION" , nullable = false, length = 50)
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -44,7 +47,6 @@ public class Rutinas {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    @Column(name = "OBSERVACIONES" , nullable = false, length = 50)
     public String getObservaciones() {
         return observaciones;
     }
@@ -53,7 +55,6 @@ public class Rutinas {
         this.observaciones = observaciones;
     }
 
-    @JoinColumn(name = "EJERCICIOS" , nullable = false)
     public List<SubEntidad_Ejercicio> getEjercicios() {
         return ejercicios;
     }
@@ -87,9 +88,6 @@ public class Rutinas {
         sb.append(descripcion);
         sb.append(", observaciones= ");
         sb.append(observaciones);
-        for(SubEntidad_Ejercicio s : ejercicios){
-            sb.append(s.toString());
-        }
 
         return sb.toString();
     }
