@@ -26,6 +26,8 @@ public class Ejercicios implements Serializable{
     @Column(name = "DIFICULTAD" , nullable = false, length = 50)
     private String dificultad;
     @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
+    @ElementCollection
+    @CollectionTable(name = "multimedia")
     private List<String> multimedia;
 
     public Ejercicios() {
