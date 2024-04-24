@@ -14,11 +14,9 @@ public class Rutinas {
     private String nombre;
     private String descripcion;
     private String observaciones;
-    @ManyToMany
-    private Set<Ejercicios> relacionEjercicio;
-    @ElementCollection
+    @ManyToMany 
+    @JoinTable (name = "relRutinaEjercicio")
     private List<SubEntidad_Ejercicio> ejercicios;
-
 
     @Id
     @GeneratedValue

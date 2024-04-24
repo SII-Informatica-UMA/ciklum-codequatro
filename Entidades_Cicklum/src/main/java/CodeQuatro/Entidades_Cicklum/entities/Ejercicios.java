@@ -7,9 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-
 public class Ejercicios {
-    @Id
     private Long idEjercicio;
     private String nombre;
     private String descripcion;
@@ -18,10 +16,7 @@ public class Ejercicios {
     private String material;
     private String dificultad;
     private List<String> multimedia;
-    @ManyToMany
-    private Set<Rutinas> rutinas; // Coleccion para la relacion de mucho a mucho entre ejercicio y rutinas
 
-   
     @Id
     @GeneratedValue
     @Column(name = "ID" , nullable = false, length = 50)

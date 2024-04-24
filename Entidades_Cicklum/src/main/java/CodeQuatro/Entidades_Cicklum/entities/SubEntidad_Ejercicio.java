@@ -1,5 +1,7 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 
@@ -12,6 +14,8 @@ public class SubEntidad_Ejercicio extends Ejercicios {
     private Long series;
     private Long repeticiones;
     private Long duracionMInutos;
+    @ManyToMany (mappedBy = "ejercicios")
+    private List<Rutinas> relacionRutina;
 
     @Column(name = "SERIES" , nullable = false, length = 50)
     public Long getSeries() {

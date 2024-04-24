@@ -74,10 +74,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
 				<configuration>
-					<includes>
-						<include>
-							\test\java\CodeQuatro\Entidades_Cicklum\EntidadesCicklumApplicationTests.java</include>
-					</includes>
+
 				</configuration>
 			</plugin>
 		</plugins>
