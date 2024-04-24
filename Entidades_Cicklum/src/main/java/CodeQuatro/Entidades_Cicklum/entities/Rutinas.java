@@ -1,7 +1,6 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
 import java.util.List;
-import java.util.Set;
 import java.io.Serializable;
 
 import jakarta.persistence.*;

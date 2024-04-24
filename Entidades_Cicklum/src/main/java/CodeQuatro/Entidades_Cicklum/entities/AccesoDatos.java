@@ -1,7 +1,6 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
 import java.io.Closeable;
-import java.util.List;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

@@ -1,7 +1,6 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
 import java.util.List;
-import java.util.Set;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
@@ -102,8 +101,8 @@ public class Ejercicios implements Serializable{
         return multimedia;
     }
 
-    public void setMultimedia(String multimedia) {
-        this.multimedia.add(multimedia);
+    public void setMultimedia(List<String> multimedia) {
+        this.multimedia = multimedia;
     }
 
     @Override
