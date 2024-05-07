@@ -28,5 +28,6 @@ public class SubEntidadDTO {
 
     public static SubEntidadDTO fromSubEntidad_Ejercicio(SubEntidad_Ejercicio sub , Function<Long, URI> subUriBuilder){
         var dto = new SubEntidadDTO();
+        return dto;
     }
 }
