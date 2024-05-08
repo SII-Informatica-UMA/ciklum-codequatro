@@ -2,6 +2,7 @@ package CodeQuatro.Entidades_Cicklum.dtos;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,4 +43,10 @@ public class RutinasDTO {
                 .build());
         return dto;
     }
+
+    public Rutinas rutina() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'rutina'");
+    }
+
 }

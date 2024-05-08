@@ -101,5 +101,9 @@ public class Rutinas implements Serializable{
 
         return sb.toString();
     }
+    public void setId(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
 
 }
