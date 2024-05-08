@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import CodeQuatro.Entidades_Cicklum.entities.AccesoDatos;
+import CodeQuatro.Entidades_Cicklum.servicios.EntidadesCicklumApplication;
 
-@SpringBootTest
+@SpringBootTest(classes=EntidadesCicklumApplication.class)
 class EntidadesCicklumApplicationTests {
 
  private AccesoDatos ad;
