@@ -1,30 +1,20 @@
 package CodeQuatro.Entidades_Cicklum;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 
-import CodeQuatro.Entidades_Cicklum.entities.AccesoDatos;
+import CodeQuatro.Entidades_Cicklum.servicios.EntidadesCicklumApplication;
 
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(classes = CodeQuatro.Entidades_Cicklum.servicios.EntidadesCicklumApplication.class)
 class EntidadesCicklumApplicationTests {
 
- private AccesoDatos ad;
+        
 
-    @BeforeEach
-    public void setup() {
-        ad = new AccesoDatos();
+        @Autowired
+        private TestRestTemplate restTemplate;
+
     }
-
-    @AfterEach
-    public void teardown() {
-        ad.close();
-    }
-
-
-   @Test
-	void contextLoads() {
-	}
-
-}

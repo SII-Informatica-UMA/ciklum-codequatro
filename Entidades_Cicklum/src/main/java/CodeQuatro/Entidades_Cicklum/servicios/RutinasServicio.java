@@ -12,7 +12,7 @@ import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
 import CodeQuatro.Entidades_Cicklum.servicios.excepciones.RutinaNoEncontrada;
-import CodeQuatro.Entidades_Cicklum.servicios.excepciones.EjercicioNoEncontrado;
+import CodeQuatro.Entidades_Cicklum.servicios.excepciones.EjercicioNoEncontradoException;
 
 @Service
 @Transactional
@@ -35,7 +35,7 @@ public class RutinasServicio {
         if (ejercicios.isPresent()) {
             return ejercicios.get();
         } else {
-            throw new EjercicioNoEncontrado();
+            throw new EjercicioNoEncontradoException();
         }
     }
 
@@ -51,7 +51,7 @@ public class RutinasServicio {
             ejercicios.setIdEjercicio(id);
             ejerciciosRepositorio.save(ejercicios);
         } else {
-            throw new EjercicioNoEncontrado();
+            throw new EjercicioNoEncontradoException();
         }
     }
 
@@ -59,7 +59,7 @@ public class RutinasServicio {
         if (ejerciciosRepositorio.existsById(id)) {
             ejerciciosRepositorio.deleteById(id);
         } else {
-            throw new EjercicioNoEncontrado();
+            throw new EjercicioNoEncontradoException();
         }
     }
 
