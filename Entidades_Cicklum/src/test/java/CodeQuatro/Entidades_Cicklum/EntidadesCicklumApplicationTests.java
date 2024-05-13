@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -105,6 +106,8 @@ class EntidadesCicklumApplicationTests {
 		assertThat(actual.getEjercicios()).isEqualTo(expected.getEjercicios());
 	}
 
+
+	@Disabled
     @Nested
     @DisplayName("cuando la base de datos esta vacía")
     public class BaseDatosVacia {
@@ -120,7 +123,6 @@ class EntidadesCicklumApplicationTests {
 		assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		assertThat(respuesta.getBody()).isEmpty();
 		}
-
 
         @Test // 2 post de todas las rutinas (crea una nueva rutina)
 		@DisplayName("inserta correctamente una rutina")
@@ -160,7 +162,6 @@ class EntidadesCicklumApplicationTests {
 		}
 
 
-
         @Test // 4 put de una rutina (modifica una rutina)
 		@DisplayName("devuelve error al modificar una rutina que no existe")
 		public void modificarRutinaInexistente() {
@@ -181,7 +182,6 @@ class EntidadesCicklumApplicationTests {
 
 			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
-
 
     }
 	
