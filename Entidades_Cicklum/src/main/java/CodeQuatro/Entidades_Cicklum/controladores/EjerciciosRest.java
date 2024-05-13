@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import CodeQuatro.Entidades_Cicklum.dtos.RutinasDTO;
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
+import CodeQuatro.Entidades_Cicklum.servicios.LogicaEjercicios;
 import CodeQuatro.Entidades_Cicklum.servicios.LogicaRutinas;
 
 import java.net.URI;
@@ -19,9 +20,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @RestController
-
+@RequestMapping("/ejericios")
 public class EjerciciosRest {
-	private LogicaRutinas servicio;
+	private LogicaEjercicios servicio;
 
 	public EjerciciosRest() {
 	}

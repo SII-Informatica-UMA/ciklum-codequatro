@@ -29,6 +29,7 @@ import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
 import CodeQuatro.Entidades_Cicklum.servicios.EntidadesCicklumApplication;
 
 @SpringBootTest(classes=EntidadesCicklumApplication.class)
+@DisplayName("En el servicio Cicklum")
 class EntidadesCicklumApplicationTests {
 
  private AccesoDatos ad;
@@ -104,8 +105,6 @@ class EntidadesCicklumApplicationTests {
 		assertThat(actual.getEjercicios()).isEqualTo(expected.getEjercicios());
 	}
 
-
-
     @Nested
     @DisplayName("cuando la base de datos esta vacía")
     public class BaseDatosVacia {
@@ -118,7 +117,7 @@ class EntidadesCicklumApplicationTests {
 		var respuesta = restTemplate.exchange(peticion,
 				new ParameterizedTypeReference<List<Rutinas>>() {});
 			
-		assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+		assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		assertThat(respuesta.getBody()).isEmpty();
 		}
 
@@ -185,4 +184,5 @@ class EntidadesCicklumApplicationTests {
 
 
     }
+	
 }

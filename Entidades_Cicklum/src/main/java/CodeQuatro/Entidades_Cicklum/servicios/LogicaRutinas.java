@@ -32,7 +32,7 @@ public class LogicaRutinas {
 
 	public Rutinas aniadirRutina(Rutinas nuevaRutina){
 		if (repo.findRutinaByName(nuevaRutina.getNombre()).isPresent()) {
-            throw new RutinaExistente();
+            throw new RutinaExistente("La rutina ya existe en la base de datos");
         }
 		nuevaRutina.setIdRutinas(null); // null?????
 		repo.save(nuevaRutina);
@@ -42,7 +42,7 @@ public class LogicaRutinas {
 	public void modificarRutina(Long id, Rutinas rutina){
 
 		if (repo.findRutinaByName(rutina.getNombre()).isPresent()) { // si le quieres poner el nombre de una rutina que ya existe, lanza excepcion
-            throw new RutinaExistente();
+            throw new RutinaExistente("La rutina ya existe en la base de datos");
         }
 		
 		else{
@@ -54,7 +54,7 @@ public class LogicaRutinas {
 				rutinasModificar.ifPresent(l->l.setEjercicios(rutina.getEjercicios()));
 			}
 			else{
-				throw new RutinaExistente();
+				throw new RutinaExistente("La rutina ya existe en la base de datos");
 			}
 		}
 	}
@@ -64,7 +64,7 @@ public class LogicaRutinas {
 			repo.deleteById(id);
 		}
 		else{
-			throw new RutinaNoEncontrada();
+			throw new RutinaNoEncontrada("La rutina no existe en la base de datos");
 		}
 	}
 }
