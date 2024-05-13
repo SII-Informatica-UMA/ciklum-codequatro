@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ import CodeQuatro.Entidades_Cicklum.servicios.LogicaEjercicios;
 @RequestMapping("/ejericios")
 public class EjerciciosRest {
 	private LogicaEjercicios logicaEjercicios;
-
+	@Autowired
 	public EjerciciosRest(LogicaEjercicios logicaEjercicios) {
         this.logicaEjercicios = logicaEjercicios;
     }
