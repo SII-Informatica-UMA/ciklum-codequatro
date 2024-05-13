@@ -31,7 +31,7 @@ public class EjerciciosDTO {
     private Links links;
     
     public static EjerciciosDTO fromEjercicios(Ejercicios ej , Function<Long, URI> uriBuilder){
-        var dto = new EjerciciosDTO();
+        EjerciciosDTO dto = new EjerciciosDTO();
         dto.setIdEjercicio(ej.getIdEjercicio());
         dto.setNombre(ej.getNombre());
         dto.setDescripcion(ej.getDescripcion());
@@ -49,7 +49,7 @@ public class EjerciciosDTO {
 
 
     public Ejercicios ejercicios(){
-        var ej = new Ejercicios();
+        Ejercicios ej = new Ejercicios();
         ej.setIdEjercicio(idEjercicio);
         ej.setNombre(nombre);
         ej.setDescripcion(descripcion);

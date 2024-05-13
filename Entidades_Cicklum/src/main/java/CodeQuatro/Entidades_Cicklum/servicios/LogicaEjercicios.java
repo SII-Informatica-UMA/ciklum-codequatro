@@ -1,11 +1,11 @@
 package CodeQuatro.Entidades_Cicklum.servicios;
-import java.util.*;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
-import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioExistente;
-import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioNoEncontrado;
+import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioExistenteException;
+import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioNoEncontradoException;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
 import jakarta.transaction.Transactional;
 
@@ -27,7 +27,7 @@ public class LogicaEjercicios {
         if(Ejercicios.isPresent()){
             return Ejercicios.get();
         }else{
-            throw new EjercicioNoEncontrado("Ejercicio no encontrado en la base de datos");
+            throw new EjercicioNoEncontradoException("Ejercicio no encontrado en la base de datos");
         }
     }
 
@@ -38,7 +38,7 @@ public class LogicaEjercicios {
             System.out.println("Ejercicio añadido");
             return nuevoEjercicio.getIdEjercicio();
         }else{
-            throw new EjercicioExistente("El ejercicio ya está creado");
+            throw new EjercicioExistenteException("El ejercicio ya está creado");
         }
     }
 
@@ -46,7 +46,7 @@ public class LogicaEjercicios {
         if(repo.existsById(id)){
             repo.deleteById(id);
         }else{
-            throw new EjercicioNoEncontrado("Ejercicio no encontrado en la base de datos");
+            throw new EjercicioNoEncontradoException("Ejercicio no encontrado en la base de datos");
         }
     }
 
@@ -54,7 +54,7 @@ public class LogicaEjercicios {
         if(repo.existsById(ejercicio.getIdEjercicio())){
             repo.save(ejercicio);
         }else{
-            throw new EjercicioNoEncontrado("ERROR: no se ha podido modificar el ejercicio con id: "
+            throw new EjercicioNoEncontradoException("ERROR: no se ha podido modificar el ejercicio con id: "
              + ejercicio.getIdEjercicio() + " -> no encontrado en la base de datos");
         }
     }
