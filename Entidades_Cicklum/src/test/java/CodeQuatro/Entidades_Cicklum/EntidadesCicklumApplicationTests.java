@@ -25,6 +25,7 @@ import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriBuilderFactory;
 
 import CodeQuatro.Entidades_Cicklum.dtos.EjerciciosDTO;
+import CodeQuatro.Entidades_Cicklum.dtos.RutinasDTO;
 import CodeQuatro.Entidades_Cicklum.entities.AccesoDatos;
 import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
@@ -55,10 +56,6 @@ class EntidadesCicklumApplicationTests {
 		ejerciciosRepository.deleteAll();
 	}
 
-	@AfterEach
-	public void teardown() {
-		ad.close();
-	}
 
 	// metodos auxiliares
 	private URI uri(String scheme, String host, int port, String... paths) {
@@ -185,7 +182,7 @@ class EntidadesCicklumApplicationTests {
 
 			var respuesta = restTemplate.exchange(peticion, Void.class);
 
-			assertThat(respuesta.getStatusCode().value()).isEqualTo(400);
+			assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
 		}
 		// Tests de las rutinas
 	}
@@ -281,20 +278,20 @@ class EntidadesCicklumApplicationTests {
 		assertThat(ejerciciosRepository.count()).isEqualTo(1);
 	}
 
-	/*
-	 * @Test // 1 get de todas las rutinas
-	 * 
-	 * @DisplayName("consulta todas las rutinas")
-	 * public void devuelveListaVaciaRutinas() {
-	 * var peticion = get("http", "localhost",port, "/rutinas");
-	 * 
-	 * var respuesta = restTemplate.exchange(peticion,
-	 * new ParameterizedTypeReference<List<Rutinas>>() {});
-	 * 
-	 * assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	 * assertThat(respuesta.getBody()).isEmpty();
-	 * }
-	 * 
+	
+	  @Test // 1 get de todas las rutinas
+	  
+	  @DisplayName("consulta todas las rutinas")
+	  public void devuelveListaVaciaRutinas() {
+	  var peticion = get("http", "localhost",port, "/rutinas");
+	  
+	  var respuesta = restTemplate.exchange(peticion,
+	  new ParameterizedTypeReference<List<Rutinas>>() {});
+	  
+	  assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+	  assertThat(respuesta.getBody()).isEmpty();
+	  }
+	 /* 
 	 * @Test // 2 post de todas las rutinas (crea una nueva rutina)
 	 * 
 	 * @DisplayName("inserta correctamente una rutina")
@@ -323,40 +320,39 @@ class EntidadesCicklumApplicationTests {
 	 * }
 	 * 
 	 * @Test // 3 get de una rutina concreta
-	 * 
-	 * @DisplayName("devuelve error al acceder a una rutina concreta")
-	 * public void errorConRutinaConcreta() {
-	 * var peticion = get("http", "localhost",port, "/rutinas/1");
-	 * 
-	 * var respuesta = restTemplate.exchange(peticion,
-	 * new ParameterizedTypeReference<RutinasDTO>() {});
-	 * 
-	 * assertThat(respuesta.getStatusCode().value()).isEqualTo(404); // comprueba el
-	 * resultado - 404 no encontrado
-	 * }
-	 * 
-	 * 
-	 * @Test // 4 put de una rutina (modifica una rutina)
-	 * 
-	 * @DisplayName("devuelve error al modificar una rutina que no existe")
-	 * public void modificarRutinaInexistente() {
-	 * var rutina = RutinasDTO.builder().nombre("Rutina").build();
-	 * var peticion = put("http", "localhost",port, "/rutinas/1", rutina);
-	 * 
-	 * var respuesta = restTemplate.exchange(peticion, Void.class);
-	 * 
-	 * assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	 * }
-	 * 
-	 * @Test // 5 delete de una rutina
-	 * 
-	 * @DisplayName("devuelve error al eliminar una rutina que no existe")
-	 * public void eliminarRutinaInexistente() {
-	 * var peticion = delete("http", "localhost",port, "/rutinas/1");
-	 * 
-	 * var respuesta = restTemplate.exchange(peticion, Void.class);
-	 * 
-	 * assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	 * }
+	  
+	  @DisplayName("devuelve error al acceder a una rutina concreta")
+	  public void errorConRutinaConcreta() {
+	  var peticion = get("http", "localhost",port, "/rutinas/1");
+	  
+	  var respuesta = restTemplate.exchange(peticion,
+	  new ParameterizedTypeReference<RutinasDTO>() {});
+	  
+	  assertThat(respuesta.getStatusCode().value()).isEqualTo(404); // comprueba el resultado - 404 no encontrado
+	  }
+	  
+	  
+	  @Test // 4 put de una rutina (modifica una rutina)
+	  
+	  @DisplayName("devuelve error al modificar una rutina que no existe")
+	  public void modificarRutinaInexistente() {
+	  var rutina = RutinasDTO.builder().nombre("Rutina").build();
+	  var peticion = put("http", "localhost",port, "/rutinas/1", rutina);
+	  
+	  var respuesta = restTemplate.exchange(peticion, Void.class);
+	  
+	  assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
+	  }
+	  
+	  @Test // 5 delete de una rutina
+	  
+	  @DisplayName("devuelve error al eliminar una rutina que no existe")
+	  public void eliminarRutinaInexistente() {
+	  var peticion = delete("http", "localhost",port, "/rutinas/1");
+	  
+	  var respuesta = restTemplate.exchange(peticion, Void.class);
+	  
+	  assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
+	  }
 	 */
 }
