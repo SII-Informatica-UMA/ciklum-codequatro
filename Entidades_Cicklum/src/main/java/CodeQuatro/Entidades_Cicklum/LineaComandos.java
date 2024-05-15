@@ -21,7 +21,7 @@ import CodeQuatro.Entidades_Cicklum.entities.SubEntidad_Ejercicio;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
 import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
 
-@Component
+//@Component
 public class LineaComandos implements CommandLineRunner {
 	
 	@Autowired
