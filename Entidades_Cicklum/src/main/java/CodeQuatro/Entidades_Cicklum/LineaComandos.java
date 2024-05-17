@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
 import CodeQuatro.Entidades_Cicklum.entities.SubEntidad_Ejercicio;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;

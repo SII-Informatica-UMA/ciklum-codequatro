@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.net.URI;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,6 +17,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.web.util.DefaultUriBuilderFactory;
@@ -26,18 +26,16 @@ import org.springframework.web.util.UriBuilderFactory;
 
 import CodeQuatro.Entidades_Cicklum.dtos.EjerciciosDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.RutinasDTO;
-import CodeQuatro.Entidades_Cicklum.entities.AccesoDatos;
 import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
 import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
+import CodeQuatro.Entidades_Cicklum.security.JwtUtil;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = EntidadesCicklumApplication.class)
 @DisplayName("------En el servicio Cicklum--------")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class EntidadesCicklumApplicationTests {
-
-	private AccesoDatos ad;
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -49,6 +47,11 @@ class EntidadesCicklumApplicationTests {
 	private RutinasRepository rutinaRepository;
 	@Autowired
 	private EjerciciosRepository ejerciciosRepository;
+	
+	private JwtUtil jwtUtil = new JwtUtil();
+	private UserDetails userDetails = jwtUtil.createUserDetails("username", "password", List.of("ROLE_USER"));
+	private String token = jwtUtil.generateToken(userDetails);
+	
 
 	@BeforeEach
 	public void initializeDatabase() {
@@ -59,6 +62,7 @@ class EntidadesCicklumApplicationTests {
 
 	// metodos auxiliares
 	private URI uri(String scheme, String host, int port, String... paths) {
+
 		UriBuilderFactory ubf = new DefaultUriBuilderFactory();
 		UriBuilder ub = ubf.builder()
 				.scheme(scheme)
@@ -70,16 +74,20 @@ class EntidadesCicklumApplicationTests {
 	}
 
 	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
-		URI uri = uri(scheme, host, port, path);
-		var peticion = RequestEntity.get(uri)
-				.accept(MediaType.APPLICATION_JSON)
+
+			URI uri = uri(scheme, host, port, path);
+			var peticion = RequestEntity.get(uri)
+					.accept(MediaType.APPLICATION_JSON)
+					.header("Authorization", "Bearer " + token)
 				.build();
+
 		return peticion;
 	}
 
 	private RequestEntity<Void> delete(String scheme, String host, int port, String path) {
 		URI uri = uri(scheme, host, port, path);
 		var peticion = RequestEntity.delete(uri)
+				.header("Authorization", "Bearer " + token)
 				.build();
 		return peticion;
 	}
@@ -88,6 +96,7 @@ class EntidadesCicklumApplicationTests {
 		URI uri = uri(scheme, host, port, path);
 		var peticion = RequestEntity.post(uri)
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", "Bearer " + token)
 				.body(object);
 		return peticion;
 	}
@@ -96,6 +105,7 @@ class EntidadesCicklumApplicationTests {
 		URI uri = uri(scheme, host, port, path);
 		var peticion = RequestEntity.put(uri)
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", "Bearer " + token)
 				.body(object);
 		return peticion;
 	}
@@ -158,7 +168,10 @@ class EntidadesCicklumApplicationTests {
 		public void insertaEjercicio() {
 			var ejercicio = EjerciciosDTO.builder()
 					.nombre("Curl de biceps")
+					.descripcion("descripcion")
 					.build();
+
+					
 			var peticion = post("http", "localhost", port, "/ejercicios", ejercicio);
 
 			var respuesta = restTemplate.exchange(peticion, Void.class);
@@ -199,9 +212,15 @@ class EntidadesCicklumApplicationTests {
 
 		@BeforeEach
 		public void insertaEjercicio() {
-			var flexiones = new Ejercicios();
-			flexiones.setNombre("Flexiones");
-			ejerciciosRepository.save(flexiones);
+			var sentadilla = new Ejercicios();
+			sentadilla.setNombre("sentadilla");
+		sentadilla.setDescripcion("descripcion");
+		sentadilla.setDificultad("dificultad");
+		sentadilla.setMusculosTrabajados("musculos");
+		sentadilla.setMaterial("material");
+		sentadilla.setTipo("tipo");
+		sentadilla.setMultimedia(null);
+			ejerciciosRepository.save(sentadilla);
 			/*
 			 * var rutina1 = new Rutinas();
 			 * rutina1.setNombre("Calentamiento");
@@ -269,6 +288,12 @@ class EntidadesCicklumApplicationTests {
 	public void eliminarEjercicio() {
 		var sentadilla = new Ejercicios();
 		sentadilla.setNombre("sentadilla");
+		sentadilla.setDescripcion("descripcion");
+		sentadilla.setDificultad("dificultad");
+		sentadilla.setMusculosTrabajados("musculos");
+		sentadilla.setMaterial("material");
+		sentadilla.setTipo("tipo");
+		sentadilla.setMultimedia(null);
 		ejerciciosRepository.save(sentadilla);
 		var peticion = delete("http", "localhost", port, "/ejercicios/2");
 

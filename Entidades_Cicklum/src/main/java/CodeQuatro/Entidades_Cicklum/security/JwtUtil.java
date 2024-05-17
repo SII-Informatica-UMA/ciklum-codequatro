@@ -1,42 +1,14 @@
 package CodeQuatro.Entidades_Cicklum.security;
-//import java.security.interfaces.RSAPrivateKey;
-//import java.security.interfaces.RSAPublicKey;
-//
-//import org.springframework.stereotype.Component;
-//
-//import com.auth0.jwt.JWT;
-//import com.auth0.jwt.algorithms.Algorithm;
-//import com.jcodepoint.jwt.util.JksProperties;
-//
-//@Component
-//public class JwtUtil {
-//	private RSAPrivateKey privateKey;
-//	private RSAPublicKey publicKey;
-//
-//	public JwtUtil(RSAPublicKey publicKey, RSAPrivateKey privateKey) {
-//		this.privateKey = privateKey;
-//		this.publicKey = publicKey;
-//	}
-//
-//
-//	public String encode(String subject) {
-//		return JWT.create()
-//				.withSubject(subject)
-//				.withExpiresAt(null)
-//				.sign(Algorithm.RSA256(publicKey, privateKey) );
-//	}
-//
-//}
-
-
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -47,12 +19,9 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-
-    @Value("${jwt.secret}")
-    private String secret;
-
-    @Value("${jwt.token.validity}")
-    private long tokenValidity;
+    
+    private String secret = "sistemasinformacioninternet20232024sistemasinformacioninternet20232024";
+    private long tokenValidity = 600;
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -106,7 +75,7 @@ public class JwtUtil {
 //				.signWith(SignatureAlgorithm.HS512, secret).compact();
 //	}
 
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
+    public String doGenerateToken(Map<String, Object> claims, String subject) {
         byte[] keyBytes = secret.getBytes();
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
@@ -122,5 +91,13 @@ public class JwtUtil {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public UserDetails createUserDetails(String username, String password, List<String> roles) {
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .toList();
+
+        return new User(username, password, authorities);
     }
 }
