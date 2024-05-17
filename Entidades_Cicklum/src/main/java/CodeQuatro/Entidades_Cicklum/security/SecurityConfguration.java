@@ -27,16 +27,14 @@ public class SecurityConfguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+       /* */ http
                 .csrf(cs -> cs.disable())
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(authorizeRequests ->authorizeRequests.anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                ); 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
