@@ -52,16 +52,18 @@ class EntidadesCicklumApplicationTests {
 	private final BCryptPasswordEncoder encoder2 = new BCryptPasswordEncoder();
 
 	
-	
-	private JwtUtil jwtUtil = new JwtUtil();
-	private UserDetails userDetails = jwtUtil.createUserDetails("username", "password", List.of("ROLE_USER"));
-	private String token = jwtUtil.generateToken(userDetails);
+	@Autowired
+	private JwtUtil jwtUtil;
+	private UserDetails userDetails;
+	private String token;
 	
 
 	@BeforeEach
 	public void initializeDatabase() {
 		rutinaRepository.deleteAll();
 		ejerciciosRepository.deleteAll();
+		 userDetails = jwtUtil.createUserDetails("1", "", List.of("ROLE_USER"));
+		 token = jwtUtil.generateToken(userDetails);
 	}
 
 
@@ -86,7 +88,7 @@ class EntidadesCicklumApplicationTests {
 					.accept(MediaType.APPLICATION_JSON)
 					.header("Authorization", "Bearer " + token)
 				.build();
-
+			System.out.println("TOKEN -----------------"+token);
 		return peticion;
 	}
 
