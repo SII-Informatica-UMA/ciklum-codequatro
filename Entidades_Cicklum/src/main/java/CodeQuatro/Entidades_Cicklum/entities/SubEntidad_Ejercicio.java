@@ -24,8 +24,8 @@ public class SubEntidad_Ejercicio extends Ejercicios implements Serializable{
     public SubEntidad_Ejercicio() {
     }
     
-    public SubEntidad_Ejercicio (Long idEjercicio, String nombre, String descripcion, String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia, Long series, Long repeticiones, Long duracionMinutos){
-        super(idEjercicio, nombre, descripcion, tipo, musculosTrabajados, material, dificultad, multimedia);
+    public SubEntidad_Ejercicio (Long idEjercicio, String nombre, String descripcion, String observaciones,String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia, Long series, Long repeticiones, Long duracionMinutos){
+        super(idEjercicio, nombre, descripcion, observaciones, tipo, musculosTrabajados, material, dificultad, multimedia);
         this.series = series;
         this.repeticiones = repeticiones;
         this.duracionMinutos = duracionMinutos;

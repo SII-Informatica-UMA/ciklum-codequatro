@@ -16,6 +16,8 @@ public class Ejercicios implements Serializable{
     private String nombre;
     @Column(name = "DESCRIPCION" , nullable = false, length = 50)
     private String descripcion;
+    @Column(name = "OBSERVACIONES", nullable = false, length = 50)
+    private String observaciones;
     @Column(name = "TIPO" , nullable = false, length = 50)
     private String tipo;
     @Column(name = "MUSCULOS_TRABAJADOS" , nullable = false, length = 50)
@@ -24,17 +26,19 @@ public class Ejercicios implements Serializable{
     private String material;
     @Column(name = "DIFICULTAD" , nullable = false, length = 50)
     private String dificultad;
-    @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
+
     @ElementCollection
+    @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
     @CollectionTable(name = "multimedia")
     private List<String> multimedia;
 
     public Ejercicios() {
     }
-    public Ejercicios (Long idEjercicio, String nombre, String descripcion, String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia){
+    public Ejercicios (Long idEjercicio, String nombre, String descripcion, String observaciones, String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia){
         this.idEjercicio = idEjercicio;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.observaciones = observaciones;
         this.tipo = tipo;
         this.musculosTrabajados = musculosTrabajados;
         this.material = material;

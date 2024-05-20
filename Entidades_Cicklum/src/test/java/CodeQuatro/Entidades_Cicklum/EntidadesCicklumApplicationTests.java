@@ -18,6 +18,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.web.util.DefaultUriBuilderFactory;
@@ -47,6 +48,10 @@ class EntidadesCicklumApplicationTests {
 	private RutinasRepository rutinaRepository;
 	@Autowired
 	private EjerciciosRepository ejerciciosRepository;
+
+	private final BCryptPasswordEncoder encoder2 = new BCryptPasswordEncoder();
+
+	
 	
 	private JwtUtil jwtUtil = new JwtUtil();
 	private UserDetails userDetails = jwtUtil.createUserDetails("username", "password", List.of("ROLE_USER"));
@@ -76,6 +81,7 @@ class EntidadesCicklumApplicationTests {
 	private RequestEntity<Void> get(String scheme, String host, int port, String path) {
 
 			URI uri = uri(scheme, host, port, path);
+			//String token = jwtUtil.doGenerateToken(null, null);
 			var peticion = RequestEntity.get(uri)
 					.accept(MediaType.APPLICATION_JSON)
 					.header("Authorization", "Bearer " + token)
