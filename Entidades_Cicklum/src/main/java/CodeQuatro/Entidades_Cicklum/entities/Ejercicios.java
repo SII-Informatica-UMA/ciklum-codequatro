@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 public class Ejercicios implements Serializable{
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "ID" , nullable = false, length = 50)
     private Long idEjercicio;
     @Column(name = "NOMBRE" , nullable = false, length = 50)
@@ -25,9 +25,13 @@ public class Ejercicios implements Serializable{
     private String material;
     @Column(name = "DIFICULTAD" , nullable = false, length = 50)
     private String dificultad;
+    // @ElementCollection
+    // @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
+    // @CollectionTable(name = "multimedia")
+
     @ElementCollection
-    @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
-    @CollectionTable(name = "multimedia")
+    @CollectionTable(name = "MULTIMEDIA", joinColumns = @JoinColumn(name = "EJERCICIOS_ID"))
+    @Column(name = "MULTIMEDIA", nullable = false, length = 50)
     private List<String> multimedia;
     @Column(name = "ID_ENTRENADOR" , nullable = false, length = 50)
     private Long idEntrenador;

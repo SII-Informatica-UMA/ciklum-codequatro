@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @Access (AccessType.FIELD)
 public class Rutinas implements Serializable{
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "ID" , nullable = false, length = 50)
     private Long idRutinas;
     @Column(name = "NOMBRE" , nullable = false, length = 50)
@@ -21,7 +21,8 @@ public class Rutinas implements Serializable{
     private String observaciones;
     @Column(name = "ID_ENTRENADOR" , nullable = false, length = 50)
     private Long idEntrenador;
-    @OneToMany
+    // @OneToMany
+    @OneToMany (mappedBy = "rutina", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FragmentoRutina> ejercicios; // atributo para la relacion mucho a mucho con fragmentoRutina
 
     public Rutinas() {

@@ -62,8 +62,8 @@ class EntidadesCicklumApplicationTests {
 	public void initializeDatabase() {
 		rutinaRepository.deleteAll();
 		ejerciciosRepository.deleteAll();
-		 userDetails = jwtUtil.createUserDetails("1", "", List.of("ROLE_USER"));
-		 token = jwtUtil.generateToken(userDetails);
+		userDetails = jwtUtil.createUserDetails("1", "", List.of("ROLE_USER"));
+		token = jwtUtil.generateToken(userDetails);
 	}
 
 
@@ -128,6 +128,9 @@ class EntidadesCicklumApplicationTests {
 		assertThat(actual.getDescripcion()).isEqualTo(expected.getDescripcion());
 
 	}
+	
+
+
 	/* BASE DE DATOS VACIA */
 	@Nested
 	@DisplayName("cuando la base de datos esta vacía")

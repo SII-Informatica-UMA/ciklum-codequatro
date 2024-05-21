@@ -4,7 +4,10 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
@@ -12,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 public class FragmentoRutina {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID" , nullable = false, length = 50)
     private Long idFragmentoRutina;
     @Column(name = "NUMERO DE SERIES" , nullable = false, length = 50)
@@ -21,8 +25,12 @@ public class FragmentoRutina {
     @Column(name = "DURACION EN MINUTOS" , nullable = false, length = 50)
     private Long duracionMinutos;
     @ManyToOne
+    @JoinColumn(name = "EJERCICIOS_ID", nullable = false)
     private Ejercicios ejercicios;
 
+    @ManyToOne
+    @JoinColumn(name = "RUTINA_ID", nullable = false)
+    private Rutinas rutina;
 
     public FragmentoRutina() {
     }
