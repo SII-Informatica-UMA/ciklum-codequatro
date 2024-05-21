@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +18,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+
 @Component
 public class JwtUtil {
     
-    private String secret = "sistemasinformacioninternet20232024sistemasinformacioninternet20232024";
-    private long tokenValidity = 600;
+    @Value("${jwt.secret}")
+    private String secret;
+    
+    @Value("${jwt.token-validity}")
+    private long tokenValidity;
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
