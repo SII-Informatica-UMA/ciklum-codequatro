@@ -69,7 +69,7 @@ public class RutinasRest {
 	@PutMapping("{id}")
 	public void modificarRutina(@PathVariable Long id, @RequestBody RutinasDTO rutina) {
 		Rutinas entidadRutina = rutina.rutina();
-		entidadRutina.setId(id);
+		entidadRutina.setIdRutinas(id);
 		servicio.modificarRutina(id,entidadRutina);
 	}
 	

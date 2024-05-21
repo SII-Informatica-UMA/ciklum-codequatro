@@ -19,18 +19,19 @@ public class Rutinas implements Serializable{
     private String descripcion;
     @Column(name = "OBSERVACIONES" , nullable = false, length = 50)
     private String observaciones;
-    @ManyToMany 
-    @JoinTable (name = "relRutinaEjercicio")
-    private List<SubEntidad_Ejercicio> ejercicios;
+    @Column(name = "ID_ENTRENADOR" , nullable = false, length = 50)
+    private Long idEntrenador;
+    @OneToMany
+    private List<FragmentoRutina> ejercicios; // atributo para la relacion mucho a mucho con fragmentoRutina
 
     public Rutinas() {
     }
-    public Rutinas (Long idRutinas, String nombre, String descripcion, String observaciones, List<SubEntidad_Ejercicio> ejercicios){
+    
+    public Rutinas (Long idRutinas, String nombre, String descripcion, String observaciones){
         this.idRutinas = idRutinas;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.observaciones = observaciones;
-        this.ejercicios = ejercicios;
     }
 
     
@@ -65,11 +66,19 @@ public class Rutinas implements Serializable{
         this.observaciones = observaciones;
     }
 
-    public List<SubEntidad_Ejercicio> getEjercicios() {
+    public Long getIdEntrenador() {
+        return idEntrenador;
+    }
+
+    public void setIdEntrenador(Long idEntrenador) {
+        this.idEntrenador = idEntrenador;
+    }
+
+    public List<FragmentoRutina> getFragmentoRutina() {
         return ejercicios;
     }
 
-    public void setEjercicios(List<SubEntidad_Ejercicio> ejercicios) {
+    public void setFragmentoRutina(List<FragmentoRutina> ejercicios) {
         this.ejercicios = ejercicios;
     }
 
@@ -100,10 +109,6 @@ public class Rutinas implements Serializable{
         sb.append(observaciones);
 
         return sb.toString();
-    }
-    public void setId(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setId'");
     }
 
 }

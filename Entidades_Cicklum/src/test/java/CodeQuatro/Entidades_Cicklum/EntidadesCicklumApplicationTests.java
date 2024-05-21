@@ -121,7 +121,6 @@ class EntidadesCicklumApplicationTests {
 	private void compruebaCampos(Rutinas expected, Rutinas actual) {
 		assertThat(actual.getNombre()).isEqualTo(expected.getNombre());
 		assertThat(actual.getDescripcion()).isEqualTo(expected.getDescripcion());
-		assertThat(actual.getEjercicios()).isEqualTo(expected.getEjercicios());
 	}
 
 	private void compruebaCampos(Ejercicios expected, Ejercicios actual) {

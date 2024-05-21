@@ -51,7 +51,6 @@ public class LogicaRutinas {
 
 				rutinasModificar.ifPresent(l->l.setNombre(rutina.getNombre()));
 				rutinasModificar.ifPresent(l->l.setDescripcion(rutina.getDescripcion()));
-				rutinasModificar.ifPresent(l->l.setEjercicios(rutina.getEjercicios()));
 			}
 			else{
 				throw new RutinaExistente("La rutina ya existe en la base de datos");

@@ -8,7 +8,6 @@ import java.util.function.Function;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
-import CodeQuatro.Entidades_Cicklum.entities.SubEntidad_Ejercicio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +25,6 @@ public class RutinasDTO {
     private String nombre;
     private String descripcion; 
     private String observaciones;
-    private List<SubEntidad_Ejercicio> ejercicios;
     @JsonProperty("_links")
     private Links links;
 
@@ -36,7 +34,6 @@ public class RutinasDTO {
         dto.setNombre(rut.getNombre());
         dto.setDescripcion(rut.getDescripcion());
         dto.setObservaciones(rut.getObservaciones());
-        dto.setEjercicios(rut.getEjercicios());
         dto.setLinks( 
             Links.builder()
                 .self(rutinaUriBuilder.apply(rut.getIdRutinas()))

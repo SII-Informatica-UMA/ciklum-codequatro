@@ -6,7 +6,6 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Ejercicios implements Serializable{
     @Id
     @GeneratedValue
@@ -26,11 +25,12 @@ public class Ejercicios implements Serializable{
     private String material;
     @Column(name = "DIFICULTAD" , nullable = false, length = 50)
     private String dificultad;
-
     @ElementCollection
     @Column(name = "MULTIMEDIA" , nullable = false, length = 50)
     @CollectionTable(name = "multimedia")
     private List<String> multimedia;
+    @Column(name = "ID_ENTRENADOR" , nullable = false, length = 50)
+    private Long idEntrenador;
 
     public Ejercicios() {
     }
@@ -70,6 +70,16 @@ public class Ejercicios implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+
     public String getTipo() {
         return tipo;
     }
@@ -132,6 +142,8 @@ public class Ejercicios implements Serializable{
         sb.append(nombre);
         sb.append(", descripcion= ");
         sb.append(descripcion);
+        sb.append("descripcion= ");
+        sb.append(observaciones);
         sb.append(", tipo= ");
         sb.append(tipo);
         sb.append(", musculos trabajados= ");
