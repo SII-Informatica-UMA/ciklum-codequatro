@@ -20,6 +20,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
     
+    private String secret = "sistemasinformacioninternet20232024sistemasinformacioninternet20232024";
     private long tokenValidity = 600;
 
     //retrieve username from jwt token
