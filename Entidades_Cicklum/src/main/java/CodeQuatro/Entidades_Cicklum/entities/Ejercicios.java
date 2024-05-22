@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 public class Ejercicios implements Serializable{
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue //(strategy = GenerationType.IDENTITY)
     @Column(name = "ID" , nullable = false, length = 50)
     private Long idEjercicio;
     @Column(name = "NOMBRE" , nullable = false, length = 50)

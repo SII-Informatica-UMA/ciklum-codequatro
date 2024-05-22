@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 public class FragmentoRutina {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue //(strategy = GenerationType.IDENTITY)
     @Column(name = "ID" , nullable = false, length = 50)
     private Long idFragmentoRutina;
     @Column(name = "NUMERO DE SERIES" , nullable = false, length = 50)

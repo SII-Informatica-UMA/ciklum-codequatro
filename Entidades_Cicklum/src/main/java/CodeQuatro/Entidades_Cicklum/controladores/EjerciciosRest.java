@@ -28,7 +28,7 @@ import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioNoEncontradoException;
 import CodeQuatro.Entidades_Cicklum.servicios.LogicaEjercicios;
 
 @RestController
-@RequestMapping("/ejericios")
+@RequestMapping("/ejericio")
 public class EjerciciosRest {
 	private LogicaEjercicios logicaEjercicios;
 	@Autowired

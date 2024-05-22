@@ -55,10 +55,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     userDetails, userDetails.getPassword(), userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                logger.debug("usernamePasswordAuthenticationToken = " + usernamePasswordAuthenticationToken);
+                logger.info("usernamePasswordAuthenticationToken = " + usernamePasswordAuthenticationToken);
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             } else {
-                logger.debug("Token no válido");
+                logger.info("Token no válido");
             }
 
         }

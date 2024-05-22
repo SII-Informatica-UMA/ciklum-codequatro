@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @Access (AccessType.FIELD)
 public class Rutinas implements Serializable{
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue //(strategy = GenerationType.IDENTITY)
     @Column(name = "ID" , nullable = false, length = 50)
     private Long idRutinas;
     @Column(name = "NOMBRE" , nullable = false, length = 50)
