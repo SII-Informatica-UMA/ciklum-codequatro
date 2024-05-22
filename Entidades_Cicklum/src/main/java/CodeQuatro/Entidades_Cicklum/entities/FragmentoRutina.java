@@ -25,12 +25,8 @@ public class FragmentoRutina {
     @Column(name = "DURACION EN MINUTOS" , nullable = false, length = 50)
     private Long duracionMinutos;
     @ManyToOne
-    @JoinColumn(name = "EJERCICIOS_ID", nullable = false)
+    @Column(name = "EJERCICIOS_ID", nullable = false)
     private Ejercicios ejercicios;
-
-    @ManyToOne
-    @JoinColumn(name = "RUTINA_ID", nullable = false)
-    private Rutinas rutina;
 
     public FragmentoRutina() {
     }

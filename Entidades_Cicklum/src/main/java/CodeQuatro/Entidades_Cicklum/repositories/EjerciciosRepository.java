@@ -13,7 +13,4 @@ import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 public interface EjerciciosRepository extends JpaRepository<Ejercicios, Long> {
 	List<Ejercicios> findEjercicioByNombre(String nombre);
 	
-	@Query("select e from Ejercicios e where e.nombre = :nombre")
-	List<Ejercicios> miConsultaCompleja(@Param("nombre") String nombre);
-
 }
