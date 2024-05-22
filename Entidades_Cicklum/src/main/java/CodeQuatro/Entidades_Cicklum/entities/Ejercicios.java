@@ -38,7 +38,7 @@ public class Ejercicios implements Serializable{
 
     public Ejercicios() {
     }
-    public Ejercicios (Long idEjercicio, String nombre, String descripcion, String observaciones, String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia){
+    public Ejercicios (Long idEjercicio, String nombre, String descripcion, String observaciones, String tipo, String musculosTrabajados, String material, String dificultad, List<String> multimedia, Long idEntrenador){
         this.idEjercicio = idEjercicio;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -48,6 +48,7 @@ public class Ejercicios implements Serializable{
         this.material = material;
         this.dificultad = dificultad;
         this.multimedia = multimedia;
+        this.idEntrenador = idEntrenador;
     }
 
 
@@ -57,6 +58,14 @@ public class Ejercicios implements Serializable{
     
     public void setIdEjercicio(Long idEjercicio) {
         this.idEjercicio = idEjercicio;
+    }
+
+    public Long getIdEntrenador() {
+        return idEntrenador;
+    }
+
+    public void setIdEntrenador(Long idEntrenador) {
+        this.idEntrenador = idEntrenador;
     }
     
     public String getNombre() {

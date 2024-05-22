@@ -30,6 +30,7 @@ public class EjerciciosDTO {
     private List<String> multimedia;
     @JsonProperty("_links")
     private Links links;
+    private Long idEntrenador;
     
     public static EjerciciosDTO fromEjercicios(Ejercicios ej , Function<Long, URI> uriBuilder){
         EjerciciosDTO dto = new EjerciciosDTO();
@@ -59,6 +60,7 @@ public class EjerciciosDTO {
         ej.setMaterial(material);
         ej.setDificultad(dificultad);
         ej.setMultimedia(multimedia);
+        ej.setIdEntrenador(idEntrenador);
         return ej;
     }
 
@@ -68,6 +70,14 @@ public class EjerciciosDTO {
 
     public void setIdEjercicio(Long idEjercicio) {
         this.idEjercicio = idEjercicio;
+    }
+
+    public Long getIdEntrenador() {
+        return idEntrenador;
+    }
+
+    public void setIdEntrenador(Long idEntrenador) {
+        this.idEntrenador = idEntrenador;
     }
 
     public String getNombre() {

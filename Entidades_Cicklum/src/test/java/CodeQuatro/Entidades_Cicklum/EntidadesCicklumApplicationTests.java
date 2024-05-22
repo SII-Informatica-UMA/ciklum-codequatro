@@ -181,6 +181,8 @@ class EntidadesCicklumApplicationTests {
 					.idEjercicio((long) 1)
 					.nombre("Curl de biceps")
 					.descripcion("descripcion")
+					.observaciones("observaciones")
+					.idEntrenador((long) 1)
 					.build();
 
 					
@@ -216,7 +218,6 @@ class EntidadesCicklumApplicationTests {
 	/*---------------- BASE DE DATOS CON DATOS ---------------------*/
 
 
-	@Disabled
 	@Nested
 	@DisplayName("----------cuando la base de datos contiene datos----------")
 	public class BaseDatosConDatos {
@@ -227,18 +228,16 @@ class EntidadesCicklumApplicationTests {
 		public void insertaEjercicio() {
 			var sentadilla = new Ejercicios();
 			sentadilla.setNombre("sentadilla");
-		sentadilla.setDescripcion("descripcion");
-		sentadilla.setDificultad("dificultad");
-		sentadilla.setMusculosTrabajados("musculos");
-		sentadilla.setMaterial("material");
-		sentadilla.setTipo("tipo");
-		sentadilla.setMultimedia(null);
+			sentadilla.setDescripcion("descripcion");
+			sentadilla.setObservaciones("obsevaciones");
+			sentadilla.setDificultad("dificultad");
+			sentadilla.setMusculosTrabajados("musculos");
+			sentadilla.setMaterial("material");
+			sentadilla.setTipo("tipo");
+			sentadilla.setMultimedia(null);
+			sentadilla.setIdEntrenador((long) 1);
+
 			ejerciciosRepository.save(sentadilla);
-			/*
-			 * var rutina1 = new Rutinas();
-			 * rutina1.setNombre("Calentamiento");
-			 * rutina1.setEjercicios(Collections.singletonList(flexiones));
-			 */
 		}
 
 		/* TESTS  */
