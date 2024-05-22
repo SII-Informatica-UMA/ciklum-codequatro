@@ -5,7 +5,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,10 +27,11 @@ import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioNoEncontradoException;
 import CodeQuatro.Entidades_Cicklum.servicios.LogicaEjercicios;
 
 @RestController
-@RequestMapping("/ejericio")
+@RequestMapping("/ejercicios")
 public class EjerciciosRest {
+
 	private LogicaEjercicios logicaEjercicios;
-	@Autowired
+	
 	public EjerciciosRest(LogicaEjercicios logicaEjercicios) {
         this.logicaEjercicios = logicaEjercicios;
     }
@@ -46,11 +46,14 @@ public class EjerciciosRest {
 	}
 
 	@GetMapping
-    public List<Ejercicios> getTodosEjercicios(UriComponentsBuilder uriBuilder) {
-        return logicaEjercicios.getTodosEjercicios();
+    public List<EjerciciosDTO> getTodosEjercicios(UriComponentsBuilder uriBuilder) {
+        var ejercicios = logicaEjercicios.getTodosEjercicios();
+        return ejercicios.stream()
+				.map(ej->EjerciciosDTO.fromEjercicios(ej, ejerciciosUriBuilder(uriBuilder.build())))
+                .toList();
     }
 
-	 @PostMapping
+	@PostMapping
     public ResponseEntity<EjerciciosDTO> aniadirEjercicio(@RequestBody EjerciciosDTO ejercicio, UriComponentsBuilder uriBuilder){
         Long id = logicaEjercicios.aniadirEjercicio(ejercicio.ejercicios());
         return ResponseEntity.created(ejerciciosUriBuilder(uriBuilder.build()).apply(id)).build();
@@ -66,7 +69,7 @@ public class EjerciciosRest {
     public void actualizarEjercicio(@PathVariable Long id, @RequestBody EjerciciosDTO ejercicio){
         Ejercicios ej = ejercicio.ejercicios();
         ejercicio.setIdEjercicio(id);
-        logicaEjercicios.actualizarEjercicio(ej);
+        logicaEjercicios.actualizarEjercicio(id, ej);
     }
 
     @DeleteMapping("/{id}")

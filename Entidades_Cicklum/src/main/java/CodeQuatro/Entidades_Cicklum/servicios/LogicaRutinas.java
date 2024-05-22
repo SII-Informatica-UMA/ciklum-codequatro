@@ -1,10 +1,10 @@
 package CodeQuatro.Entidades_Cicklum.servicios;
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
+import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioNoEncontradoException;
 import CodeQuatro.Entidades_Cicklum.excepciones.RutinaExistente;
 import CodeQuatro.Entidades_Cicklum.excepciones.RutinaNoEncontrada;
 import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,6 @@ public class LogicaRutinas {
 	
 	private RutinasRepository repo;
 	
-	@Autowired
 	public LogicaRutinas(RutinasRepository repo) {
 		this.repo=repo;
 	}
@@ -26,17 +25,22 @@ public class LogicaRutinas {
 		return repo.findAll();
 	}
 
-	public Optional<Rutinas> getRutinasById(Long id) {
-		return repo.findById(id);
+	public Rutinas getRutinasById(Long id) {
+		var rut = repo.findById(id);
+        if(rut.isPresent()){
+            return rut.get();
+        }else{
+            throw new RutinaNoEncontrada("Rutina no encontrada en la base de datos");
+        }
 	}
 
-	public Rutinas aniadirRutina(Rutinas nuevaRutina){
+	public Long aniadirRutina(Rutinas nuevaRutina){
 		if (repo.findByNombre(nuevaRutina.getNombre()).isPresent()) {
             throw new RutinaExistente("La rutina ya existe en la base de datos");
         }
 		nuevaRutina.setIdRutinas(null); // null?????
 		repo.save(nuevaRutina);
-		return nuevaRutina;
+		return nuevaRutina.getIdRutinas();
 	}
 	
 	public void modificarRutina(Long id, Rutinas rutina){
@@ -49,8 +53,11 @@ public class LogicaRutinas {
 			if(repo.existsById(id)){
 				Optional<Rutinas> rutinasModificar = repo.findById(id);
 
-				rutinasModificar.ifPresent(l->l.setNombre(rutina.getNombre()));
 				rutinasModificar.ifPresent(l->l.setDescripcion(rutina.getDescripcion()));
+				rutinasModificar.ifPresent(l->l.setIdEntrenador(rutina.getIdEntrenador()));
+				rutinasModificar.ifPresent(l->l.setObservaciones(rutina.getObservaciones()));
+				rutinasModificar.ifPresent(l->l.setFragmentoRutina(rutina.getFragmentoRutina()));
+
 			}
 			else{
 				throw new RutinaExistente("La rutina ya existe en la base de datos");

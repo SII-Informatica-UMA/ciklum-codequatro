@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import jakarta.persistence.*;
 
-
+// DUDA: PQ AQUI NO HAY LINKS
 @Entity
 @Access (AccessType.FIELD)
 public class Rutinas implements Serializable{
