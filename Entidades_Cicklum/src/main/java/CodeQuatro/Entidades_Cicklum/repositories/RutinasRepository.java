@@ -11,7 +11,7 @@ import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
 @Repository
 public interface RutinasRepository extends JpaRepository<Rutinas, Long>{
 
-    Optional<Rutinas> findRutinaByNombre(String nombre);
+    Optional<Rutinas> findByNombre(String nombre);
     
     @Query("select r from Rutinas r where r.nombre = :nombre")
     //List<Rutinas> miConsultaCompleja(@Param("nombre") String nombre);

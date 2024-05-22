@@ -31,7 +31,7 @@ public class LogicaRutinas {
 	}
 
 	public Rutinas aniadirRutina(Rutinas nuevaRutina){
-		if (repo.findRutinaByNombre(nuevaRutina.getNombre()).isPresent()) {
+		if (repo.findByNombre(nuevaRutina.getNombre()).isPresent()) {
             throw new RutinaExistente("La rutina ya existe en la base de datos");
         }
 		nuevaRutina.setIdRutinas(null); // null?????
@@ -41,7 +41,7 @@ public class LogicaRutinas {
 	
 	public void modificarRutina(Long id, Rutinas rutina){
 
-		if (repo.findRutinaByNombre(rutina.getNombre()).isPresent()) { // si le quieres poner el nombre de una rutina que ya existe, lanza excepcion
+		if (repo.findByNombre(rutina.getNombre()).isPresent()) { // si le quieres poner el nombre de una rutina que ya existe, lanza excepcion
             throw new RutinaExistente("La rutina ya existe en la base de datos");
         }
 		
