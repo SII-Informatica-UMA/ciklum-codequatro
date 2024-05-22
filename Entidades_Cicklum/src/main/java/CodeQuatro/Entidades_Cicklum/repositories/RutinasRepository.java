@@ -1,4 +1,5 @@
 package CodeQuatro.Entidades_Cicklum.repositories;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +10,7 @@ import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
 
 @Repository
 public interface RutinasRepository extends JpaRepository<Rutinas, Long>{
-    //sin rutinas
+
     Optional<Rutinas> findRutinaByNombre(String nombre);
     
     @Query("select r from Rutinas r where r.nombre = :nombre")

@@ -146,7 +146,7 @@ public class Ejercicios implements Serializable{
         sb.append(nombre);
         sb.append(", descripcion= ");
         sb.append(descripcion);
-        sb.append("descripcion= ");
+        sb.append("Observaciones= ");
         sb.append(observaciones);
         sb.append(", tipo= ");
         sb.append(tipo);

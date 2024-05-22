@@ -226,5 +226,6 @@ create table fragmento_rutina ("duracion en minutos" bigint not null, ejercicios
 create table multimedia (ejercicios_id bigint not null, multimedia varchar(50) not null);
 create table rutinas (id bigint not null, id_entrenador bigint not null, descripcion varchar(50) not null, nombre varchar(50) not null, observaciones varchar(50) not null, primary key (id));
 alter table if exists fragmento_rutina add constraint FK2yl2w27k5vkl6u8xg7wim5xq7 foreign key (ejercicios_id) references ejercicios;
-alter table if exists fragmento_rutina add constraint FK7cyv9l5r75a2erprqctjqbu97 foreign key (rutina_id) references rutinas;
 alter table if exists multimedia add constraint FKqx33895wyp9jvt1e2wujjhw9p foreign key (ejercicios_id) references ejercicios;
+alter table if exists rutinas_ejercicios add constraint FK58n7ohg6ru4behceqccrs9ddi foreign key (ejercicios_id) references fragmento_rutina;
+alter table if exists rutinas_ejercicios add constraint FK4o1bj3jyk9bfkoq9wfrjb825c foreign key (rutinas_id) references rutinas;
