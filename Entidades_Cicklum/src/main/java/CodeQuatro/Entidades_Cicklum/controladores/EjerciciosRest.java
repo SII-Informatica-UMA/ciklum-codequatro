@@ -51,7 +51,7 @@ public class EjerciciosRest {
     }
 
 	 @PostMapping
-    public ResponseEntity<?> aniadirEjercicio(@RequestBody EjerciciosDTO ejercicio, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<EjerciciosDTO> aniadirEjercicio(@RequestBody EjerciciosDTO ejercicio, UriComponentsBuilder uriBuilder){
         Long id = logicaEjercicios.aniadirEjercicio(ejercicio.ejercicios());
         return ResponseEntity.created(ejerciciosUriBuilder(uriBuilder.build()).apply(id)).build();
     }

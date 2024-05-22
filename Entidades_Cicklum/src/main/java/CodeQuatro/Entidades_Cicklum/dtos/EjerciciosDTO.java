@@ -22,6 +22,7 @@ public class EjerciciosDTO {
     private Long idEjercicio;
     private String nombre;
     private String descripcion;
+    private String observaciones;
     private String tipo;
     private String musculosTrabajados;
     private String material;
@@ -59,5 +60,85 @@ public class EjerciciosDTO {
         ej.setDificultad(dificultad);
         ej.setMultimedia(multimedia);
         return ej;
+    }
+
+    public Long getIdEjercicio() {
+        return idEjercicio;
+    }
+
+    public void setIdEjercicio(Long idEjercicio) {
+        this.idEjercicio = idEjercicio;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getMusculosTrabajados() {
+        return musculosTrabajados;
+    }
+
+    public void setMusculosTrabajados(String musculosTrabajados) {
+        this.musculosTrabajados = musculosTrabajados;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(String dificultad) {
+        this.dificultad = dificultad;
+    }
+
+    public List<String> getMultimedia() {
+        return multimedia;
+    }
+
+    public void setMultimedia(List<String> multimedia) {
+        this.multimedia = multimedia;
+    }
+
+    public Links getLinks() {
+        return links;
+    }
+
+    public void setLinks(Links links) {
+        this.links = links;
     }
 }
