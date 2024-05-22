@@ -22,7 +22,7 @@ public class Rutinas implements Serializable{
     @Column(name = "ID_ENTRENADOR" , nullable = false, length = 50)
     private Long idEntrenador;
     // @OneToMany
-    @OneToMany (mappedBy = "rutina", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FragmentoRutina> ejercicios; // atributo para la relacion mucho a mucho con fragmentoRutina
 
     public Rutinas() {
