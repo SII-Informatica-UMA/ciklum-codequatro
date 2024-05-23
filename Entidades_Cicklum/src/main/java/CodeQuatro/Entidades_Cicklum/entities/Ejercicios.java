@@ -4,8 +4,10 @@ import java.util.List;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
+@Builder
 public class Ejercicios implements Serializable{
     @Id
     @GeneratedValue //(strategy = GenerationType.IDENTITY)
@@ -50,6 +52,8 @@ public class Ejercicios implements Serializable{
         this.multimedia = multimedia;
         this.idEntrenador = idEntrenador;
     }
+
+    
 
 
     public Long getIdEjercicio() {

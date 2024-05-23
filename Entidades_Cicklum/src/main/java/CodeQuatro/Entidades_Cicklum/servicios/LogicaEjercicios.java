@@ -10,74 +10,51 @@ import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioExistenteException;
 import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioNoEncontradoException;
 import CodeQuatro.Entidades_Cicklum.excepciones.RutinaExistente;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
-import jakarta.transaction.Transactional;
+import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 public class LogicaEjercicios {
-    private EjerciciosRepository repo;
+   private EjerciciosRepository ejercicioRepo;
+   private RutinasRepository rutinaRepo;
 
+   public LogicaEjercicios(EjerciciosRepository ejercicioRepo, RutinasRepository rutinaRepo) {
+      this.ejercicioRepo = ejercicioRepo;
+      this.rutinaRepo = rutinaRepo;
+   }
 
-    public LogicaEjercicios(EjerciciosRepository repo) {
-        this.repo = repo;
-    }
+   public List<Ejercicios> obtenerEjercicios(Long idEntrenador) {
+      this.comprobarPermiso(idEntrenador);
+      return this.ejercicioRepo.findByIdEntrenador(idEntrenador);
+   }
 
-    public List<Ejercicios> getTodosEjercicios() {
-        return repo.findAll();
-    }
-    public Ejercicios getEjercicioById(Long id) {
-        var Ejercicios = repo.findById(id);
-        if(Ejercicios.isPresent()){
-            return Ejercicios.get();
-        }else{
-            throw new EjercicioNoEncontradoException("Ejercicio no encontrado en la base de datos");
-        }
-    }
+   public Optional<Ejercicios> obtenerEjercicio(Long idEjercicio) {
+      Optional<Ejercicios> ejercicio = this.ejercicioRepo.findById(idEjercicio);
+      ejercicio.ifPresent(this::comprobarPermiso);
+      return ejercicio;
+   }
 
-    public Long aniadirEjercicio(Ejercicios nuevoEjercicio){
-        if(!repo.existsById(nuevoEjercicio.getIdEjercicio())){
-            nuevoEjercicio.setIdEjercicio(null);
-            repo.save(nuevoEjercicio);
-            System.out.println("Ejercicio añadido");
-            return nuevoEjercicio.getIdEjercicio();
-        }else{
-            throw new EjercicioExistenteException("El ejercicio ya está creado");
-        }
-    }
+   private void comprobarPermiso(Ejercicios ejercicio) {
+   }
 
-    public void eliminarEjercicio(Long id){
-        if(repo.existsById(id)){
-            repo.deleteById(id);
-        }else{
-            throw new EjercicioNoEncontradoException("Ejercicio no encontrado en la base de datos");
-        }
-    }
+   private void comprobarPermiso(Long idEntrenador) {
+   }
 
-    public void actualizarEjercicio(Long id, Ejercicios ejercicio){
+   public Ejercicios crearActualizarEjercicio(Ejercicios ejercicio) {
+      this.comprobarPermiso(ejercicio);
+      return (Ejercicios)this.ejercicioRepo.save(ejercicio);
+   }
 
-        if (repo.findEjercicioByNombre(ejercicio.getNombre()).isPresent()) { // si le quieres poner el nombre de un ejercicio que ya existe, lanza excepcion
-            throw new RutinaExistente("El ejercicio ya existe en la base de datos");
-        }
-		
-		else{
-			if(repo.existsById(id)){
-				Optional<Ejercicios> ejercicioModificar = repo.findById(id);
-
-				ejercicioModificar.ifPresent(l->l.setDescripcion(ejercicio.getDescripcion()));
-                ejercicioModificar.ifPresent(l->l.setDificultad(ejercicio.getDificultad()));
-                ejercicioModificar.ifPresent(l->l.setMaterial(ejercicio.getMaterial()));
-                ejercicioModificar.ifPresent(l->l.setMusculosTrabajados(ejercicio.getMusculosTrabajados()));
-                ejercicioModificar.ifPresent(l->l.setObservaciones(ejercicio.getObservaciones()));
-                ejercicioModificar.ifPresent(l->l.setTipo(ejercicio.getTipo()));
-                ejercicioModificar.ifPresent(l->l.setMultimedia(ejercicio.getMultimedia()));
-
-			}
-			else{
-				throw new EjercicioNoEncontradoException("ERROR: no se ha podido modificar el ejercicio con id: "
-                + ejercicio.getIdEjercicio() + " -> no encontrado en la base de datos");
-			}
-
-    }
-}
-
+   public void eliminarEjercicio(Long id) {
+      if (this.rutinaRepo.existsRutinaWithEjercicio(id)) {
+         throw new EjercicioNoEncontradoException(); // En caso de que de fallo, usamos un runtime exception
+      } else {
+         this.ejercicioRepo.deleteById(id);
+      }
+   }
 }
