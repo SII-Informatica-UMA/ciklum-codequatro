@@ -5,8 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class FragmentoRutina {
 
     @Id
@@ -22,15 +28,6 @@ public class FragmentoRutina {
     @ManyToOne
     private Ejercicios ejercicios;
 
-    public FragmentoRutina() {
-    }
-
-    public FragmentoRutina(Long idFragmentoRutina, Long numSeries, Long numRepeticiones, Long duracionMinutos) {
-        this.idFragmentoRutina = idFragmentoRutina;
-        this.numSeries = numSeries;
-        this.numRepeticiones = numRepeticiones;
-        this.duracionMinutos = duracionMinutos;
-    }
 
 
     public Long getIdFragmentoRutina() {

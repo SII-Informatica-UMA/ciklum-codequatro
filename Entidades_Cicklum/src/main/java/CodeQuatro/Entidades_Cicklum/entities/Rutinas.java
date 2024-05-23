@@ -1,13 +1,26 @@
 package CodeQuatro.Entidades_Cicklum.entities;
 
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 // DUDA: PQ AQUI NO HAY LINKS
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Access (AccessType.FIELD)
+@Builder
 public class Rutinas implements Serializable{
     @Id
     @GeneratedValue //(strategy = GenerationType.IDENTITY)
@@ -25,15 +38,6 @@ public class Rutinas implements Serializable{
     @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FragmentoRutina> ejercicios; // atributo para la relacion mucho a mucho con fragmentoRutina
 
-    public Rutinas() {
-    }
-    
-    public Rutinas (Long idRutinas, String nombre, String descripcion, String observaciones){
-        this.idRutinas = idRutinas;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.observaciones = observaciones;
-    }
 
     
     public Long getIdRutinas() {
