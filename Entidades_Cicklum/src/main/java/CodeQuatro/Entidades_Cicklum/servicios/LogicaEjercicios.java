@@ -50,11 +50,13 @@ public class LogicaEjercicios {
       return (Ejercicios)this.ejercicioRepo.save(ejercicio);
    }
 
-   public void eliminarEjercicio(Long id) {
-      if (this.rutinaRepo.existsRutinaWithEjercicio(id)) {
-         throw new EjercicioNoEncontradoException(); // En caso de que de fallo, usamos un runtime exception
-      } else {
-         this.ejercicioRepo.deleteById(id);
+   
+   public void eliminarEjercicio(Long id) throws Exception{
+      Optional<Ejercicios>aux= ejercicioRepo.findById(id);
+      if(aux.isEmpty()){
+
+          throw new Exception();
       }
-   }
+      ejercicioRepo.deleteById(id);
+}
 }

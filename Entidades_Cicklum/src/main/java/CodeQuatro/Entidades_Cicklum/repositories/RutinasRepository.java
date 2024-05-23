@@ -14,8 +14,8 @@ public interface RutinasRepository extends JpaRepository<Rutinas, Long>{
 
 
 
-    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN TRUE ELSE FALSE END FROM Rutina r WHERE EXISTS (SELECT 1 FROM r.ejercicios f WHERE f.ejercicio.id = :idEjercicio)")
-    boolean existsRutinaWithEjercicio(@Param("idEjercicio") Long idEjercicio);
+    // @Query("SELECT CASE WHEN COUNT(r) > 0 THEN TRUE ELSE FALSE END FROM Rutina r WHERE EXISTS (SELECT 1 FROM r.ejercicios f WHERE f.ejercicio.id = :idEjercicio)")
+    // boolean existsRutinaWithEjercicio(@Param("idEjercicio") Long idEjercicio);
 
 
     List<Rutinas> findByIdEntrenador(Long idEntrenador);

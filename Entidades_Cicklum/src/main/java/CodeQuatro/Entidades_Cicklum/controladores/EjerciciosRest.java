@@ -131,6 +131,9 @@ public class EjerciciosRest {
             this.logicaEjercicios.eliminarEjercicio(idEjercicio);
         } catch (EjercicioNoEncontradoException var3) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
         return ResponseEntity.ok().build();
