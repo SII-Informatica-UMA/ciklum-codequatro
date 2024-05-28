@@ -132,8 +132,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
 				<configuration>
-
-				</configuration>
+        			<printSummary>true</printSummary>
+    			</configuration>
 			</plugin>
 		</plugins>
 	</build>
