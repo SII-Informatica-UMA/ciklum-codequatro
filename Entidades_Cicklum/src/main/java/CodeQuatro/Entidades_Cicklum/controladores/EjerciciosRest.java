@@ -50,14 +50,13 @@ public class EjerciciosRest {
 				.toUri();
 	}
 
-
     @GetMapping
     @Operation(description = "Permite consultar todos los ejercicios a un entrenador. Solo lo puede hacer el entrenador.", responses = {
         @ApiResponse(responseCode = "200", description = "Devuelve la lista de ejercicios de un entrenador."),
         @ApiResponse(responseCode = "403", description = "Acceso no autorizado", content = {
-            @Content(schema = @Schema(implementation = Void.class)) }) })
+            @Content(schema = @Schema(implementation = Void.class)) }) })        
     public List<EjerciciosDTO> obtenerEjercicios(
-        @RequestParam(value = "entrenador", required = true) Long idEntrenador) {
+        @RequestParam(value = "entrenador", required = false) Long idEntrenador) {
         return this.logicaEjercicios.obtenerEjercicios(idEntrenador).stream().map(EjerciciosDTO::fromEntity).toList();
     }
 
