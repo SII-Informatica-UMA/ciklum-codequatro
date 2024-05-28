@@ -42,7 +42,7 @@ public class EjerciciosDTO extends EjercicioNuevoDTO{
         .material(ejercicios.getMaterial())
         .dificultad(ejercicios.getDificultad())
         .multimedia(ejercicios.getMultimedia())
-        .idEntrenador(ejercicios.getIdEntrenador())
+        //.idEntrenador(ejercicios.getIdEntrenador())
         .build();
     }
 
@@ -57,13 +57,13 @@ public class EjerciciosDTO extends EjercicioNuevoDTO{
         .material(this.getMaterial())
         .dificultad(this.getDificultad())
         .multimedia(this.getMultimedia())
-        .idEntrenador(this.getIdEntrenador())
+        //.idEntrenador(this.getIdEntrenador())
         .build();
     }
 
-    public Long getIdEjercicio() {
-        return idEjercicio;
-    }
+    // public Long getIdEjercicio() {
+    //     return idEjercicio;
+    // }
 
     public void setIdEjercicio(Long idEjercicio) {
         this.idEjercicio = idEjercicio;

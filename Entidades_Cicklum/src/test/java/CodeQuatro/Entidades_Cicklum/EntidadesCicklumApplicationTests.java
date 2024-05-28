@@ -52,7 +52,7 @@ class EntidadesCicklumApplicationTests {
 	@Autowired
 	private EjerciciosRepository ejerciciosRepository;
 
-	private final BCryptPasswordEncoder encoder2 = new BCryptPasswordEncoder();
+	//private final BCryptPasswordEncoder encoder2 = new BCryptPasswordEncoder();
 
 	
 	@Autowired
@@ -143,7 +143,7 @@ class EntidadesCicklumApplicationTests {
 		@Test
 		@DisplayName("Devuelve error al obtener un ejercicio concreto")
 		public void errorConEjercicioConcreto() {
-			var peticion = get("http", "localhost", 8081, "/ejercicios/1?entrenador=1");
+			var peticion = get("http", "localhost", port, "/ejercicio/1"); // entrenador=1");
 
 			var respuesta = restTemplate.exchange(peticion,
 					new ParameterizedTypeReference<EjerciciosDTO>() {
@@ -181,12 +181,12 @@ class EntidadesCicklumApplicationTests {
 		@Test
 		@DisplayName("Devuelve una lista vacía de ejercicios")
 		public void devuelveListaVaciaEjercicios() {
-			var peticion = get("http", "localhost", port, "/ejercicios?entrenador=1");
+			var peticion = get("http", "localhost", port, "/ejercicio"); //?entrenador=1");
 
 			var respuesta = restTemplate.exchange(peticion,
-					new ParameterizedTypeReference<List<EjerciciosDTO>>() {
-					});
+					new ParameterizedTypeReference<List<EjerciciosDTO>>() {});
 			
+			System.out.println("-------RESPUESTA----------" + respuesta.getBody());
 			assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
 			assertThat(respuesta.getBody()).isEmpty();
 			assertEquals(HttpStatus.OK, respuesta.getStatusCode());
@@ -364,18 +364,18 @@ class EntidadesCicklumApplicationTests {
 	// }
 
 	
-	//   @Test // 1 get de todas las rutinas
+	  @Test // 1 get de todas las rutinas
 	  
-	//   @DisplayName("consulta todas las rutinas")
-	//   public void devuelveListaVaciaRutinas() {
-	//   var peticion = get("http", "localhost",port, "/rutinas");
+	  @DisplayName("consulta todas las rutinas")
+	  public void devuelveListaVaciaRutinas() {
+	  var peticion = get("http", "localhost",port, "/rutinas");
 	  
-	//   var respuesta = restTemplate.exchange(peticion,
-	//   new ParameterizedTypeReference<List<Rutinas>>() {});
+	  var respuesta = restTemplate.exchange(peticion,
+	  new ParameterizedTypeReference<List<Rutinas>>() {});
 	  
-	//   assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-	//   assertThat(respuesta.getBody()).isEmpty();
-	//   }
+	  assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+	  assertThat(respuesta.getBody()).isEmpty();
+	  }
 	 /* 
 	 * @Test // 2 post de todas las rutinas (crea una nueva rutina)
 	 * 

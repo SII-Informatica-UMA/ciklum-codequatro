@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping({ "/ejercicios" })
 
 public class EjerciciosRest {
