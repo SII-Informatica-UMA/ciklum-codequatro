@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,7 +33,10 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriBuilderFactory;
 
+import CodeQuatro.Entidades_Cicklum.dtos.EjercicioNuevoDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.EjerciciosDTO;
+import CodeQuatro.Entidades_Cicklum.dtos.FragmentoRutinaDTO;
+import CodeQuatro.Entidades_Cicklum.dtos.RutinasDTO;
 import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.entities.FragmentoRutina;
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
@@ -495,6 +499,89 @@ class EntidadesCicklumApplicationTests {
         assertNotEquals(rutina1.hashCode(), rutina3.hashCode());
     }
 
+	@Test
+	@DisplayName("Test constructor con parametros Ejercicios")
+    public void testConstructorWithParametersEjercicios() {
+        Ejercicios ejercicio = new Ejercicios(
+            1L, "Push Up", "Ejercicio de pecho", "Realizar correctamente",
+            "Calistenia", "Pectorales", "Ninguno", "Intermedio",
+            Arrays.asList("video1.mp4", "video2.mp4"), 1L
+        );
+
+        assertEquals(1L, ejercicio.getIdEjercicio());
+        assertEquals("Push Up", ejercicio.getNombre());
+        assertEquals("Ejercicio de pecho", ejercicio.getDescripcion());
+        assertEquals("Realizar correctamente", ejercicio.getObservaciones());
+        assertEquals("Calistenia", ejercicio.getTipo());
+        assertEquals("Pectorales", ejercicio.getMusculosTrabajados());
+        assertEquals("Ninguno", ejercicio.getMaterial());
+        assertEquals("Intermedio", ejercicio.getDificultad());
+        assertEquals(2, ejercicio.getMultimedia().size());
+        assertEquals(1L, ejercicio.getIdEntrenador());
+    }
+
+    @Test
+	@DisplayName("Test toString de ejercicios")
+    public void testToStringEjercicios() {
+        Ejercicios ejercicio = new Ejercicios(
+            1L, "Push Up", "Ejercicio de pecho", "Realizar correctamente",
+            "Calistenia", "Pectorales", "Ninguno", "Intermedio",
+            Arrays.asList("video1.mp4", "video2.mp4"), 1L
+        );
+        String expected = "Ejercicio [id= 1, nombre= Push Up, descripcion= Ejercicio de pechoObservaciones= Realizar correctamente, tipo= Calistenia, musculos trabajados= Pectorales, material= Ninguno, dificultad= Intermedio, multimedia= [video1.mp4video2.mp4]]";
+        assertEquals(expected, ejercicio.toString());
+    }
+	@Test
+	@DisplayName("Test constructor con parametros de rutinas")
+    public void testConstructorWithParametersRutinas() {
+        FragmentoRutina fragmento1 = new FragmentoRutina(1L, 3L, 15L, 10L, null);
+        FragmentoRutina fragmento2 = new FragmentoRutina(2L, 4L, 12L, 8L, null);
+
+        Rutinas rutina = new Rutinas(
+            1L, "Rutina de fuerza", "Rutina para desarrollar fuerza",
+            "Realizar con buena técnica", 1L,
+            Arrays.asList(fragmento1, fragmento2)
+        );
+
+        assertEquals(1L, rutina.getIdRutinas());
+        assertEquals("Rutina de fuerza", rutina.getNombre());
+        assertEquals("Rutina para desarrollar fuerza", rutina.getDescripcion());
+        assertEquals("Realizar con buena técnica", rutina.getObservaciones());
+        assertEquals(1L, rutina.getIdEntrenador());
+        assertEquals(2, rutina.getFragmentoRutina().size());
+    }
+
+	@Test
+	@DisplayName("Test constructor con parametros de fragmento rutina")
+    public void testConstructorWithParametersFR() {
+        Ejercicios ejercicio = new Ejercicios(
+            1L, "Push Up", "Ejercicio de pecho", "Realizar correctamente",
+            "Calistenia", "Pectorales", "Ninguno", "Intermedio",
+            Arrays.asList("video1.mp4", "video2.mp4"), 1L
+        );
+
+        FragmentoRutina fragmento = new FragmentoRutina(
+            1L, 3L, 15L, 10L, ejercicio
+        );
+
+        assertEquals(1L, fragmento.getIdFragmentoRutina());
+        assertEquals(3L, fragmento.getNumSeries());
+        assertEquals(15L, fragmento.getNumRepeticiones());
+        assertEquals(10L, fragmento.getDuracionMinutos());
+        assertEquals(ejercicio, fragmento.getEjercicios());
+    }
+	
+    @Test
+	@DisplayName("Test toString de rutinas")
+    public void testToStringRutinas() {
+        Rutinas rutina = new Rutinas(
+            1L, "Rutina de fuerza", "Rutina para desarrollar fuerza",
+            "Realizar con buena técnica", 1L,
+            Arrays.asList(new FragmentoRutina(1L, 3L, 15L, 10L, null))
+        );
+        String expected = "Rutina [id= 1, nombre= Rutina de fuerza, descripcion= Rutina para desarrollar fuerza, observaciones= Realizar con buena técnica";
+        assertEquals(expected, rutina.toString());
+    }
 
 
 
@@ -510,50 +597,7 @@ class EntidadesCicklumApplicationTests {
     }
 		
 
-		// -----------------MÉTODOS POST-----------------
-
-		// @Test
-		// @DisplayName("Inserta un ejercicio correctamente")
-		// public void insertaEjercicio() {
-		// 	var ejercicio = EjerciciosDTO.builder()
-		// 			.idEjercicio((long) 1)
-		// 			.nombre("Curl de biceps")
-		// 			.descripcion("descripcion")
-		// 			.observaciones("observaciones")
-		// 			.idEntrenador((long) 1)
-		// 			.build();
-
-					
-		// 	var peticion = post("http", "localhost", port, "/ejercicios", ejercicio);
-
-		// 	var respuesta = restTemplate.exchange(peticion, Void.class);
-
-		// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
-		// 	assertThat(respuesta.getHeaders().get("Location").get(0))
-		// 			.startsWith("http://localhost:" + port + "/ejercicios");
-
-		// 	List<Ejercicios> ejerciciosBD = ejerciciosRepository.findAll();
-		// 	assertThat(ejerciciosBD).hasSize(1);
-		// 	assertThat(respuesta.getHeaders().get("Location").get(0))
-		// 			.endsWith("/" + ejerciciosBD.get(0).getIdEjercicio());
-		// 	compruebaCampos(ejercicio.toEntity(), ejerciciosBD.get(0));
-		// }
-
-
-		// ESTE NO FUNCIONA
-		// @Test
-		// @DisplayName("Devuelve error al insertar un ejercicio cuando no aporto informacion sobre el mismo")
-		// public void errorInsertarEjercicioSinInformacion() {
-		// 	var ejercicio = EjerciciosDTO.builder().build();
-		// 	var peticion = post("http", "localhost", port, "/ejercicios", ejercicio);
-
-		// 	var respuesta = restTemplate.exchange(peticion, Void.class);
-
-		// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-		// }
-		// Tests de las rutinas
-
-		// -----------------MÉTODOS GET-----------------
+	
 		@Test
 		@DisplayName("consulta todas las rutinas")
 		public void devuelveListaVaciaRutinas() {
@@ -566,342 +610,237 @@ class EntidadesCicklumApplicationTests {
 			assertThat(respuesta.getBody()).isEmpty();
 		}
 
-		// @Test
-		// @DisplayName("inserta correctamente una rutina")
-		// public void insertarRutina() {
+		@Test
+		@DisplayName("Test setter y getter de la propiedad idEjercicio en la clase Ejercicios")
+		public void testIdEjercicioSetterGetter() {
+			Ejercicios ejercicio = new Ejercicios();
+			ejercicio.setIdEjercicio(1L);
+			assertEquals(1L, ejercicio.getIdEjercicio());
+		}
+	
+		@Test
+		@DisplayName("Test setter y getter de la propiedad idRutinas en la clase Rutinas")
+		public void testIdRutinasSetterGetter() {
+			Rutinas rutina = new Rutinas();
+			rutina.setIdRutinas(1L);
+			assertEquals(1L, rutina.getIdRutinas());
+		}
+	
+		@Test
+		@DisplayName("Test setter y getter de la propiedad idFragmentoRutina en la clase FragmentoRutina")
+		public void testIdFragmentoRutinaSetterGetter() {
+			FragmentoRutina fragmento = new FragmentoRutina();
+			fragmento.setIdFragmentoRutina(1L);
+			assertEquals(1L, fragmento.getIdFragmentoRutina());
+		}
+	
+	
+		@Test
+		@DisplayName("Test equals y hashCode de Ejercicios")
+		public void testEqualsAndHashCodeEjercicios() {
+			Ejercicios ejercicio1 = new Ejercicios(1L, "Push Up", "Ejercicio de pecho", "Realizar correctamente",
+				"Calistenia", "Pectorales", "Ninguno", "Intermedio",
+				Arrays.asList("video1.mp4", "video2.mp4"), 1L);
+	
+			Ejercicios ejercicio2 = new Ejercicios(1L, "Push Up", "Ejercicio de pecho", "Realizar correctamente",
+				"Calistenia", "Pectorales", "Ninguno", "Intermedio",
+				Arrays.asList("video1.mp4", "video2.mp4"), 1L);
+	
+			assertEquals(ejercicio1, ejercicio2);
+			assertEquals(ejercicio1.hashCode(), ejercicio2.hashCode());
+		}
+	
+		@Test
+		@DisplayName("Test equals y hashCode de Rutinas")
+		public void testEqualsAndHashCodeRutinas() {
+			Rutinas rutina1 = new Rutinas(1L, "Rutina de fuerza", "Rutina para desarrollar fuerza",
+				"Realizar con buena técnica", 1L,
+				Arrays.asList(new FragmentoRutina(1L, 3L, 15L, 10L, null)));
+	
+			Rutinas rutina2 = new Rutinas(1L, "Rutina de fuerza", "Rutina para desarrollar fuerza",
+				"Realizar con buena técnica", 1L,
+				Arrays.asList(new FragmentoRutina(1L, 3L, 15L, 10L, null)));
+	
+			assertEquals(rutina1, rutina2);
+			assertEquals(rutina1.hashCode(), rutina2.hashCode());
+		}
+	@Test
+	@DisplayName("Test entidad ejercicio nuevo DTO")
+    public void testToEntity() {
+        // Crear un objeto EjercicioNuevoDTO para usar en la prueba
+        EjercicioNuevoDTO ejercicioDTO = EjercicioNuevoDTO.builderNuevo()
+            .nombre("Ejercicio1")
+            .descripcion("Descripción del ejercicio 1")
+            // Otros atributos...
+            .build();
 
-		// 	// Preparamos la rutina a insertar
-		// 	var rutina = Rutinas.builder()
-		// 			.nombre("Rutina")
-		// 			.build();
-		// 	// Preparamos la petición con el ingrediente dentro
-		// 	var peticion = post("http", "localhost", port, "/rutinas", rutina);
+        // Convertir el objeto EjercicioNuevoDTO a Ejercicios usando el método toEntity
+        Ejercicios ejercicio = ejercicioDTO.toEntity();
 
-		// 	// Invocamos al servicio REST
-		// 	var respuesta = restTemplate.exchange(peticion,Void.class);
+        // Verificar que el resultado no sea nulo
+        assertNotNull(ejercicio);
+        // Verificar que los atributos se hayan copiado correctamente
+        assertEquals(ejercicioDTO.getNombre(), ejercicio.getNombre());
+        assertEquals(ejercicioDTO.getDescripcion(), ejercicio.getDescripcion());
+        // Verificar otros atributos...
+    }
 
-		// 	// Comprobamos el resultado
-		// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
-		// 	assertThat(respuesta.getHeaders().get("Location").get(0))
-		// 			.startsWith("http://localhost:"+port+"/rutinas");
+	@Test
+	@DisplayName("Test fromEntity EjerciciosDTO")
+    public void testFromEntity() {
+        // Crear un objeto Ejercicios para usar en la prueba
+        Ejercicios ejercicio = new Ejercicios();
+        ejercicio.setIdEjercicio(1L);
+        ejercicio.setNombre("Ejercicio1");
+        ejercicio.setDescripcion("Descripción del ejercicio 1");
+        // Otros atributos...
 
-		// 	List<Rutinas> rutinasBD = rutinaRepository.findAll();
-		// 	assertThat(rutinasBD).hasSize(1);
-		// 	assertThat(respuesta.getHeaders().get("Location").get(0))
-		// 			.endsWith("/"+rutinasBD.get(0).getIdRutinas());
-		// 	compruebaCampos(rutina, rutinasBD.get(0));
-		// }
+        // Convertir el objeto Ejercicios a EjerciciosDTO usando el método fromEntity
+        EjerciciosDTO ejercicioDTO = EjerciciosDTO.fromEntity(ejercicio);
+
+        // Verificar que el resultado no sea nulo
+        assertNotNull(ejercicioDTO);
+        // Verificar que los atributos se hayan copiado correctamente
+        assertEquals(ejercicio.getIdEjercicio(), ejercicioDTO.getIdEjercicio());
+        assertEquals(ejercicio.getNombre(), ejercicioDTO.getNombre());
+        assertEquals(ejercicio.getDescripcion(), ejercicioDTO.getDescripcion());
+        // Verificar otros atributos...
+    }
+
+    @Test
+	@DisplayName("Test toEntity de EjerciciosDTO")
+    public void testToEntityEJDTO() {
+        // Crear un objeto EjerciciosDTO para usar en la prueba
+        EjerciciosDTO ejercicioDTO = EjerciciosDTO.builder()
+            .idEjercicio(1L)
+            .nombre("Ejercicio1")
+            .descripcion("Descripción del ejercicio 1")
+            // Otros atributos...
+            .build();
+
+        // Convertir el objeto EjerciciosDTO a Ejercicios usando el método toEntity
+        Ejercicios ejercicio = ejercicioDTO.toEntity();
+
+        // Verificar que el resultado no sea nulo
+        assertNotNull(ejercicio);
+        // Verificar que los atributos se hayan copiado correctamente
+        assertEquals(ejercicioDTO.getIdEjercicio(), ejercicio.getIdEjercicio());
+        assertEquals(ejercicioDTO.getNombre(), ejercicio.getNombre());
+        assertEquals(ejercicioDTO.getDescripcion(), ejercicio.getDescripcion());
+
+    }
+
+	@Test
+	@DisplayName("Crear con atributos nulos")
+    public void createWithNullAttributes_ReturnsDTOWithNullAttributes() {
+        // Arrange & Act
+        EjercicioNuevoDTO ejercicioNuevoDTO = EjercicioNuevoDTO.builderNuevo()
+                .nombre(null)
+                .descripcion(null)
+                .observaciones(null)
+                .tipo(null)
+                .musculosTrabajados(null)
+                .material(null)
+                .dificultad(null)
+                .multimedia(null)
+                .idEntrenador(null)
+                .build();
+
+        // Assert
+        assertNull(ejercicioNuevoDTO.getNombre());
+        assertNull(ejercicioNuevoDTO.getDescripcion());
+        assertNull(ejercicioNuevoDTO.getObservaciones());
+        assertNull(ejercicioNuevoDTO.getTipo());
+        assertNull(ejercicioNuevoDTO.getMusculosTrabajados());
+        assertNull(ejercicioNuevoDTO.getMaterial());
+        assertNull(ejercicioNuevoDTO.getDificultad());
+        assertNull(ejercicioNuevoDTO.getMultimedia());
+        assertNull(ejercicioNuevoDTO.getIdEntrenador());
+    }
+
+    @Test
+	@DisplayName("Crear con lista de multimedia vacía")
+    public void createWithEmptyMultimediaList_ReturnsDTOWithEmptyMultimediaList() {
+        // Arrange & Act
+        EjercicioNuevoDTO ejercicioNuevoDTO = EjercicioNuevoDTO.builderNuevo()
+                .multimedia(Collections.emptyList())
+                .build();
+
+        // Assert
+        assertNotNull(ejercicioNuevoDTO.getMultimedia());
+        assertEquals(0, ejercicioNuevoDTO.getMultimedia().size());
+    }
 
 
-		// este no funciona error 500
-		// @Test
-		// @DisplayName("devuelve error al acceder a una rutina concreta")
-		// public void errorConRutinaConcreta() {
-		// 	var peticion = get("http", "localhost", port, "/rutinas/" );
+    @Test
+	@DisplayName("Rutina devuelve entidad correcta")
+    public void rutina_ReturnsCorrectEntity() {
+        // Arrange
+        RutinasDTO rutinasDTO = new RutinasDTO();
+        rutinasDTO.setIdRutinas(2L);
+        rutinasDTO.setNombre("Rutina 2");
+        rutinasDTO.setDescripcion("Descripción de la rutina 2");
+        rutinasDTO.setObservaciones("Observaciones de la rutina 2");
 
-		// 	var respuesta = restTemplate.exchange(peticion,
-		// 			new ParameterizedTypeReference<Rutinas>() {});
+        // Act
+        Rutinas rutinas = rutinasDTO.rutina();
 
-		// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(404); // comprueba el resultado - 404 no encontrado
-		// }
+        // Assert
+        assertNotNull(rutinas);
+        assertEquals(2L, rutinas.getIdRutinas());
+        assertEquals("Rutina 2", rutinas.getNombre());
+        assertEquals("Descripción de la rutina 2", rutinas.getDescripcion());
+        assertEquals("Observaciones de la rutina 2", rutinas.getObservaciones());
+    }
 
+	 @Test
+	 @DisplayName("toEntity devuelve entidad correcta")
+    public void toEntity_ReturnsCorrectEntity() {
+        // Arrange
+        FragmentoRutinaDTO fragmentoRutinaDTO = new FragmentoRutinaDTO();
+        fragmentoRutinaDTO.setNumSeries(3L);
+        fragmentoRutinaDTO.setNumRepeticiones(12L);
+        fragmentoRutinaDTO.setDuracionMinutos(30L);
+        EjerciciosDTO ejercicioDTO = new EjerciciosDTO();
+        ejercicioDTO.setIdEjercicio(1L);
+        fragmentoRutinaDTO.setEjercicio(ejercicioDTO);
 
-		// Tampoco funciona
-		// @Test
-		// @DisplayName("devuelve error al modificar una rutina que no existe")
-		// public void modificarRutinaInexistente() {
-		// 	var rutina = Rutinas.builder().nombre("Rutina").build();
-		// 	var peticion = put("http", "localhost", port, "/rutinas/1", rutina);
+        // Act
+        FragmentoRutina fragmentoRutina = fragmentoRutinaDTO.toEntity();
 
-		// 	var respuesta = restTemplate.exchange(peticion, Void.class);
+        // Assert
+        assertNotNull(fragmentoRutina);
+        assertEquals(3L, fragmentoRutina.getNumSeries());
+        assertEquals(12L, fragmentoRutina.getNumRepeticiones());
+        assertEquals(30L, fragmentoRutina.getDuracionMinutos());
+        assertNotNull(fragmentoRutina.getEjercicios());
+        assertEquals(1L, fragmentoRutina.getEjercicios().getIdEjercicio());
+    }
 
-		// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-		// }
+    @Test
+	@DisplayName("fromEntity DTO correcto")
+    public void fromEntity_ReturnsCorrectDTO() {
+        // Arrange
+        FragmentoRutina fragmentoRutina = new FragmentoRutina();
+        fragmentoRutina.setNumSeries(4L);
+        fragmentoRutina.setNumRepeticiones(10L);
+        fragmentoRutina.setDuracionMinutos(25L);
+        EjerciciosDTO ejercicioDTO = new EjerciciosDTO();
+        ejercicioDTO.setIdEjercicio(2L);
+        fragmentoRutina.setEjercicios(ejercicioDTO.toEntity());
+
+        // Act
+        FragmentoRutinaDTO fragmentoRutinaDTO = FragmentoRutinaDTO.fromEntity(fragmentoRutina);
+
+        // Assert
+        assertNotNull(fragmentoRutinaDTO);
+        assertEquals(4L, fragmentoRutinaDTO.getNumSeries());
+        assertEquals(10L, fragmentoRutinaDTO.getNumRepeticiones());
+        assertEquals(25L, fragmentoRutinaDTO.getDuracionMinutos());
+        assertNotNull(fragmentoRutinaDTO.getEjercicio());
+        assertEquals(2L, fragmentoRutinaDTO.getEjercicio().getIdEjercicio());
+    }
 
 	
-
-
-
-
-
-
-
-	
-	// 	@Test
-	//   @DisplayName("Test GET Rutinas con token JWT - Sencillo")
-	//   public void testGetRutinasWithTokenSimple() {
-	// 	  // Crear una rutina de ejemplo
-	// 	  Rutinas rutina = Rutinas.builder()
-	// 			  .nombre("Rutina 1")
-	// 			  .descripcion("Descripción de Rutina 1")
-	// 			  .observaciones("Observaciones de Rutina 1")
-	// 			  .idEntrenador(1L) // Asegúrate de establecer idEntrenador
-	// 			  .ejercicios(List.of()) // Lista vacía de ejercicios para simplificar
-	// 			  .build();
-	// 	  rutinaRepository.save(rutina);
-	  
-	// 	  // Realizar una petición GET para obtener las rutinas
-	// 	  RequestEntity<Void> request = get("http", "localhost", port, "/rutinas");
-	// 	  ResponseEntity<List<Rutinas>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Rutinas>>() {});
-	  
-	// 	  // Verificar el estado de la respuesta
-	// 	  assertEquals(HttpStatus.OK, response.getStatusCode());
-	  
-	// 	  // Verificar que la respuesta no es nula
-	// 	  List<Rutinas> rutinas = response.getBody();
-	// 	  assertThat(rutinas).isNotNull();
-	// 	  assertThat(rutinas.size()).isGreaterThan(0); // Verificar que hay al menos una rutina
-	//   }
-
-
-		
-		
-		
-
 	}
-	// 	// -----------------MÉTODOS PUT-----------------
-	// 	@Test
-	// 	@DisplayName("Devuelve error al modificar un ejercicio que no existe")
-	// 	public void modificarEjercicioInexistente() {
-	// 		var ejercicio = EjerciciosDTO.builder().nombre("Sentadilla").build();
-	// 		var peticion = put("http", "localhost", port, "/ejercicios/1", ejercicio);
-
-	// 		var respuesta = restTemplate.exchange(peticion, Void.class);
-
-	// 		assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	// 	}
-
-	// 	// Metodos Delete
-	// 	@Test
-	// 	@DisplayName("devuelve error al eliminar un ejercicio que no existe")
-	// 	public void eliminarEjercicioInexistente() {
-	// 		var peticion = delete("http", "localhost", port, "/ejercicios/1");
-
-	// 		var respuesta = restTemplate.exchange(peticion, Void.class);
-
-	// 		assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	// 	}
-
-	// 	// -----------------MÉTODOS POST-----------------
-	// 	@Disabled
-	// 	@Test
-	// 	@DisplayName("Inserta un ejercicio correctamente")
-	// 	public void insertaEjercicio() {
-	// 		var ejercicio = EjerciciosDTO.builder()
-	// 				.idEjercicio((long) 1)
-	// 				.nombre("Curl de biceps")
-	// 				.descripcion("descripcion")
-	// 				.observaciones("observaciones")
-	// 				.idEntrenador((long) 1)
-	// 				.build();
-
-					
-	// 		var peticion = post("http", "localhost", port, "/ejercicios", ejercicio);
-
-	// 		var respuesta = restTemplate.exchange(peticion, Void.class);
-
-	// 		assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
-	// 		assertThat(respuesta.getHeaders().get("Location").get(0))
-	// 				.startsWith("http://localhost:" + port + "/ejercicios");
-
-	// 		List<Ejercicios> ejerciciosBD = ejerciciosRepository.findAll();
-	// 		assertThat(ejerciciosBD).hasSize(1);
-	// 		assertThat(respuesta.getHeaders().get("Location").get(0))
-	// 				.endsWith("/" + ejerciciosBD.get(0).getIdEjercicio());
-	// 		compruebaCampos(ejercicio.toEntity(), ejerciciosBD.get(0));
-	// 	}
-
-	// 	@Test
-	// 	@DisplayName("Devuelve error al insertar un ejercicio cuando no aporto informacion sobre el mismo")
-	// 	public void errorInsertarEjercicioSinInformacion() {
-	// 		var ejercicio = EjerciciosDTO.builder().build();
-	// 		var peticion = post("http", "localhost", port, "/ejercicios", ejercicio);
-
-	// 		var respuesta = restTemplate.exchange(peticion, Void.class);
-
-	// 		assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	// 	}
-	// 	// Tests de las rutinas
-	// }
-
-
-	/*---------------- BASE DE DATOS CON DATOS ---------------------*/
-
-
-	// @Nested
-	// @DisplayName("----------cuando la base de datos contiene datos----------")
-	// public class BaseDatosConDatos {
-
-	// 	/*INSERCION DE DATOS PARA LOS TEST */
-
-	// 	@BeforeEach
-	// 	public void insertaEjercicio() {
-	// 		var sentadilla = new Ejercicios();
-	// 		sentadilla.setNombre("sentadilla");
-	// 		sentadilla.setDescripcion("descripcion");
-	// 		sentadilla.setObservaciones("obsevaciones");
-	// 		sentadilla.setDificultad("dificultad");
-	// 		sentadilla.setMusculosTrabajados("musculos");
-	// 		sentadilla.setMaterial("material");
-	// 		sentadilla.setTipo("tipo");
-	// 		sentadilla.setMultimedia(null);
-	// 		sentadilla.setIdEntrenador((long) 1);
-
-	// 		ejerciciosRepository.save(sentadilla);
-	// 	}
-
-	// 	/* TESTS  */
-
-	// 	// -----------------MÉTODOS POST-----------------
-	// 	@Test
-	// 	@DisplayName("Devuelve error al insertar un ejercicio que ya existe")
-	// 	public void errorConEjercicioExistente() {
-	// 		var ejercicio = EjerciciosDTO.builder().nombre("Flexiones").build();
-	// 		var peticion = post("http", "localhost", port, "/ejercicios", ejercicio);
-	// 		var respuesta = restTemplate.exchange(peticion, Void.class);
-	// 		assertThat(respuesta.getStatusCode().value()).isEqualTo(409);
-	// 	}
-	// }
-
-	
-
-	// // ----------METODOS GET----------
-	// @Test
-	// @DisplayName("Devuelve un ejercicio correctamente")
-	// public void devuelveEjercicio() {
-	// 	var peticion = get("http", "localhost", port, "/ejercicios/1");
-	// 	var respuesta = restTemplate.exchange(peticion,
-	// 			new ParameterizedTypeReference<EjerciciosDTO>() {
-	// 			});
-
-	// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-	// 	assertThat(respuesta.getBody().getNombre()).isEqualTo("Flexiones");
-	// }
-
-	// @Test
-	// @DisplayName("Devuelve una lista de ejercicios")
-	// public void devuelveListaEjercicios() {
-	// 	var peticion = get("http", "localhost", port, "/ejercicios");
-	// 	var respuesta = restTemplate.exchange(peticion,
-	// 			new ParameterizedTypeReference<List<EjerciciosDTO>>() {
-	// 			});
-
-	// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-	// 	assertThat(respuesta.getBody()).hasSize(1);
-
-	// }
-
-	// // -----------------MÉTODOS PUT-----------------
-	// @Test
-	// @DisplayName("Modifica un ejercicio correctamente")
-	// public void modificarEjercicio() {
-	// 	var ejercicio = EjerciciosDTO.builder().nombre("Flexiones").build();
-	// 	var peticion = put("http", "localhost", port, "/ejercicios/1", ejercicio);
-
-	// 	var respuesta = restTemplate.exchange(peticion, Void.class);
-
-	// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-	// 	assertThat(ejerciciosRepository.findById(1L).get().getNombre()).isEqualTo("Sentadilla");
-	// }
-
-	// // Metodos Delete
-	// @Disabled
-	// @Test
-	// @DisplayName("Elimina un ejercicio correctamente")
-	// public void eliminarEjercicio() {
-	// 	var sentadilla = new Ejercicios();
-	// 	sentadilla.setIdEjercicio((long) 18);
-	// 	sentadilla.setNombre("sentadilla");
-	// 	sentadilla.setDescripcion("descripcion");
-	// 	sentadilla.setDificultad("dificultad");
-	// 	sentadilla.setMusculosTrabajados("musculos");
-	// 	sentadilla.setMaterial("material");
-	// 	sentadilla.setTipo("tipo");
-	// 	sentadilla.setMultimedia(null);
-	// 	ejerciciosRepository.save(sentadilla);
-	// 	var peticion = delete("http", "localhost", port, "/ejercicios/2");
-
-	// 	var respuesta = restTemplate.exchange(peticion, Void.class);
-
-	// 	assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-	// 	assertThat(ejerciciosRepository.count()).isEqualTo(1);
-	// }
-
-	
-	  @Test // 1 get de todas las rutinas
-	  
-	  @DisplayName("consulta todas las rutinas")
-	  public void devuelveListaVaciaRutinas() {
-	  var peticion = get("http", "localhost",port, "/rutinas");
-	  
-	  var respuesta = restTemplate.exchange(peticion,
-	  new ParameterizedTypeReference<List<Rutinas>>() {});
-	  
-	  assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-	  assertThat(respuesta.getBody()).isEmpty();
-	  }
-	 /* 
-	 * @Test // 2 post de todas las rutinas (crea una nueva rutina)
-	 * 
-	 * @DisplayName("inserta correctamente una rutina")
-	 * public void insertarRutina() {
-	 * 
-	 * // Preparamos la rutina a insertar
-	 * var rutina = RutinasDTO.builder()
-	 * .nombre("Rutina")
-	 * .build();
-	 * // Preparamos la petición con el ingrediente dentro
-	 * var peticion = post("http", "localhost",port, "/rutinas", rutina);
-	 * 
-	 * // Invocamos al servicio REST
-	 * var respuesta = restTemplate.exchange(peticion,Void.class);
-	 * 
-	 * // Comprobamos el resultado
-	 * assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
-	 * assertThat(respuesta.getHeaders().get("Location").get(0))
-	 * .startsWith("http://localhost:"+port+"/rutinas");
-	 * 
-	 * List<Rutinas> rutinasBD = rutinaRepository.findAll();
-	 * assertThat(rutinasBD).hasSize(1);
-	 * assertThat(respuesta.getHeaders().get("Location").get(0))
-	 * .endsWith("/"+rutinasBD.get(0).getIdRutinas());
-	 * compruebaCampos(rutina.rutina(), rutinasBD.get(0));
-	 * }
-	 * 
-	 * @Test // 3 get de una rutina concreta
-	  
-	  @DisplayName("devuelve error al acceder a una rutina concreta")
-	  public void errorConRutinaConcreta() {
-	  var peticion = get("http", "localhost",port, "/rutinas/1");
-	  
-	  var respuesta = restTemplate.exchange(peticion,
-	  new ParameterizedTypeReference<RutinasDTO>() {});
-	  
-	  assertThat(respuesta.getStatusCode().value()).isEqualTo(404); // comprueba el resultado - 404 no encontrado
-	  }
-	  
-	  
-	  @Test // 4 put de una rutina (modifica una rutina)
-	  
-	  @DisplayName("devuelve error al modificar una rutina que no existe")
-	  public void modificarRutinaInexistente() {
-	  var rutina = RutinasDTO.builder().nombre("Rutina").build();
-	  var peticion = put("http", "localhost",port, "/rutinas/1", rutina);
-	  
-	  var respuesta = restTemplate.exchange(peticion, Void.class);
-	  
-	  assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	  }
-	  
-	  @Test // 5 delete de una rutina
-	  
-	  @DisplayName("devuelve error al eliminar una rutina que no existe")
-	  public void eliminarRutinaInexistente() {
-	  var peticion = delete("http", "localhost",port, "/rutinas/1");
-	  
-	  var respuesta = restTemplate.exchange(peticion, Void.class);
-	  
-	  assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
-	  }
-	 */
 }
