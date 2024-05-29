@@ -1,38 +1,51 @@
 package CodeQuatro.Entidades_Cicklum;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import CodeQuatro.Entidades_Cicklum.controladores.EjerciciosRest;
+import CodeQuatro.Entidades_Cicklum.controladores.RutinasRest;
 import CodeQuatro.Entidades_Cicklum.dtos.EjercicioNuevoDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.EjerciciosDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.FragmentoRutinaDTO;
@@ -40,13 +53,20 @@ import CodeQuatro.Entidades_Cicklum.dtos.RutinasDTO;
 import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.entities.FragmentoRutina;
 import CodeQuatro.Entidades_Cicklum.entities.Rutinas;
+import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioExistenteException;
+import CodeQuatro.Entidades_Cicklum.excepciones.EjercicioNoEncontradoException;
+import CodeQuatro.Entidades_Cicklum.excepciones.RutinaExistente;
+import CodeQuatro.Entidades_Cicklum.excepciones.RutinaNoEncontrada;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
 import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
 import CodeQuatro.Entidades_Cicklum.security.JwtUtil;
+import CodeQuatro.Entidades_Cicklum.servicios.LogicaEjercicios;
+import CodeQuatro.Entidades_Cicklum.servicios.LogicaRutinas;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = EntidadesCicklumApplication.class)
 @DisplayName("------En el servicio Cicklum--------")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@ExtendWith(MockitoExtension.class)
 class EntidadesCicklumApplicationTests {
 
 	@Autowired
@@ -61,6 +81,18 @@ class EntidadesCicklumApplicationTests {
 	private EjerciciosRepository ejerciciosRepository;
 
 	//private final BCryptPasswordEncoder encoder2 = new BCryptPasswordEncoder();
+
+	 @Mock
+    LogicaEjercicios logicaEjerciciosMock;
+
+    @Mock
+    LogicaRutinas logicaRutinasMock;
+
+    @InjectMocks
+    EjerciciosRest ejerciciosRest;
+
+    @InjectMocks
+    RutinasRest rutinasRest;
 
 	
 	@Autowired
@@ -841,6 +873,199 @@ class EntidadesCicklumApplicationTests {
         assertEquals(2L, fragmentoRutinaDTO.getEjercicio().getIdEjercicio());
     }
 
+		@Test
+	  @DisplayName("Test GET Rutinas con token JWT - Sencillo")
+	  public void testGetRutinasWithTokenSimple() {
+		  // Crear una rutina de ejemplo
+		  Rutinas rutina = Rutinas.builder()
+				  .nombre("Rutina 1")
+				  .descripcion("Descripción de Rutina 1")
+				  .observaciones("Observaciones de Rutina 1")
+				  .idEntrenador(1L) // Asegúrate de establecer idEntrenador
+				  .ejercicios(List.of()) // Lista vacía de ejercicios para simplificar
+				  .build();
+		  rutinaRepository.save(rutina);
+	  
+		  // Realizar una petición GET para obtener las rutinas
+		  RequestEntity<Void> request = get("http", "localhost", port, "/rutinas");
+		  ResponseEntity<List<Rutinas>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Rutinas>>() {});
+	  
+		  // Verificar el estado de la respuesta
+		  assertEquals(HttpStatus.OK, response.getStatusCode());
+	  
+		  // Verificar que la respuesta no es nula
+		  List<Rutinas> rutinas = response.getBody();
+		  assertThat(rutinas).isNotNull();
+		  assertThat(rutinas.size()).isGreaterThan(0); // Verificar que hay al menos una rutina
+	  }
+
+	   @Test
+	   @DisplayName("Test excepciones")
+    public void EjercicioExistenteException_ConstructorSinMensaje() {
+        // Arrange & Act
+        EjercicioExistenteException exception = new EjercicioExistenteException();
+
+        // Assert
+        assertNotNull(exception);
+        assertNull(exception.getMessage());
+    }
+
+    @Test
+	@DisplayName("Test excepciones ejercicio existente ")
+    public void EjercicioExistenteException_ConstructorConMensaje() {
+        // Arrange
+        String message = "Mensaje de prueba";
+
+        // Act
+        EjercicioExistenteException exception = new EjercicioExistenteException(message);
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals(message, exception.getMessage());
+    }
+
+    @Test
+	@DisplayName("Test excepciones ejercicio no encontrado ")
+    public void EjercicioNoEncontradoException_ConstructorSinMensaje() {
+        // Arrange & Act
+        EjercicioNoEncontradoException exception = new EjercicioNoEncontradoException();
+
+        // Assert
+        assertNotNull(exception);
+        assertNull(exception.getMessage());
+    }
+
+    @Test
+	@DisplayName("Test excepciones ejercicio no encontrado con mensaje")
+    public void EjercicioNoEncontradoException_ConstructorConMensaje() {
+        // Arrange
+        String message = "Mensaje de prueba";
+
+        // Act
+        EjercicioNoEncontradoException exception = new EjercicioNoEncontradoException(message);
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals(message, exception.getMessage());
+    }
+
+    @Test
+	@DisplayName("Test excepciones rutina existente ")
+    public void RutinaExistente_ConstructorSinMensaje() {
+        // Arrange & Act
+        RutinaExistente exception = new RutinaExistente();
+
+        // Assert
+        assertNotNull(exception);
+        assertNull(exception.getMessage());
+    }
+
+    @Test
+	@DisplayName("Test excepciones rutina existente con mensaje ")
+    public void RutinaExistente_ConstructorConMensaje() {
+        // Arrange
+        String message = "Mensaje de prueba";
+
+        // Act
+        RutinaExistente exception = new RutinaExistente(message);
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals(message, exception.getMessage());
+    }
+
+    @Test
+	@DisplayName("Test excepciones rutina no encontrada")
+    public void RutinaNoEncontrada_ConstructorSinMensaje() {
+        // Arrange & Act
+        RutinaNoEncontrada exception = new RutinaNoEncontrada();
+
+        // Assert
+        assertNotNull(exception);
+        assertNull(exception.getMessage());
+    }
+
+    @Test
+	@DisplayName("Test excepciones rutina no encontrada ")
+    public void RutinaNoEncontrada_ConstructorConMensaje() {
+        // Arrange
+        String message = "Mensaje de prueba";
+
+        // Act
+        RutinaNoEncontrada exception = new RutinaNoEncontrada(message);
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals(message, exception.getMessage());
+    }
+ @Test
+    void obtenerEjercicios_Valido_ListaEjercicios() {
+        // Arrange
+        List<Ejercicios> ejercicios = new ArrayList<>();
+        ejercicios.add(new Ejercicios());
+        ejercicios.add(new Ejercicios());
+
+        // Act
+        when(logicaEjerciciosMock.obtenerEjercicios(null)).thenReturn(ejercicios);
+        List<EjerciciosDTO> resultado = ejerciciosRest.obtenerEjercicios(null);
+
+        // Assert
+        assertEquals(2, resultado.size());
+    }
+
+    @Test
+    void crearEjercicio_NuevoEjercicio_Creado() {
+        // Arrange
+        EjercicioNuevoDTO ejercicioNuevoDTO = new EjercicioNuevoDTO();
+        ejercicioNuevoDTO.setNombre("Nuevo Ejercicio");
+
+        // Act
+        when(logicaEjerciciosMock.crearActualizarEjercicio(any())).thenReturn(new Ejercicios());
+        ResponseEntity<EjerciciosDTO> responseEntity = ejerciciosRest.crearEjercicio(1L, ejercicioNuevoDTO, UriComponentsBuilder.newInstance());
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    }
+
+
+    @Test
+    void eliminarRutina_Existente_RutinaEliminada() {
+        // Act
+        assertDoesNotThrow(() -> rutinasRest.eliminarRutina(1L));
+    }
+
+}
+
+
+
+
+
+/*---------------- BASE DE DATOS CON DATOS ---------------------*/
+
+
+@Nested
+@DisplayName("----------cuando la base de datos contiene datos----------")
+public class BaseDatosConDatos {
+
+	/*INSERCION DE DATOS PARA LOS TEST */
+
+	@BeforeEach
+	public void insertaEjercicio() {
+		var sentadilla = new Ejercicios();
+		sentadilla.setNombre("sentadilla");
+		sentadilla.setDescripcion("descripcion");
+		sentadilla.setObservaciones("obsevaciones");
+		sentadilla.setDificultad("dificultad");
+		sentadilla.setMusculosTrabajados("musculos");
+		sentadilla.setMaterial("material");
+		sentadilla.setTipo("tipo");
+		sentadilla.setMultimedia(null);
+		sentadilla.setIdEntrenador((long) 1);
+
+		ejerciciosRepository.save(sentadilla);
+	}
+
+}
+
 	
 	}
-}
