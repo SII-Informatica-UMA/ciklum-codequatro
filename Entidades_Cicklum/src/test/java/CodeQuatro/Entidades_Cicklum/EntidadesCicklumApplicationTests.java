@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.net.URI;
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,6 +77,25 @@ class EntidadesCicklumApplicationTests {
 
 	@Value(value = "${local.server.port}")
 	private int port;
+
+    @Mock
+    private EjerciciosRepository ejercicioRepo;
+
+    @InjectMocks
+    private LogicaEjercicios logicaEjercicios;
+
+
+    @Mock
+    private RutinasRepository rutinaRepo;
+
+    @InjectMocks
+    private LogicaRutinas logicaRutinas;
+
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
 	@Autowired
 	private RutinasRepository rutinaRepository;
@@ -1034,6 +1056,257 @@ class EntidadesCicklumApplicationTests {
         assertDoesNotThrow(() -> rutinasRest.eliminarRutina(1L));
     }
 
+ @Test
+    void obtenerEjercicios_Existente_EjerciciosObtenidos() {
+        Long idEntrenador = 1L;
+        when(ejercicioRepo.findByIdEntrenador(idEntrenador)).thenReturn(List.of(new Ejercicios()));
+
+        var result = logicaEjercicios.obtenerEjercicios(idEntrenador);
+
+        assertFalse(result.isEmpty());
+        verify(ejercicioRepo).findByIdEntrenador(idEntrenador);
+    }
+
+    @Test
+    void obtenerEjercicio_Existente_EjercicioObtenido() {
+        Long idEjercicio = 1L;
+        Ejercicios ejercicio = new Ejercicios();
+        ejercicio.setIdEjercicio(idEjercicio);
+        when(ejercicioRepo.findById(idEjercicio)).thenReturn(Optional.of(ejercicio));
+
+        var result = logicaEjercicios.obtenerEjercicio(idEjercicio);
+
+        assertTrue(result.isPresent());
+        assertEquals(idEjercicio, result.get().getIdEjercicio());
+    }
+
+    @Test
+    void crearActualizarEjercicio_Nuevo_EjercicioCreado() {
+        Ejercicios ejercicio = new Ejercicios();
+        when(ejercicioRepo.save(ejercicio)).thenReturn(ejercicio);
+
+        var result = logicaEjercicios.crearActualizarEjercicio(ejercicio);
+
+        assertNotNull(result);
+        verify(ejercicioRepo).save(ejercicio);
+    }
+
+    @Test
+    void eliminarEjercicio_Existente_EjercicioEliminado() throws Exception {
+        Long idEjercicio = 1L;
+        Ejercicios ejercicio = new Ejercicios();
+        ejercicio.setIdEjercicio(idEjercicio);
+        when(ejercicioRepo.findById(idEjercicio)).thenReturn(Optional.of(ejercicio));
+
+        logicaEjercicios.eliminarEjercicio(idEjercicio);
+
+        verify(ejercicioRepo).deleteById(idEjercicio);
+    }
+
+    @Test
+    void eliminarEjercicio_NoExistente_ExceptionLanzada() {
+        Long idEjercicio = 1L;
+        when(ejercicioRepo.findById(idEjercicio)).thenReturn(Optional.empty());
+
+        assertThrows(Exception.class, () -> logicaEjercicios.eliminarEjercicio(idEjercicio));
+    }
+
+    @Test
+    void obtenerEjercicios_EntrenadorExistente_ListaEjercicios() {
+        Long idEntrenador = 1L;
+        List<Ejercicios> ejercicios = List.of(new Ejercicios(), new Ejercicios());
+
+        when(ejercicioRepo.findByIdEntrenador(idEntrenador)).thenReturn(ejercicios);
+
+        List<Ejercicios> result = logicaEjercicios.obtenerEjercicios(idEntrenador);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        verify(ejercicioRepo).findByIdEntrenador(idEntrenador);
+    }
+
+
+    @Test
+    void crearActualizarEjercicio_ActualizarEjercicioExistente() {
+        Long idEjercicio = 1L;
+        Ejercicios ejercicio = new Ejercicios();
+        ejercicio.setIdEjercicio(idEjercicio);
+
+        when(ejercicioRepo.save(ejercicio)).thenReturn(ejercicio);
+
+        Ejercicios result = logicaEjercicios.crearActualizarEjercicio(ejercicio);
+
+        assertNotNull(result);
+        assertEquals(idEjercicio, result.getIdEjercicio());
+        verify(ejercicioRepo).save(ejercicio);
+    }
+
+    @Test
+    void obtenerRutinas_Existente_RutinasObtenidas() {
+        Long idEntrenador = 1L;
+        when(rutinaRepo.findByIdEntrenador(idEntrenador)).thenReturn(List.of(new Rutinas()));
+
+        var result = logicaRutinas.obtenerRutinas(idEntrenador);
+
+        assertFalse(result.isEmpty());
+        verify(rutinaRepo).findByIdEntrenador(idEntrenador);
+    }
+
+    @Test
+    void obtenerRutina_Existente_RutinaObtenida() {
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        rutina.setIdRutinas(idRutina);
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
+
+        var result = logicaRutinas.obtenerRutina(idRutina);
+
+        assertTrue(result.isPresent());
+        assertEquals(idRutina, result.get().getIdRutinas());
+    }
+
+    @Test
+    void crearActualizarRutina_Nueva_RutinaCreada() {
+        // Crear una nueva instancia de Rutinas y establecer los valores necesarios
+        Rutinas rutina = new Rutinas();
+        rutina.setNombre("Rutina Test");
+        rutina.setIdEntrenador(1L);
+        
+        // Simular el comportamiento del repositorio
+        when(rutinaRepo.save(any(Rutinas.class))).thenAnswer(invocation -> {
+            Rutinas savedRutina = invocation.getArgument(0);
+            savedRutina.setIdRutinas(1L); // Asignar un ID simulado al guardar
+            return savedRutina;
+        });
+        when(rutinaRepo.findById(1L)).thenReturn(Optional.of(rutina));
+    
+        // Llamar al método crearActualizarRutina en la lógica de negocios
+        Rutinas result = logicaRutinas.crearActualizarRutina(rutina);
+    
+        // Verificar que el resultado no sea nulo y que el ID haya sido asignado
+        assertNotNull(result);
+        assertEquals(1L, result.getIdRutinas());
+        assertEquals("Rutina Test", result.getNombre());
+    
+        // Verificar que el método save del repositorio haya sido llamado
+        verify(rutinaRepo).save(rutina);
+        // Verificar que el método findById del repositorio haya sido llamado
+        verify(rutinaRepo).findById(1L);
+    }
+    
+
+
+    @Test
+    void eliminarRutina_NoExistente_ExceptionLanzada() {
+        Long idRutina = 1L;
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.empty());
+
+        assertThrows(RutinaNoEncontrada.class, () -> logicaRutinas.eliminarRutina(idRutina));
+    }
+
+    @Test
+    void aniadirRutina_Existente_RutinaExistenteException() {
+        Rutinas rutina = new Rutinas();
+        rutina.setIdEntrenador(1L);
+        when(rutinaRepo.findByIdEntrenador(rutina.getIdEntrenador())).thenReturn(List.of(rutina));
+
+        assertThrows(RutinaExistente.class, () -> logicaRutinas.aniadirRutina(rutina));
+    }
+
+    
+
+    @Test
+    void modificarRutina_NoExistente_RutinaNoEncontradaException() {
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        rutina.setIdRutinas(idRutina);
+        when(rutinaRepo.existsById(idRutina)).thenReturn(false);
+
+        assertThrows(RutinaNoEncontrada.class, () -> logicaRutinas.modificarRutina(idRutina, rutina));
+    }
+
+    @Test
+    void obtenerRutinas_EntrenadorExistente_ListaRutinas() {
+        Long idEntrenador = 1L;
+        List<Rutinas> rutinas = List.of(new Rutinas(), new Rutinas());
+
+        when(rutinaRepo.findByIdEntrenador(idEntrenador)).thenReturn(rutinas);
+
+        List<Rutinas> result = logicaRutinas.obtenerRutinas(idEntrenador);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        verify(rutinaRepo).findByIdEntrenador(idEntrenador);
+    }
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 }
 
 
@@ -1064,6 +1337,8 @@ public class BaseDatosConDatos {
 
 		ejerciciosRepository.save(sentadilla);
 	}
+
+    
 
 }
 
