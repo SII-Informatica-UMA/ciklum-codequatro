@@ -52,6 +52,7 @@ import CodeQuatro.Entidades_Cicklum.controladores.RutinasRest;
 import CodeQuatro.Entidades_Cicklum.dtos.EjercicioNuevoDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.EjerciciosDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.FragmentoRutinaDTO;
+import CodeQuatro.Entidades_Cicklum.dtos.Links;
 import CodeQuatro.Entidades_Cicklum.dtos.RutinasDTO;
 import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.entities.FragmentoRutina;
@@ -1239,6 +1240,40 @@ class EntidadesCicklumApplicationTests {
         verify(rutinaRepo).findByIdEntrenador(idEntrenador);
     }
 
+      @Test
+      @DisplayName("Test getter y setter de links")
+    void testGettersAndSettersLinks() {
+        URI uri = URI.create("http://example.com");
+        Links links = new Links();
+        links.setSelf(uri);
+
+        assertEquals(uri, links.getSelf());
+    }
+
+    @Test
+    @DisplayName("Test constructor de links")
+    void testConstructor() {
+        URI uri = URI.create("http://example.com");
+        Links links = new Links(uri);
+
+        assertEquals(uri, links.getSelf());
+    }
+
+    @Test
+    @DisplayName("Test builder de links")
+    void testBuilder() {
+        URI uri = URI.create("http://example.com");
+        Links links = Links.builder().self(uri).build();
+
+        assertEquals(uri, links.getSelf());
+    }
+
+    @Test
+    @DisplayName("Test no args constructor de links")
+    void testNoArgsConstructor() {
+        Links links = new Links();
+        assertNull(links.getSelf());
+    }
     
     
 
