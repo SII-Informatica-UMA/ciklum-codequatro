@@ -184,8 +184,7 @@ class EntidadesCicklumApplicationTests {
     }
 
     @Nested
-    @DisplayName("cuando la base de datos está vacía")
-    public class BaseDatosVacia {
+    public class BaseDatos {
 
         @Test
         @DisplayName("Devuelve error al obtener un ejercicio concreto")
@@ -1001,25 +1000,25 @@ class EntidadesCicklumApplicationTests {
         assertEquals(idRutina, result.get().getIdRutinas());
     }
     
-    @Test
-    @DisplayName("Crea una nueva rutina")
-    void crearNuevaRutina() {
-        Rutinas rutina = new Rutinas();
-        rutina.setNombre("Rutina Test");
-        rutina.setIdEntrenador(1L);
-        when(rutinaRepo.save(any(Rutinas.class))).thenAnswer(invocation -> {
-            Rutinas savedRutina = invocation.getArgument(0);
-            savedRutina.setIdRutinas(1L);
-            return savedRutina;
-        });
-        when(rutinaRepo.findById(1L)).thenReturn(Optional.of(rutina));
-        Rutinas result = logicaRutinas.crearActualizarRutina(rutina);
-        assertNotNull(result);
-        assertEquals(1L, result.getIdRutinas());
-        assertEquals("Rutina Test", result.getNombre());
-        verify(rutinaRepo).save(rutina);
-        verify(rutinaRepo).findById(1L);
-    }
+    // @Test
+    // @DisplayName("Crea una nueva rutina")
+    // void crearNuevaRutina() {
+    //     Rutinas rutina = new Rutinas();
+    //     rutina.setNombre("Rutina Test");
+    //     rutina.setIdEntrenador(1L);
+    //     when(rutinaRepo.save(any(Rutinas.class))).thenAnswer(invocation -> {
+    //         Rutinas savedRutina = invocation.getArgument(0);
+    //         savedRutina.setIdRutinas(1L);
+    //         return savedRutina;
+    //     });
+    //     when(rutinaRepo.findById(1L)).thenReturn(Optional.of(rutina));
+    //     Rutinas result = logicaRutinas.crearActualizarRutina(rutina);
+    //     assertNotNull(result);
+    //     assertEquals(1L, result.getIdRutinas());
+    //     assertEquals("Rutina Test", result.getNombre());
+    //     verify(rutinaRepo).save(rutina);
+    //     verify(rutinaRepo).findById(1L);
+    // }
     
     @Test
     @DisplayName("Lanza excepción al eliminar rutina no existente")
@@ -1361,23 +1360,25 @@ class EntidadesCicklumApplicationTests {
         verify(rutinaRepo, times(1)).deleteById(idRutina);
     }
     
-    @Test
-    @DisplayName("Crea o actualiza rutina existente")
-    void crearOActualizarRutinaExistente() {
-        Rutinas rutina = new Rutinas();
-        rutina.setIdRutinas(1L);
-        when(rutinaRepo.findById(rutina.getIdRutinas())).thenReturn(Optional.of(rutina));
-        Rutinas result = logicaRutinas.crearActualizarRutina(rutina);
-        assertEquals(rutina, result);
-        verify(rutinaRepo, times(1)).save(rutina);
-    }
+    // @Test
+    // @DisplayName("Crea o actualiza rutina existente")
+    // void crearOActualizarRutinaExistente() {
+    //     Rutinas rutina = new Rutinas();
+    //     rutina.setIdRutinas(1L);
+    //     when(rutinaRepo.findById(rutina.getIdRutinas())).thenReturn(Optional.of(rutina));
+    //     Rutinas result = logicaRutinas.(rutina);
+    //     assertEquals(rutina, result);
+    //     verify(rutinaRepo, times(1)).save(rutina);
+    // }
     
     @Test
     @DisplayName("Lanza excepción al añadir rutina con ID de entrenador existente")
     void lanzarExcepcionAlAniadirRutinaConIdDeEntrenadorExistente() {
         Rutinas nuevaRutina = new Rutinas();
         nuevaRutina.setIdEntrenador(1L);
-        when(rutinaRepo.findByIdEntrenador(nuevaRutina.getIdEntrenador())).thenReturn(new ArrayList<>());
+        List<Rutinas> lista = new ArrayList<>();
+        lista.add(nuevaRutina);
+        when(rutinaRepo.findByIdEntrenador(nuevaRutina.getIdEntrenador())).thenReturn(lista);
         assertThrows(RutinaExistente.class, () -> logicaRutinas.aniadirRutina(nuevaRutina));
     }
     
@@ -1428,22 +1429,111 @@ class EntidadesCicklumApplicationTests {
         verify(rutinaRepo, never()).deleteById(anyLong());
     }
     
-    @Nested
-    @DisplayName("Cuando la base de datos contiene datos")
-    public class BaseDatosConDatos {
-        @BeforeEach
-        public void insertaEjercicio() {
-            var sentadilla = new Ejercicios();
-            sentadilla.setNombre("sentadilla");
-            sentadilla.setDescripcion("descripcion");
-            sentadilla.setObservaciones("obsevaciones");
-            sentadilla.setDificultad("dificultad");
-            sentadilla.setMusculosTrabajados("musculos");
-            sentadilla.setMaterial("material");
-            sentadilla.setTipo("tipo");
-            sentadilla.setMultimedia(null);
-            sentadilla.setIdEntrenador((long) 1);
-            ejerciciosRepository.save(sentadilla);
-        }
+
+    @Test
+    @DisplayName("Añadir rutina existente lanza excepción")
+    public void aniadirRutinaExistenteLanzaExcepcion() {
+        Rutinas nuevaRutina = new Rutinas();
+        nuevaRutina.setIdEntrenador(1L);
+
+        when(rutinaRepo.findByIdEntrenador(nuevaRutina.getIdEntrenador())).thenReturn(List.of(nuevaRutina));
+
+        assertThrows(RutinaExistente.class, () -> logicaRutinas.aniadirRutina(nuevaRutina));
     }
+
+    @Test
+    @DisplayName("Añadir nueva rutina exitosamente")
+    public void aniadirNuevaRutinaExitosamente() {
+        Rutinas nuevaRutina = new Rutinas();
+        nuevaRutina.setIdEntrenador(1L);
+        nuevaRutina.setNombre("Rutina Nueva");
+        nuevaRutina.setDescripcion("Descripción de la rutina nueva");
+
+        when(rutinaRepo.findByIdEntrenador(nuevaRutina.getIdEntrenador())).thenReturn(List.of());
+        when(rutinaRepo.save(any(Rutinas.class))).thenAnswer(invocation -> {
+            Rutinas savedRutina = invocation.getArgument(0);
+            savedRutina.setIdRutinas(1L);
+            return savedRutina;
+        });
+
+        Long result = logicaRutinas.aniadirRutina(nuevaRutina);
+
+        assertNotNull(result);
+        assertEquals(1L, result);
+        verify(rutinaRepo).save(nuevaRutina);
+    }
+
+    @Test
+    @DisplayName("Modificar rutina con nombre existente lanza excepción")
+    public void modificarRutinaConNombreExistenteLanzaExcepcion() {
+        Rutinas rutina = new Rutinas();
+        rutina.setIdRutinas(1L);
+        rutina.setNombre("Nombre existente");
+        
+        when(rutinaRepo.findByNombre(rutina.getNombre())).thenReturn(rutina);
+        
+        assertThrows(RutinaExistente.class, () -> logicaRutinas.modificarRutina(1L, rutina));
+    }
+    
+    @Test
+    @DisplayName("Modificar rutina no existente lanza excepción")
+    public void modificarRutinaNoExistenteLanzaExcepcion() {
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        rutina.setIdRutinas(idRutina);
+        
+        when(rutinaRepo.existsById(idRutina)).thenReturn(false);
+        
+        assertThrows(RutinaNoEncontrada.class, () -> logicaRutinas.modificarRutina(idRutina, rutina));
+    }
+    
+    // @Test
+    // @DisplayName("Modificar rutina exitosamente")
+    // public void modificarRutinaExitosamente() {
+    //     Long idRutina = 1L;
+    //     Rutinas rutina = new Rutinas();
+    //     rutina.setIdRutinas(idRutina);
+    //     rutina.setNombre("Nombre modificado");
+    //     rutina.setDescripcion("Descripción modificada");
+    //     rutina.setObservaciones("Observaciones modificadas");
+    //     rutina.setIdEntrenador(2L);
+        
+    //     when(rutinaRepo.existsById(idRutina)).thenReturn(true);
+    //     when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
+        
+    //     logicaRutinas.modificarRutina(idRutina, rutina);
+        
+    //     verify(rutinaRepo).save(any(Rutinas.class));
+    // }
+    
+
+    @Test
+    @DisplayName("Modificar rutina exitosamente")
+    public void modificarRutinaExitosamente() {
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        rutina.setIdRutinas(idRutina);
+        rutina.setNombre("Nombre modificado");
+        rutina.setDescripcion("Descripción modificada");
+        rutina.setObservaciones("Observaciones modificadas");
+    
+        Rutinas existingRutina = new Rutinas();
+        existingRutina.setIdRutinas(idRutina);
+        existingRutina.setNombre("Nombre original");
+        existingRutina.setDescripcion("Descripción original");
+        existingRutina.setObservaciones("Observaciones originales");
+    
+        when(rutinaRepo.existsById(idRutina)).thenReturn(true);
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(existingRutina));
+        when(rutinaRepo.save(any(Rutinas.class))).thenAnswer(invocation -> invocation.getArgument(0));
+    
+        logicaRutinas.modificarRutina(idRutina, rutina);
+    
+        verify(rutinaRepo).save(existingRutina);
+    
+        assertEquals("Nombre modificado", existingRutina.getNombre());
+        assertEquals("Descripción modificada", existingRutina.getDescripcion());
+        assertEquals("Observaciones modificadas", existingRutina.getObservaciones());
+    }
+
 }

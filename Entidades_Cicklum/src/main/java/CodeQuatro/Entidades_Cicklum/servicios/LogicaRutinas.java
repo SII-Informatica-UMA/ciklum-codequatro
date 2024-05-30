@@ -38,77 +38,51 @@ public class LogicaRutinas {
 
    public void eliminarRutina(Long idRutina) {
       Optional<Rutinas> rutina = this.obtenerRutina(idRutina);
-      rutina.ifPresent((r) -> {
-         this.comprobarPermiso(r);
-      });
+      rutina.ifPresent(this::comprobarPermiso);
       rutina.orElseThrow(RutinaNoEncontrada::new);
       this.rutinaRepo.deleteById(idRutina);
-   }
-
-   public Rutinas crearActualizarRutina(Rutinas rutina) {
-      if (rutina.getIdRutinas() != null) {
-         this.obtenerRutina(rutina.getIdRutinas()).ifPresentOrElse((r) -> {
-            this.comprobarPermiso(r);
-         }, RutinaNoEncontrada::new);
-      }
-
-      this.rutinaRepo.save(rutina);
-      rutina = (Rutinas)this.rutinaRepo.findById(rutina.getIdRutinas()).get();
-      return rutina;
    }
 
    public List<Rutinas> getTodasRutinas() {
       return this.rutinaRepo.findAll();
    }
 
-public Long aniadirRutina(Rutinas nuevaRutina){
-		if (rutinaRepo.findByIdEntrenador(nuevaRutina.getIdEntrenador())!=null) {
-            throw new RutinaExistente("La rutina ya existe en la base de datos");
-        }
-		nuevaRutina.setIdRutinas(null); // null?????
-		rutinaRepo.save(nuevaRutina);
-		return nuevaRutina.getIdRutinas();
-	}
-/* 
+   public Long aniadirRutina(Rutinas nuevaRutina) {
+      if (!rutinaRepo.findByIdEntrenador(nuevaRutina.getIdEntrenador()).isEmpty()) {
+         throw new RutinaExistente("La rutina ya existe en la base de datos");
+      }
+      nuevaRutina.setIdRutinas(null);
+      rutinaRepo.save(nuevaRutina);
+      return nuevaRutina.getIdRutinas();
+   }
+
    public Rutinas getRutinasById(Long id) {
-		List<Rutinas> rut = rutinaRepo.findByIdEntrenador(id);
-        if(rut!=null){
-            return rut.get(id.intValue());
-        }else{
-            throw new RutinaNoEncontrada("Rutina no encontrada en la base de datos");
-        }
-      }
-*/
-
-public Rutinas getRutinasById(Long id) {
-   var rut = rutinaRepo.findById(id);
-     if(rut.isPresent()){
+      var rut = rutinaRepo.findById(id);
+      if (rut.isPresent()) {
          return rut.get();
-     }else{
+      } else {
          throw new RutinaNoEncontrada("Rutina no encontrada en la base de datos");
-     }
-}
-
-public void modificarRutina(Long id, Rutinas rutina){
-
-   if (rutinaRepo.findByNombre(rutina.getNombre())!=null) { // si le quieres poner el nombre de una rutina que ya existe, lanza excepcion
-         throw new RutinaExistente("Ya existe una rutina con ESE nombre en la bbdd");
-     }
-   
-   else{
-      if(rutinaRepo.existsById(id)){
-         Optional<Rutinas> rutinasModificar = rutinaRepo.findById(id);
-
-         rutinasModificar.ifPresent(l->l.setDescripcion(rutina.getDescripcion()));
-         rutinasModificar.ifPresent(l->l.setIdEntrenador(rutina.getIdEntrenador()));
-         rutinasModificar.ifPresent(l->l.setObservaciones(rutina.getObservaciones()));
-         rutinasModificar.ifPresent(l->l.setFragmentoRutina(rutina.getFragmentoRutina()));
-
-      }
-      else{
-         throw new RutinaNoEncontrada("La rutina no existe en la base de datos");
       }
    }
-}
 
+   public void modificarRutina(Long id, Rutinas rutina) {
+      if (rutinaRepo.findByNombre(rutina.getNombre()) != null) {
+         throw new RutinaExistente("Ya existe una rutina con ESE nombre en la bbdd");
+      } else {
+         if (rutinaRepo.existsById(id)) {
+            Optional<Rutinas> rutinasModificar = rutinaRepo.findById(id);
+
+            rutinasModificar.ifPresent(l -> {
+               l.setNombre(rutina.getNombre());
+               l.setDescripcion(rutina.getDescripcion());
+               l.setIdEntrenador(rutina.getIdEntrenador());
+               l.setObservaciones(rutina.getObservaciones());
+               l.setFragmentoRutina(rutina.getFragmentoRutina());
+               rutinaRepo.save(l); // Guardamos la rutina modificada
+            });
+         } else {
+            throw new RutinaNoEncontrada("La rutina no existe en la base de datos");
+         }
+      }
+   }
 }
