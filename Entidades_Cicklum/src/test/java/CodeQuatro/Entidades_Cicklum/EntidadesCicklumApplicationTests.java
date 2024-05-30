@@ -1,6 +1,7 @@
 package CodeQuatro.Entidades_Cicklum;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.filter;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,9 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,10 +74,15 @@ import CodeQuatro.Entidades_Cicklum.excepciones.RutinaExistente;
 import CodeQuatro.Entidades_Cicklum.excepciones.RutinaNoEncontrada;
 import CodeQuatro.Entidades_Cicklum.repositories.EjerciciosRepository;
 import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
+import CodeQuatro.Entidades_Cicklum.security.JwtRequestFilter;
 import CodeQuatro.Entidades_Cicklum.security.JwtUtil;
 import CodeQuatro.Entidades_Cicklum.servicios.LogicaEjercicios;
 import CodeQuatro.Entidades_Cicklum.servicios.LogicaRutinas;
 import io.jsonwebtoken.Claims;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = EntidadesCicklumApplication.class)
 @DisplayName("------En el servicio Cicklum--------")
@@ -96,6 +107,9 @@ class EntidadesCicklumApplicationTests {
 
     @InjectMocks
     private LogicaRutinas logicaRutinas;
+
+    @InjectMocks
+    private LineaComandos lineaComandos;
 
 
     @BeforeEach
@@ -1541,6 +1555,201 @@ class EntidadesCicklumApplicationTests {
         assertEquals(1, userDetails.getAuthorities().size());
         assertTrue(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")));
     }
+
+    @Test
+    public void testRun_Success() throws Exception {
+        // Arrange
+
+        // Act
+        lineaComandos.run();
+
+        // Assert
+        // Aquí puedes agregar aserciones adicionales si es necesario
+    }
+
+    @Test
+    public void testRun_WithArgs_Success() throws Exception {
+        // Arrange
+        String[] args = {"arg1", "arg2"};
+
+        // Act
+        lineaComandos.run(args);
+
+        // Assert
+        // Aquí puedes agregar aserciones adicionales si es necesario
+    }
+
+    @Test
+    public void testRun_WithEmptyArgs_Success() throws Exception {
+        // Arrange
+        String[] args = {};
+
+        // Act
+        lineaComandos.run(args);
+
+        // Assert
+        // Aquí puedes agregar aserciones adicionales si es necesario
+    }
+
+    @Test
+    @DisplayName("Entidades Ciclum Application correcto")
+    public void contextLoads() {
+        // Arrange
+        String[] args = {}; // No se necesitan argumentos para cargar el contexto
+
+        // Act
+        EntidadesCicklumApplication.main(args);
+
+        // Assert
+        // Verificar que la aplicación se inicie correctamente sin lanzar excepciones
+        assertNotNull(EntidadesCicklumApplication.class);
+    }
+
+     @Test
+    void obtenerRutinas_ReturnsListOfRutinas() {
+        // Arrange
+        Long idEntrenador = 1L;
+        List<Rutinas> rutinasList = new ArrayList<>();
+        when(rutinaRepo.findByIdEntrenador(idEntrenador)).thenReturn(rutinasList);
+
+        // Act
+        List<Rutinas> result = logicaRutinas.obtenerRutinas(idEntrenador);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(rutinasList, result);
+    }
+
+    @Test
+    void obtenerRutina_WithValidId_ReturnsOptionalRutinas() {
+        // Arrange
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
+
+        // Act
+        Optional<Rutinas> result = logicaRutinas.obtenerRutina(idRutina);
+
+        // Assert
+        assertTrue(result.isPresent());
+        assertEquals(rutina, result.get());
+    }
+
+    @Test
+    void eliminarRutina_WithValidId_CallsDeleteByIdInRepository() {
+        // Arrange
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
+
+        // Act
+        logicaRutinas.eliminarRutina(idRutina);
+
+        // Assert
+        verify(rutinaRepo, times(1)).deleteById(idRutina);
+    }
+
+    @Test
+    void crearActualizarRutina_WithExistingId_UpdatesRutina() {
+        // Arrange
+        Rutinas rutina = new Rutinas();
+        rutina.setIdRutinas(1L);
+        when(rutinaRepo.findById(rutina.getIdRutinas())).thenReturn(Optional.of(rutina));
+
+        // Act
+        Rutinas result = logicaRutinas.crearActualizarRutina(rutina);
+
+        // Assert
+        assertEquals(rutina, result);
+        verify(rutinaRepo, times(1)).save(rutina);
+    }
+
+    @Test
+    void aniadirRutina_WithExistingEntrenadorId_ThrowsRutinaExistente() {
+        // Arrange
+        Rutinas nuevaRutina = new Rutinas();
+        nuevaRutina.setIdEntrenador(1L);
+        when(rutinaRepo.findByIdEntrenador(nuevaRutina.getIdEntrenador())).thenReturn(new ArrayList<>());
+
+        // Act and Assert
+        assertThrows(RutinaExistente.class, () -> logicaRutinas.aniadirRutina(nuevaRutina));
+    }
+
+    @Test
+    void getRutinasById_WithValidId_ReturnsRutinas() {
+        // Arrange
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
+
+        // Act
+        Rutinas result = logicaRutinas.getRutinasById(idRutina);
+
+        // Assert
+        assertEquals(rutina, result);
+    }
+
+    @Test
+    void getRutinasById_WithInvalidId_ThrowsRutinaNoEncontrada() {
+        // Arrange
+        Long idRutina = 1L;
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(RutinaNoEncontrada.class, () -> logicaRutinas.getRutinasById(idRutina));
+    }
+
+
+    // Test similar al anterior pero con un id de entrenador que no tiene rutinas asociadas
+    @Test
+    void obtenerRutinas_WithNoRutinasForEntrenador_ReturnsEmptyList() {
+        // Arrange
+        Long idEntrenador = 2L; // ID de un entrenador que no tiene rutinas asociadas
+        when(rutinaRepo.findByIdEntrenador(idEntrenador)).thenReturn(new ArrayList<>());
+
+        // Act
+        List<Rutinas> result = logicaRutinas.obtenerRutinas(idEntrenador);
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+    }
+
+    // Test similar al anterior pero con un id de entrenador inexistente
+ @Test
+    void eliminarRutina_WithValidId_DeletesRutina() {
+        // Arrange
+        Long idRutina = 1L;
+        Rutinas rutina = new Rutinas();
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
+
+        // Act
+        logicaRutinas.eliminarRutina(idRutina);
+
+        // Assert
+        verify(rutinaRepo, times(1)).deleteById(idRutina);
+    }
+
+    @Test
+    void eliminarRutina_WithInvalidId_ThrowsRutinaNoEncontrada() {
+        // Arrange
+        Long idRutina = 999L;
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.empty());
+
+        // Act + Assert
+        assertThrows(RutinaNoEncontrada.class, () -> logicaRutinas.eliminarRutina(idRutina));
+        verify(rutinaRepo, never()).deleteById(anyLong());
+    }
+
+    
+
+
+
+
+
+        
+
+
     
 
 
