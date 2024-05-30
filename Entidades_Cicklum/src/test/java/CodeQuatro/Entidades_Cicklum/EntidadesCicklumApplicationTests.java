@@ -17,7 +17,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +42,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -53,6 +57,7 @@ import CodeQuatro.Entidades_Cicklum.dtos.EjercicioNuevoDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.EjerciciosDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.FragmentoRutinaDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.Links;
+import CodeQuatro.Entidades_Cicklum.dtos.RutinaNuevaDTO;
 import CodeQuatro.Entidades_Cicklum.dtos.RutinasDTO;
 import CodeQuatro.Entidades_Cicklum.entities.Ejercicios;
 import CodeQuatro.Entidades_Cicklum.entities.FragmentoRutina;
@@ -66,6 +71,7 @@ import CodeQuatro.Entidades_Cicklum.repositories.RutinasRepository;
 import CodeQuatro.Entidades_Cicklum.security.JwtUtil;
 import CodeQuatro.Entidades_Cicklum.servicios.LogicaEjercicios;
 import CodeQuatro.Entidades_Cicklum.servicios.LogicaRutinas;
+import io.jsonwebtoken.Claims;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = EntidadesCicklumApplication.class)
 @DisplayName("------En el servicio Cicklum--------")
@@ -84,7 +90,6 @@ class EntidadesCicklumApplicationTests {
 
     @InjectMocks
     private LogicaEjercicios logicaEjercicios;
-
 
     @Mock
     private RutinasRepository rutinaRepo;
@@ -1275,7 +1280,270 @@ class EntidadesCicklumApplicationTests {
         assertNull(links.getSelf());
     }
     
+    @Test
+    @DisplayName("Test toEntity Method")
+    void testToEntityRNDTO() {
+        String nombre = "Rutina Nueva";
+        String descripcion = "Descripción de la nueva rutina";
+        String observaciones = "Observaciones de la nueva rutina";
+        List<FragmentoRutinaDTO> ejerciciosDTO = Collections.emptyList();
+        List<FragmentoRutina> ejercicios = Collections.emptyList();
+
+        RutinaNuevaDTO dto = new RutinaNuevaDTO();
+        dto.setNombre(nombre);
+        dto.setDescripcion(descripcion);
+        dto.setObservaciones(observaciones);
+        dto.setEjercicios(ejerciciosDTO);
+
+        Rutinas rutina = dto.toEntity();
+
+        assertEquals(nombre, rutina.getNombre());
+        assertEquals(descripcion, rutina.getDescripcion());
+        assertEquals(observaciones, rutina.getObservaciones());
+        assertEquals(ejercicios, rutina.getFragmentoRutina());
+    }
+
+    @Test
+    @DisplayName("Test Getters and Setters nueva rutina DTO")
+    void testGettersAndSettersNuevaRutinaDTO() {
+        String nombre = "Rutina Nueva";
+        String descripcion = "Descripción de la nueva rutina";
+        String observaciones = "Observaciones de la nueva rutina";
+        List<FragmentoRutinaDTO> ejercicios = Collections.emptyList();
+
+        RutinaNuevaDTO dto = new RutinaNuevaDTO();
+        dto.setNombre(nombre);
+        dto.setDescripcion(descripcion);
+        dto.setObservaciones(observaciones);
+        dto.setEjercicios(ejercicios);
+
+        assertEquals(nombre, dto.getNombre());
+        assertEquals(descripcion, dto.getDescripcion());
+        assertEquals(observaciones, dto.getObservaciones());
+        assertEquals(ejercicios, dto.getEjercicios());
+    }
+
+    @Test
+    @DisplayName("Test All Args Constructor")
+    void testAllArgsConstructor() {
+        String nombre = "Rutina Nueva";
+        String descripcion = "Descripción de la nueva rutina";
+        String observaciones = "Observaciones de la nueva rutina";
+        List<FragmentoRutinaDTO> ejercicios = Collections.emptyList();
+
+        RutinaNuevaDTO dto = new RutinaNuevaDTO(nombre, descripcion, observaciones, ejercicios);
+
+        assertEquals(nombre, dto.getNombre());
+        assertEquals(descripcion, dto.getDescripcion());
+        assertEquals(observaciones, dto.getObservaciones());
+        assertEquals(ejercicios, dto.getEjercicios());
+    }
+
+    @Test
+    @DisplayName("Test No Args Constructor rutinaNueva DTO")
+    void testNoArgsConstructorRutinaNuevaDTO() {
+        RutinaNuevaDTO dto = new RutinaNuevaDTO();
+        assertNotNull(dto);
+    }
     
+    @Test
+    @DisplayName("Test toEntity with null list")
+    void testToEntityWithNullList() {
+        String nombre = "Rutina sin Ejercicios";
+        String descripcion = "Descripción de la rutina sin ejercicios";
+        String observaciones = "Observaciones de la rutina sin ejercicios";
+
+        RutinaNuevaDTO dto = new RutinaNuevaDTO();
+        dto.setNombre(nombre);
+        dto.setDescripcion(descripcion);
+        dto.setObservaciones(observaciones);
+        dto.setEjercicios(null);
+
+        Rutinas rutina = dto.toEntity();
+
+        assertEquals(nombre, rutina.getNombre());
+        assertEquals(descripcion, rutina.getDescripcion());
+        assertEquals(observaciones, rutina.getObservaciones());
+        assertNull(rutina.getFragmentoRutina());
+    }
+
+
+    @Test
+    @DisplayName("Test All Args Constructor")
+    void testAllArgsConstructorEjerciciosDTO() {
+        Long idEjercicio = 1L;
+        String nombre = "Ejercicio Nuevo";
+        String descripcion = "Descripción del ejercicio";
+        String observaciones = "Observaciones del ejercicio";
+        String tipo = "Tipo de ejercicio";
+        String musculosTrabajados = "Músculos trabajados";
+        String material = "Material necesario";
+        String dificultad = "Dificultad del ejercicio";
+        List<String> multimedia = Arrays.asList("link1", "link2");
+        Long idEntrenador = 1L;
+        Links links = Links.builder().self(URI.create("http://example.com")).build();
+
+        EjerciciosDTO dto = new EjerciciosDTO(idEjercicio, nombre, descripcion, observaciones, tipo, musculosTrabajados, material, dificultad, multimedia, idEntrenador, links);
+
+        assertEquals(idEjercicio, dto.getIdEjercicio());
+        assertEquals(nombre, dto.getNombre());
+        assertEquals(descripcion, dto.getDescripcion());
+        assertEquals(observaciones, dto.getObservaciones());
+        assertEquals(tipo, dto.getTipo());
+        assertEquals(musculosTrabajados, dto.getMusculosTrabajados());
+        assertEquals(material, dto.getMaterial());
+        assertEquals(dificultad, dto.getDificultad());
+        assertEquals(multimedia, dto.getMultimedia());
+        assertEquals(idEntrenador, dto.getIdEntrenador());
+        assertEquals(links, dto.getLinks());
+    }
+
+    @Test
+    @DisplayName("Test No Args Constructor")
+    void testNoArgsConstructorEjerciciosDTO() {
+        EjerciciosDTO dto = new EjerciciosDTO();
+        assertNotNull(dto);
+    }
+
+
+    @Test
+    @DisplayName("Test Builder Method")
+    void testBuilderMethod() {
+        Long idEjercicio = 1L;
+        String nombre = "Ejercicio Nuevo";
+        String descripcion = "Descripción del ejercicio";
+        String observaciones = "Observaciones del ejercicio";
+        String tipo = "Tipo de ejercicio";
+        String musculosTrabajados = "Músculos trabajados";
+        String material = "Material necesario";
+        String dificultad = "Dificultad del ejercicio";
+        List<String> multimedia = Arrays.asList("link1", "link2");
+        Long idEntrenador = 1L;
+        Links links = Links.builder().self(URI.create("http://example.com")).build();
+
+        EjerciciosDTO dto = EjerciciosDTO.builder()
+            .idEjercicio(idEjercicio)
+            .nombre(nombre)
+            .descripcion(descripcion)
+            .observaciones(observaciones)
+            .tipo(tipo)
+            .musculosTrabajados(musculosTrabajados)
+            .material(material)
+            .dificultad(dificultad)
+            .multimedia(multimedia)
+            .idEntrenador(idEntrenador)
+            .links(links)
+            .build();
+
+        assertEquals(idEjercicio, dto.getIdEjercicio());
+        assertEquals(nombre, dto.getNombre());
+        assertEquals(descripcion, dto.getDescripcion());
+        assertEquals(observaciones, dto.getObservaciones());
+        assertEquals(tipo, dto.getTipo());
+        assertEquals(musculosTrabajados, dto.getMusculosTrabajados());
+        assertEquals(material, dto.getMaterial());
+        assertEquals(dificultad, dto.getDificultad());
+        assertEquals(multimedia, dto.getMultimedia());
+        assertEquals(idEntrenador, dto.getIdEntrenador());
+        assertEquals(links, dto.getLinks());
+    }
+
+
+    @Test
+    void getUsernameFromToken_ValidToken_ReturnsUsername() {
+        // Arrange
+        String token = jwtUtil.generateToken(jwtUtil.createUserDetails("testUser", "password", new ArrayList<>())); // Modificamos aquí
+
+        // Act
+        String username = jwtUtil.getUsernameFromToken(token);
+
+        // Assert
+        assertEquals("testUser", username);
+    }
+
+    @Test
+    void getExpirationDateFromToken_ValidToken_ReturnsExpirationDate() {
+        // Arrange
+        String token = jwtUtil.generateToken(jwtUtil.createUserDetails("testUser", "password", new ArrayList<>())); // Modificamos aquí
+
+        // Act
+        Date expirationDate = jwtUtil.getExpirationDateFromToken(token);
+
+        // Assert
+        assertNotNull(expirationDate);
+    }
+
+    @Test
+    void getClaimFromToken_ValidToken_ReturnsClaim() {
+        // Arrange
+        String token = jwtUtil.generateToken(jwtUtil.createUserDetails("testUser", "password", new ArrayList<>())); // Modificamos aquí
+
+        // Act
+        String username = jwtUtil.getClaimFromToken(token, Claims::getSubject);
+
+        // Assert
+        assertEquals("testUser", username);
+    }
+
+    @Test
+    void isTokenExpired_ValidToken_ReturnsFalse() {
+        // Arrange
+        String token = jwtUtil.generateToken(jwtUtil.createUserDetails("testUser", "password", new ArrayList<>())); // Modificamos aquí
+
+        // Act
+        boolean isExpired = jwtUtil.isTokenExpired(token);
+
+        // Assert
+        assertFalse(isExpired);
+    }
+
+    @Test
+    void doGenerateToken_ValidClaims_ReturnsToken() {
+        // Arrange
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("key1", "value1");
+        claims.put("key2", "value2");
+
+        // Act
+        String token = jwtUtil.doGenerateToken(claims, "testUser");
+
+        // Assert
+        assertNotNull(token);
+    }
+
+    @Test
+    void validateToken_ValidTokenAndUserDetails_ReturnsTrue() {
+        // Arrange
+        String token = jwtUtil.generateToken(jwtUtil.createUserDetails("testUser", "password", new ArrayList<>())); // Modificamos aquí
+        UserDetails userDetails = jwtUtil.createUserDetails("testUser", "password", new ArrayList<>()); // Modificamos aquí
+
+        // Act
+        boolean isValid = jwtUtil.validateToken(token, userDetails);
+
+        // Assert
+        assertTrue(isValid);
+    }
+
+    @Test
+    void createUserDetails_ValidArguments_ReturnsUserDetails() {
+        // Arrange
+        String username = "testUser";
+        String password = "password";
+        List<String> roles = List.of("ROLE_USER");
+
+        // Act
+        UserDetails userDetails = jwtUtil.createUserDetails(username, password, roles);
+
+        // Assert
+        assertNotNull(userDetails);
+        assertEquals(username, userDetails.getUsername());
+        assertEquals(password, userDetails.getPassword());
+        assertEquals(1, userDetails.getAuthorities().size());
+        assertTrue(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")));
+    }
+    
+
+
 
 
 
