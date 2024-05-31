@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.function.Function;
 
 @RestController
-@RequestMapping("/rutinas")
+@RequestMapping("/rutina")
 public class RutinasRest {
 
 	private LogicaRutinas servicio;
@@ -31,7 +31,7 @@ public class RutinasRest {
 
 	public static Function<Long, URI> rutinasUriBuilder(UriComponents uriBuilder) {
 		;
-		return id -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder).path("/rutinas")
+		return id -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder).path("/rutina")
 				.path(String.format("/%d", id))
 				.build()
 				.toUri();

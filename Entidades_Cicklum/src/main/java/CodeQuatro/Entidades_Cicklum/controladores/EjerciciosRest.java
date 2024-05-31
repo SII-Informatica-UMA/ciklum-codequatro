@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 //@CrossOrigin
-@RequestMapping({ "/ejercicios" })
+@RequestMapping({ "/ejercicio" })
 
 public class EjerciciosRest {
     private LogicaEjercicios logicaEjercicios;
@@ -44,14 +44,14 @@ public class EjerciciosRest {
     }
     public static Function<Long, URI> ejerciciosUriBuilder(UriComponents uriBuilder) {
 		;
-		return id -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder).path("/ejercicios")
+		return id -> UriComponentsBuilder.newInstance().uriComponents(uriBuilder).path("/ejercicio")
 				.path(String.format("/%d", id))
 				.build()
 				.toUri();
 	}
 
     @GetMapping
-    @Operation(description = "Permite consultar todos los ejercicios a un entrenador. Solo lo puede hacer el entrenador.", responses = {
+    @Operation(description = "Permite consultar todos los ejercicios a un entrenador.", responses = {
         @ApiResponse(responseCode = "200", description = "Devuelve la lista de ejercicios de un entrenador."),
         @ApiResponse(responseCode = "403", description = "Acceso no autorizado", content = {
             @Content(schema = @Schema(implementation = Void.class)) }) })        
@@ -61,7 +61,7 @@ public class EjerciciosRest {
     }
 
     @PostMapping
-    @Operation(description = "Permite crear un ejercicio nuevo a un entrenador. ", responses = {
+    @Operation(description = "Permite crear un ejercicio nuevo. ", responses = {
             @ApiResponse(responseCode = "201", description = "Se crea el ejercicio y lo devuelve", headers = {
                     @Header(name = "Location", description = "URI del nuevo recurso", schema = @Schema(type = "string", subTypes = {
                             URI.class })) }),
@@ -86,18 +86,22 @@ public class EjerciciosRest {
     }
 
     @GetMapping({ "/{idEjercicio}" })
-    @Operation(description = "Obtiene un ejercicio concreto. Sollo pued ehacerlo el entrenador que lo ha creado y los clientes que entrena.", responses = {
+    @Operation(description = "Obtiene un ejercicio concreto.", responses = {
             @ApiResponse(responseCode = "200", description = "El ejercicio existe"),
             @ApiResponse(responseCode = "404", description = "El ejercicio no existe", content = {
                     @Content(schema = @Schema(implementation = Void.class)) }),
             @ApiResponse(responseCode = "403", description = "Acceso no autorizado", content = {
                     @Content(schema = @Schema(implementation = Void.class)) }) })
     public ResponseEntity<EjerciciosDTO> getEjercicio(@PathVariable Long idEjercicio) {
+        // Ejercicios original = (Ejercicios) this.logicaEjercicios.obtenerEjercicio(idEjercicio).orElseThrow(() -> {
+        //     return new EjercicioNoEncontradoException();
+        // });
         return ResponseEntity.of(this.logicaEjercicios.obtenerEjercicio(idEjercicio).map(EjerciciosDTO::fromEntity));
+        
     }
 
     @PutMapping({ "/{idEjercicio}" })
-    @Operation(description = "Actualiza un ejercicio. Solo puede hacerlo el entrenador que lo ha creado.", responses = {
+    @Operation(description = "Actualiza un ejercicio.", responses = {
             @ApiResponse(responseCode = "200", description = "El ejercicio se ha actualizado"),
             @ApiResponse(responseCode = "404", description = "El ejercicio no existe", content = {
                     @Content(schema = @Schema(implementation = Void.class)) }),
@@ -115,7 +119,7 @@ public class EjerciciosRest {
     }
 
     @DeleteMapping({ "/{idEjercicio}" })
-    @Operation(description = "Elimina el ejercicio. Solo puede hacerlo el entrenador que lo ha creado.", responses = {
+    @Operation(description = "Elimina el ejercicio.", responses = {
             @ApiResponse(responseCode = "200", description = "El ejercicio se ha elminado"),
             @ApiResponse(responseCode = "404", description = "El ejercicio no existe", content = {
                     @Content(schema = @Schema(implementation = Void.class)) }),
