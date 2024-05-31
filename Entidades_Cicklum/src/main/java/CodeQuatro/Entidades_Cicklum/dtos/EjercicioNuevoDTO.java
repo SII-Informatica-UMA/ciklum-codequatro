@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder(builderMethodName = "builderNuevo")
 public class EjercicioNuevoDTO {
+   //private String idEjercicio;
    private String nombre;
    private String descripcion;
    private String observaciones;
@@ -37,7 +38,13 @@ public class EjercicioNuevoDTO {
       this.idEntrenador = idEntrenador;
    }
 
+   // public Long getIdEjercicio() {
+   //    return idEjercicio;
+   // }
 
+   // public void setIdEjercicio(Long idEjercicio) {
+   //    this.idEjercicio = idEjercicio;
+   // }
 
    public String getNombre() {
       return this.nombre;

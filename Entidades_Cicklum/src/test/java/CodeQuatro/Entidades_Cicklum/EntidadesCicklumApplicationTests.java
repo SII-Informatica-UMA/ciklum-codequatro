@@ -1556,6 +1556,39 @@ class EntidadesCicklumApplicationTests {
         assertEquals("Observaciones modificadas", existingRutina.getObservaciones());
     }
 
+    // @Nested
+    // @DisplayName("Cuando la base de datos contiene datos")
+    // public class BaseDatosConDatos {
+    //     @BeforeEach
+    //     public void insertaEjercicio() {
+    //         var sentadilla = new Ejercicios();
+    //         sentadilla.setIdEjercicio(Long.valueOf(1));
+    //         sentadilla.setNombre("sentadilla");
+    //         sentadilla.setDescripcion("descripcion");
+    //         sentadilla.setObservaciones("obsevaciones");
+    //         sentadilla.setDificultad("dificultad");
+    //         sentadilla.setMusculosTrabajados("musculos");
+    //         sentadilla.setMaterial("material");
+    //         sentadilla.setTipo("tipo");
+    //         sentadilla.setMultimedia(null);
+    //         sentadilla.setIdEntrenador(Long.valueOf(1));
+    //         ejerciciosRepository.save(sentadilla);
+    //     }
+
+    //     @Test
+    //     @DisplayName("Devuelve un ejercicio concreto")
+    //     public void obtenerEjercicio() {
+    //         var peticion = get("http", "localhost", port, "/ejercicio/1");
+
+    //         var respuesta = restTemplate.exchange(peticion, new ParameterizedTypeReference<EjerciciosDTO>() {
+    //         });
+            
+    //         assertThat(respuesta.getBody().getNombre()).isEqualTo("sentadilla");
+    //         assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+            
+    //     }
+    
+    // }
+    }
 
    
-}
