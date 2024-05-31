@@ -229,6 +229,105 @@ class EntidadesCicklumApplicationTests {
         }
 
         @Test
+        @DisplayName("Devuelve una lista vacía de rutinas")
+        public void listaVaciaDeRutinas() {
+            var peticion = get("http", "localhost", port, "/rutinas");
+        
+            var respuesta = restTemplate.exchange(peticion, new ParameterizedTypeReference<List<RutinasDTO>>() {});
+        
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
+            assertThat(respuesta.getBody()).isEmpty();
+        }
+        
+        @Test
+        @DisplayName("Devuelve error al modificar una rutina que no existe")
+        public void errorAlModificarRutinaInexistente() {
+            var rutina = RutinasDTO.builder().nombre("Rutina de fuerza").build();
+            var peticion = put("http", "localhost", port, "/rutinas/1", rutina);
+        
+            var respuesta = restTemplate.exchange(peticion, Void.class);
+        
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
+        }
+        
+        @Test
+        @DisplayName("Devuelve error al eliminar una rutina que no existe")
+        public void errorAlEliminarRutinaInexistente() {
+            var peticion = delete("http", "localhost", port, "/rutinas/1");
+        
+            var respuesta = restTemplate.exchange(peticion, Void.class);
+        
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
+        }
+       
+
+
+        // @Test
+        // @DisplayName("Añadir una rutina correctamente")
+        // public void aniadirRutinaCorrectamente() {
+        //     // Preparamos la rutina a insertar
+        //     var rutinaDTO = RutinasDTO.builder()
+        //             .nombre("Rutina Nueva")
+        //             .descripcion("Descripción de la rutina nueva")
+        //             .observaciones("Observaciones de la rutina nueva")
+        //             .build();
+
+        //     // Preparamos la petición con la rutina dentro
+        //     URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:" + port + "/rutinas").build().toUri();
+        //     var peticion = RequestEntity.post(uri)
+        //                                 .contentType(MediaType.APPLICATION_JSON)
+        //                                 .header("Authorization", "Bearer " + token)
+        //                                 .body(rutinaDTO);
+
+        //     // Invocamos al servicio REST
+        //     var respuesta = restTemplate.exchange(peticion, Void.class);
+
+        //     // Comprobamos el resultado
+        //     assertThat(respuesta.getStatusCode().value()).isEqualTo(201);
+        //     assertThat(respuesta.getHeaders().getLocation().toString()).startsWith("http://localhost:" + port + "/rutinas/");
+
+        //     // Verificamos que la rutina se ha guardado en la base de datos
+        //     List<Rutinas> rutinasBD = rutinaRepo.findAll();
+        //     assertThat(rutinasBD).hasSize(1);
+        //     Rutinas rutinaGuardada = rutinasBD.get(0);
+        //     assertThat(rutinaGuardada.getNombre()).isEqualTo("Rutina Nueva");
+        //     assertThat(rutinaGuardada.getDescripcion()).isEqualTo("Descripción de la rutina nueva");
+        //     assertThat(rutinaGuardada.getObservaciones()).isEqualTo("Observaciones de la rutina nueva");
+        // }
+
+        // @Test
+        // @DisplayName("Devuelve error al obtener una rutina que no existe")
+        // public void errorAlObtenerRutinaInexistente() {
+        //     var peticion = get("http", "localhost", port, "/rutinas/1");
+
+        //     var respuesta = restTemplate.exchange(peticion, new ParameterizedTypeReference<RutinasDTO>() {});
+
+        //     assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
+        // }
+
+        @Test
+        @DisplayName("Devuelve error al modificar una rutina que no existe")
+        public void modificarRutinaInexistente() {
+            var rutinaDTO = RutinasDTO.builder().nombre("Nombre Modificado").build();
+            var peticion = put("http", "localhost", port, "/rutinas/1", rutinaDTO);
+
+            var respuesta = restTemplate.exchange(peticion, Void.class);
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
+        }
+
+        @Test
+        @DisplayName("Devuelve error al eliminar una rutina que no existe")
+        public void eliminarRutinaInexistente() {
+            var peticion = delete("http", "localhost", port, "/rutinas/1");
+
+            var respuesta = restTemplate.exchange(peticion, Void.class);
+
+            assertThat(respuesta.getStatusCode().value()).isEqualTo(404);
+        }
+        
+
+        @Test
         @DisplayName("Comprueba hashCode con el mismo ejercicio")
         public void testHashCodeEjercicio() {
             Ejercicios ejercicio = new Ejercicios(1L, "Push-up", "Ejercicio de pecho", "Realizar con espalda recta",
@@ -521,16 +620,7 @@ class EntidadesCicklumApplicationTests {
             assertEquals(1L, ejercicio.getIdEntrenador());
         }
 
-        // @Test
-        // @DisplayName("Comprueba toString de Ejercicios")
-        // public void testToStringEjercicios() {
-        //     Ejercicios ejercicio = new Ejercicios(1L, "Push Up", "Ejercicio de pecho", "Realizar correctamente",
-        //             "Calistenia", "Pectorales", "Ninguno", "Intermedio",
-        //             Arrays.asList("video1.mp4", "video2.mp4"), 1L);
-        //     String expected = "Ejercicio [id= 1, nombre= Push Up, descripcion= Ejercicio de pechoObservaciones= Realizar correctamente, tipo= Calistenia, musculos trabajados= Pectorales, material= Ninguno, dificultad= Intermedio, multimedia= [video1.mp4video2.mp4]]";
-        //     assertEquals(expected, ejercicio.toString());
-        // }
-      
+
 
         @Test
         @DisplayName("Comprueba constructor con parámetros de Rutinas")
@@ -634,21 +724,7 @@ class EntidadesCicklumApplicationTests {
             assertEquals(ejercicio1.hashCode(), ejercicio2.hashCode());
         }
 
-        // @Test
-        // @DisplayName("Comprueba equals y hashCode de Rutinas")
-        // public void testEqualsYHashCodeRutinas() {
-        //     Rutinas rutina1 = new Rutinas(1L, "Rutina de fuerza", "Rutina para desarrollar fuerza",
-        //             "Realizar con buena técnica", 1L,
-        //             Arrays.asList(new FragmentoRutina(1L, 3L, 15L, 10L, null)));
-
-        //     Rutinas rutina2 = new Rutinas(1L, "Rutina de fuerza", "Rutina para desarrollar fuerza",
-        //             "Realizar con buena técnica", 1L,
-        //             Arrays.asList(new FragmentoRutina(1L, 3L, 15L, 10L, null)));
-
-        //     assertEquals(rutina1, rutina2);
-        //     assertEquals(rutina1.hashCode(), rutina2.hashCode());
-        // }
-        
+    
 
         @Test
         @DisplayName("Comprueba la conversión a entidad de EjercicioNuevoDTO")
@@ -1000,26 +1076,7 @@ class EntidadesCicklumApplicationTests {
         assertEquals(idRutina, result.get().getIdRutinas());
     }
     
-    // @Test
-    // @DisplayName("Crea una nueva rutina")
-    // void crearNuevaRutina() {
-    //     Rutinas rutina = new Rutinas();
-    //     rutina.setNombre("Rutina Test");
-    //     rutina.setIdEntrenador(1L);
-    //     when(rutinaRepo.save(any(Rutinas.class))).thenAnswer(invocation -> {
-    //         Rutinas savedRutina = invocation.getArgument(0);
-    //         savedRutina.setIdRutinas(1L);
-    //         return savedRutina;
-    //     });
-    //     when(rutinaRepo.findById(1L)).thenReturn(Optional.of(rutina));
-    //     Rutinas result = logicaRutinas.crearActualizarRutina(rutina);
-    //     assertNotNull(result);
-    //     assertEquals(1L, result.getIdRutinas());
-    //     assertEquals("Rutina Test", result.getNombre());
-    //     verify(rutinaRepo).save(rutina);
-    //     verify(rutinaRepo).findById(1L);
-    // }
-    
+
     @Test
     @DisplayName("Lanza excepción al eliminar rutina no existente")
     void lanzarExcepcionAlEliminarRutinaNoExistente() {
@@ -1231,16 +1288,7 @@ class EntidadesCicklumApplicationTests {
             .links(links)
             .build();
         assertEquals(idEjercicio, dto.getIdEjercicio());
-        // assertEquals(nombre, dto.getNombre());
-        // assertEquals(descripcion, dto.getDescripcion());
-        // assertEquals(observaciones, dto.getObservaciones());
-        // assertEquals(tipo, dto.getTipo());
-        // assertEquals(musculosTrabajados, dto.getMusculosTrabajados());
-        // assertEquals(material, dto.getMaterial());
-        // assertEquals(dificultad, dto.getDificultad());
-        // assertEquals(multimedia, dto.getMultimedia());
-        // assertEquals(idEntrenador, dto.getIdEntrenador());
-        // assertEquals(links, dto.getLinks());
+        
     }
     
     @Test
@@ -1360,16 +1408,6 @@ class EntidadesCicklumApplicationTests {
         verify(rutinaRepo, times(1)).deleteById(idRutina);
     }
     
-    // @Test
-    // @DisplayName("Crea o actualiza rutina existente")
-    // void crearOActualizarRutinaExistente() {
-    //     Rutinas rutina = new Rutinas();
-    //     rutina.setIdRutinas(1L);
-    //     when(rutinaRepo.findById(rutina.getIdRutinas())).thenReturn(Optional.of(rutina));
-    //     Rutinas result = logicaRutinas.(rutina);
-    //     assertEquals(rutina, result);
-    //     verify(rutinaRepo, times(1)).save(rutina);
-    // }
     
     @Test
     @DisplayName("Lanza excepción al añadir rutina con ID de entrenador existente")
@@ -1487,25 +1525,7 @@ class EntidadesCicklumApplicationTests {
         assertThrows(RutinaNoEncontrada.class, () -> logicaRutinas.modificarRutina(idRutina, rutina));
     }
     
-    // @Test
-    // @DisplayName("Modificar rutina exitosamente")
-    // public void modificarRutinaExitosamente() {
-    //     Long idRutina = 1L;
-    //     Rutinas rutina = new Rutinas();
-    //     rutina.setIdRutinas(idRutina);
-    //     rutina.setNombre("Nombre modificado");
-    //     rutina.setDescripcion("Descripción modificada");
-    //     rutina.setObservaciones("Observaciones modificadas");
-    //     rutina.setIdEntrenador(2L);
-        
-    //     when(rutinaRepo.existsById(idRutina)).thenReturn(true);
-    //     when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
-        
-    //     logicaRutinas.modificarRutina(idRutina, rutina);
-        
-    //     verify(rutinaRepo).save(any(Rutinas.class));
-    // }
-    
+
 
     @Test
     @DisplayName("Modificar rutina exitosamente")
@@ -1536,4 +1556,6 @@ class EntidadesCicklumApplicationTests {
         assertEquals("Observaciones modificadas", existingRutina.getObservaciones());
     }
 
+
+   
 }
