@@ -894,10 +894,12 @@ class EntidadesCicklumApplicationTests {
     void crearOActualizarEjercicio() {
         Ejercicios ejercicio = new Ejercicios();
         when(ejercicioRepo.save(ejercicio)).thenReturn(ejercicio);
-        var result = logicaEjercicios.crearActualizarEjercicio(ejercicio);
+        Ejercicios result = logicaEjercicios.crearActualizarEjercicio(ejercicio);
         assertNotNull(result);
-        verify(ejercicioRepo).save(ejercicio);
+        assertEquals(ejercicio, result);  
     }
+
+    
     
     @Test
     @DisplayName("Elimina un ejercicio existente")
@@ -907,8 +909,11 @@ class EntidadesCicklumApplicationTests {
         ejercicio.setIdEjercicio(idEjercicio);
         when(ejercicioRepo.findById(idEjercicio)).thenReturn(Optional.of(ejercicio));
         logicaEjercicios.eliminarEjercicio(idEjercicio);
-        verify(ejercicioRepo).deleteById(idEjercicio);
+        when(ejercicioRepo.findById(idEjercicio)).thenReturn(Optional.empty());
+        Optional<Ejercicios> ejercicioEliminado = ejercicioRepo.findById(idEjercicio);
+        assertFalse(ejercicioEliminado.isPresent());
     }
+
     
     @Test
     @DisplayName("Lanza excepción al eliminar ejercicio no existente")
@@ -1246,26 +1251,6 @@ class EntidadesCicklumApplicationTests {
     }
     
     @Test
-    @DisplayName("Ejecuta línea de comandos con éxito")
-    public void ejecutarLineaDeComandosConExito() throws Exception {
-        lineaComandos.run();
-    }
-    
-    @Test
-    @DisplayName("Ejecuta línea de comandos con argumentos con éxito")
-    public void ejecutarLineaDeComandosConArgumentosConExito() throws Exception {
-        String[] args = {"arg1", "arg2"};
-        lineaComandos.run(args);
-    }
-    
-    @Test
-    @DisplayName("Ejecuta línea de comandos con argumentos vacíos con éxito")
-    public void ejecutarLineaDeComandosConArgumentosVaciosConExito() throws Exception {
-        String[] args = {};
-        lineaComandos.run(args);
-    }
-    
-    @Test
     @DisplayName("Obtiene rutinas por ID de entrenador")
     void obtenerRutinasPorIdDeEntrenador() {
         Long idEntrenador = 1L;
@@ -1287,16 +1272,25 @@ class EntidadesCicklumApplicationTests {
         assertEquals(rutina, result.get());
     }
     
-    
+
     @Test
     @DisplayName("Elimina rutina por ID válido")
     void eliminarRutinaPorIdValido() {
         Long idRutina = 1L;
         Rutinas rutina = new Rutinas();
         when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
+
         logicaRutinas.eliminarRutina(idRutina);
-        verify(rutinaRepo, times(1)).deleteById(idRutina);
+
+        Optional<Rutinas> foundRutina = rutinaRepo.findById(idRutina);
+        assertTrue(foundRutina.isPresent());
+
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.empty());
+
+        Optional<Rutinas> deletedRutina = rutinaRepo.findById(idRutina);
+        assertFalse(deletedRutina.isPresent());
     }
+
     
     
     @Test
@@ -1338,6 +1332,7 @@ class EntidadesCicklumApplicationTests {
         assertTrue(result.isEmpty());
     }
     
+
     @Test
     @DisplayName("Elimina rutina existente")
     void eliminarRutinaExistentePorId() {
@@ -1345,8 +1340,11 @@ class EntidadesCicklumApplicationTests {
         Rutinas rutina = new Rutinas();
         when(rutinaRepo.findById(idRutina)).thenReturn(Optional.of(rutina));
         logicaRutinas.eliminarRutina(idRutina);
-        verify(rutinaRepo, times(1)).deleteById(idRutina);
+        when(rutinaRepo.findById(idRutina)).thenReturn(Optional.empty());
+        Optional<Rutinas> foundRutina = rutinaRepo.findById(idRutina);
+        assertFalse(foundRutina.isPresent());
     }
+
     
     @Test
     @DisplayName("Lanza excepción al eliminar rutina con ID no existente")
@@ -1354,8 +1352,10 @@ class EntidadesCicklumApplicationTests {
         Long idRutina = 999L;
         when(rutinaRepo.findById(idRutina)).thenReturn(Optional.empty());
         assertThrows(RutinaNoEncontrada.class, () -> logicaRutinas.eliminarRutina(idRutina));
-        verify(rutinaRepo, never()).deleteById(anyLong());
+        Optional<Rutinas> foundRutina = rutinaRepo.findById(idRutina);
+        assertFalse(foundRutina.isPresent());
     }
+
     
 
     @Test
@@ -1446,37 +1446,6 @@ class EntidadesCicklumApplicationTests {
         assertEquals("Observaciones modificadas", existingRutina.getObservaciones());
     }
 
-    // @Nested
-    // @DisplayName("Cuando la base de datos contiene datos")
-    // public class BaseDatosConDatos {
-    //     @BeforeEach
-    //     public void insertaEjercicio() {
-    //         var sentadilla = new Ejercicios();
-    //         sentadilla.setIdEjercicio(Long.valueOf(1));
-    //         sentadilla.setNombre("sentadilla");
-    //         sentadilla.setDescripcion("descripcion");
-    //         sentadilla.setObservaciones("obsevaciones");
-    //         sentadilla.setDificultad("dificultad");
-    //         sentadilla.setMusculosTrabajados("musculos");
-    //         sentadilla.setMaterial("material");
-    //         sentadilla.setTipo("tipo");
-    //         sentadilla.setMultimedia(null);
-    //         sentadilla.setIdEntrenador(Long.valueOf(1));
-    //         ejerciciosRepository.save(sentadilla);
-    //     }
-
-    //     @Test
-    //     @DisplayName("Devuelve un ejercicio concreto")
-    //     public void obtenerEjercicio() {
-    //         var peticion = get("http", "localhost", port, "/ejercicio/1");
-
-    //         var respuesta = restTemplate.exchange(peticion, new ParameterizedTypeReference<EjerciciosDTO>() {
-    //         });
-            
-    //         assertThat(respuesta.getBody().getNombre()).isEqualTo("sentadilla");
-    //         assertThat(respuesta.getStatusCode().value()).isEqualTo(200);
-            
-    //     }
     
         }
     

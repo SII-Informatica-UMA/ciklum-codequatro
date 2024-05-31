@@ -51,8 +51,8 @@ public class EjerciciosRest {
 	}
 
     @GetMapping
-    @Operation(description = "Permite consultar todos los ejercicios a un entrenador.", responses = {
-        @ApiResponse(responseCode = "200", description = "Devuelve la lista de ejercicios de un entrenador."),
+    @Operation(description = "Permite consultar todos los ejercicios.", responses = {
+        @ApiResponse(responseCode = "200", description = "Devuelve la lista de ejercicios."),
         @ApiResponse(responseCode = "403", description = "Acceso no autorizado", content = {
             @Content(schema = @Schema(implementation = Void.class)) }) })        
     public List<EjerciciosDTO> obtenerEjercicios(
