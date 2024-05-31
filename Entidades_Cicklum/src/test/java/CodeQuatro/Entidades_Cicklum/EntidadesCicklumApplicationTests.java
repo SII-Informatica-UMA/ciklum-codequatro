@@ -1287,6 +1287,7 @@ class EntidadesCicklumApplicationTests {
         assertEquals(rutina, result.get());
     }
     
+    
     @Test
     @DisplayName("Elimina rutina por ID válido")
     void eliminarRutinaPorIdValido() {
